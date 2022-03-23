@@ -14,7 +14,8 @@ public class BattleShipLocalGame extends LocalGame {
     }
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-
+        // make a copy of the state, and send it to the player
+        p.sendInfo(new BattleShipGameState(((BattleShipGameState) state)));
     }
 
     @Override
