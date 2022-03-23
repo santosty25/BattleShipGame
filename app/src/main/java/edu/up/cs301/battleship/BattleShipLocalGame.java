@@ -12,6 +12,12 @@ public class BattleShipLocalGame extends LocalGame {
         super();
         super.state = new BattleShipGameState();
     }
+
+    public BattleShipLocalGame(BattleShipGameState battleshipState){
+        super();
+        super.state = new BattleShipGameState(battleshipState);
+    }
+
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
         // make a copy of the state, and send it to the player
@@ -20,7 +26,7 @@ public class BattleShipLocalGame extends LocalGame {
 
     @Override
     protected boolean canMove(int playerIdx) {
-        return false;
+        return playerIdx == ((BattleShipGameState) state).getPlayersTurn();
     }
 
     @Override
@@ -30,6 +36,23 @@ public class BattleShipLocalGame extends LocalGame {
 
     @Override
     protected boolean makeMove(GameAction action) {
+        BattleShipGameState state = (BattleShipGameState) super.state;
+        int phase = state.getPhase();
+        GameBoard board = state.getBoard();
+        int playerID = state.getPlayerID();
+        int remainingShips = state.getRemainingShips();
+
+        if(action instanceof Fire) {
+            if(phase != 1) {
+                return false;
+            }
+            else {
+                //fix later
+            }
+        }
+
+
         return false;
     }
 }
+
