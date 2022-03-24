@@ -87,14 +87,19 @@ public class BattleShipGameState extends GameState {
 
         int i;
         int j;
-        //Log.i("Test", "before Players fleet for loop");
+        Log.i("Test", "before Players fleet for loop");
         for (i = 0;  i < playerID.length; i++) {
             for (j = 0;j < 6; j++) {
-                //Log.i("Test", i + " " + j);
-                this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
+                Log.i("Test", i + " " + j);
+                if(copy.playersFleet[i][j] == null){
+                    Log.i("IS NULL", "NULL");
+                }
+                else {
+                    this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
+                }
             }
         }
-        //Log.i("Test", "after Players fleet for loop");
+        Log.i("Test", "after Players fleet for loop");
 
     }
 

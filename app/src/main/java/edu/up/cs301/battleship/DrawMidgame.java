@@ -78,7 +78,7 @@ public class DrawMidgame extends SurfaceView{
          */
         canvas.drawBitmap(background, 0.0f, 0.0f, new Paint());
         canvas.drawBitmap(grid, 550.0f, 25.0f, new Paint());
-        canvas.drawBitmap(playersGrid, 50.0f, 700.0f, new Paint());
+        canvas.drawBitmap(playersGrid, 50.0f, 600.0f, new Paint());
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, new Paint());
 //        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());

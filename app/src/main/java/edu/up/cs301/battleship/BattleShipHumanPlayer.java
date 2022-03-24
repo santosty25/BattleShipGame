@@ -1,7 +1,8 @@
 package edu.up.cs301.battleship;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
