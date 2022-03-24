@@ -36,5 +36,15 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     public void setAsGui(GameMainActivity activity) {
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
+        Button nextButton = activity.findViewById(R.id.confirm_button);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.setContentView(R.layout.midgame);
+
+            }
+        });
+
+
     }
 }
