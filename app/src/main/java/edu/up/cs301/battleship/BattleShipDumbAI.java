@@ -15,7 +15,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
     @Override
     protected void receiveInfo(GameInfo info) {
         BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState)info);
-        Fire fire = new Fire(this);
+//        Fire fire = new Fire(this);
         PlaceShip placeShip = new PlaceShip(this);
         Random r = new Random();
         int row = r.nextInt(10) + 1;
@@ -25,7 +25,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             Coordinates coords = new Coordinates(false, true, row, col);
             gameState.printFire(row, col, true);
             Log.i("randomFire", "Fired at " + row + " " + col + "." );
-            game.sendAction(new Fire(this));
+//            game.sendAction(new Fire(this));
         }
     }
 }
