@@ -215,7 +215,29 @@ public class BattleShipGameState extends GameState {
         }
     }
 
+    /**
+     * xyToCoordMidGame - Returns a coordinate object based on where the player taps on the enemies mid game board
+     * @param touchX - float x coordinate of user tap
+     * @param touchY - float y coordinate of user tap
+     * @return coordinate object based on board
+     */
+    public Coordinates xyToCoordMidGame(float touchX, float touchY) {
+        //Top left corner of board/grid
+        float boardStartX = 713;
+        float boardStartY = 185;
+        float cellWidth = 74;
+        char boardRows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+        int newX = (int)((touchX - boardStartX) / cellWidth);
+        int newY = (int)((touchY - boardStartY) / cellWidth);
 
+        Coordinates tappedCoordinate = new Coordinates(false, false, newX, newY);
+        char letterRow = boardRows[newY];
+        if (newX >= 10 || newX < 0 || newY >= 10 || newX <= 0)  {
+            return null;
+        }
+        Log.d("Converted Coords", "New Coords:" + newX + ", " + letterRow);
+        return tappedCoordinate;
+    }
 
     /** toString - Returns the number of ships remaining for the player if it is their turn or
      * returns that it is not their turn.
