@@ -268,6 +268,8 @@ public class BattleShipGameState extends GameState {
 
     public void setPhase(int changePhase) {this.phase = changePhase;}
 
+    public void setPlayersTurn(int initTurn) { this.playersTurn = initTurn;}
+
     /**
      * checkPlayerFleet - Checks the state of each players fleet.
      * @return - 0 if player 0's fleet still remains

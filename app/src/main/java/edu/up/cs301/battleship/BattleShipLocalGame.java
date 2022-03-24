@@ -49,6 +49,7 @@ public class BattleShipLocalGame extends LocalGame {
         int player = state.getPlayerID();
         GameBoard board = state.getBoard();
         int remainingShips = state.getRemainingShips();
+        int whosTurn = state.getPlayersTurn();
 
         if(action instanceof Fire) {
             if(phase != 1) {
@@ -57,6 +58,12 @@ public class BattleShipLocalGame extends LocalGame {
             else {
                 Coordinates coord = ((Fire) action).getCoord();
                 state.canFire(coord);
+                if(whosTurn == 0) {
+                    state.setPlayersTurn(1);
+                }
+                else {
+                    state.setPlayersTurn(0);
+                }
             }
         }
 
