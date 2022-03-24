@@ -36,7 +36,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         activity.setContentView(R.layout.setup_phase);
         Button nextButton = activity.findViewById(R.id.confirm_button);
 
-        //setup phase surfaceView
+        //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
 
 
