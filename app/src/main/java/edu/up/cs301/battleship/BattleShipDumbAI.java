@@ -28,6 +28,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
 
         gameState.printFire(row, col, true);
         Log.i("randomFire", "Fired at " + row + " " + col + "." );
-        game.sendAction(fire);
+
+    game.sendAction(new Fire(this));
     }
 }
