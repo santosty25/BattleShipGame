@@ -31,6 +31,14 @@ public class BattleShipLocalGame extends LocalGame {
 
     @Override
     protected String checkIfGameOver() {
+        BattleShipGameState state = (BattleShipGameState) super.state;
+        int winner = state.checkPlayerFleet();
+        if (winner == 0) {
+            return "Player 0 has won.";
+        }
+        else if (winner == 1) {
+            return "Player 1 has won.";
+        }
         return null;
     }
 
@@ -38,8 +46,8 @@ public class BattleShipLocalGame extends LocalGame {
     protected boolean makeMove(GameAction action) {
         BattleShipGameState state = (BattleShipGameState) super.state;
         int phase = state.getPhase();
+        int player = state.getPlayerID();
         GameBoard board = state.getBoard();
-        int playerID = state.getPlayerID();
         int remainingShips = state.getRemainingShips();
 
         if(action instanceof Fire) {
@@ -47,7 +55,8 @@ public class BattleShipLocalGame extends LocalGame {
                 return false;
             }
             else {
-
+                Coordinates coord = ((Fire) action).getCoord();
+                state.canFire(coord);
             }
         }
 

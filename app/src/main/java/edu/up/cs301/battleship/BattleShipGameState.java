@@ -266,6 +266,40 @@ public class BattleShipGameState extends GameState {
 
     public int getRemainingShips() { return this.remainingShips;}
 
+    public void setPhase(int changePhase) {this.phase = changePhase;}
+
+    /**
+     * checkPlayerFleet - Checks the state of each players fleet.
+     * @return - 0 if player 0's fleet still remains
+     *           1 if player 1's fleet still remains
+     *           2 if both players' fleet still remain
+     */
+    public int checkPlayerFleet() {
+        boolean allSunk0 = false;
+        boolean allSunk1 = false;
+
+        //check the state of each player's fleet
+        for(int i = 0; i < playersFleet[0].length; i++) {
+            allSunk0 = playersFleet[0][i].getSunk();
+        }
+        for(int j = 0; j < playersFleet[1].length; j++) {
+            allSunk1 = playersFleet[1][j].getSunk();
+        }
+
+        //player 1 won
+        if(allSunk0 == true && allSunk1 == false) {
+            return 1;
+        }
+        //player 0 won
+        else if(allSunk0 == false && allSunk1 == true) {
+            return 0;
+        }
+        //game is not over
+        return 2;
+    }
+
+
+
 
 
 
