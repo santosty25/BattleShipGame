@@ -1,6 +1,8 @@
 package edu.up.cs301.battleship;
-
 import android.content.Intent;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 
@@ -37,10 +39,35 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
         Button nextButton = activity.findViewById(R.id.confirm_button);
+
+        //setup phase surfaceView object
+        SurfaceView gameView = activity.findViewById(R.id.boardView);
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activity.setContentView(R.layout.midgame);
+                //midgame phase surface view
+                SurfaceView gameView = activity.findViewById(R.id.boardView);
+
+                gameView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        float x = motionEvent.getX();
+                        float y = motionEvent.getY();
+                        Log.d("Coords Test", "Coords: " + x + ", " + y);
+                        return false;
+                    }
+                });
+            }
+        });
+        gameView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                float x = motionEvent.getX();
+                float y = motionEvent.getY();
+                Log.d("Coords Test", "Coords: " + x + ", " + y);
+                return false;
             }
         });
 

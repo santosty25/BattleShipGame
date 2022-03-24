@@ -26,6 +26,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TabHost.TabSpec;
+
+import edu.up.cs301.battleship.DrawMidgame;
 import edu.up.cs301.game.GameFramework.gameConfiguration.GameConfig;
 import edu.up.cs301.game.GameFramework.gameConfiguration.GamePlayerType;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
@@ -78,7 +80,6 @@ public abstract class GameMainActivity extends Activity implements
     // whether the game is in the "configuration" stage, before the actual game
     // has started
     private boolean doingConfiguration = true;
-
     /**
      * contains the game configuration this activity will be used to initialize
      */
