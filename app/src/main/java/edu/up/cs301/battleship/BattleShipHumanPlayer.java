@@ -6,8 +6,12 @@ import android.widget.Button;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
+import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
+import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
 import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;
+import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.R;
+import edu.up.cs301.tictactoe.infoMessage.TTTState;
 
 public class BattleShipHumanPlayer extends GameHumanPlayer {
 
@@ -32,15 +36,5 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     public void setAsGui(GameMainActivity activity) {
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
-        Button nextButton = activity.findViewById(R.id.confirm_button);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.setContentView(R.layout.midgame);
-
-            }
-        });
-
-
     }
 }

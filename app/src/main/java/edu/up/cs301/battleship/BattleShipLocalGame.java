@@ -47,7 +47,7 @@ public class BattleShipLocalGame extends LocalGame {
                 return false;
             }
             else {
-                //fix later
+
             }
         }
 
