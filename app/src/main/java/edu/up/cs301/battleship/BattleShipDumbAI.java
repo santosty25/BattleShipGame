@@ -23,12 +23,9 @@ public class BattleShipDumbAI extends GameComputerPlayer {
 
         if (playerNum == gameState.getPlayersTurn()) {
             Coordinates coords = new Coordinates(false, true, row, col);
-
+            gameState.printFire(row, col, true);
+            Log.i("randomFire", "Fired at " + row + " " + col + "." );
+            game.sendAction(new Fire(this));
         }
-
-        gameState.printFire(row, col, true);
-        Log.i("randomFire", "Fired at " + row + " " + col + "." );
-
-//    game.sendAction(new Fire(this));
     }
 }

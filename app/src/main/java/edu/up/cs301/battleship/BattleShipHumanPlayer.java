@@ -41,9 +41,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             @Override
             public void onClick(View view) {
                 activity.setContentView(R.layout.midgame);
-
             }
         });
+
 
 
     }

@@ -8,10 +8,12 @@ import android.graphics.Picture;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.game.R;
 
 public class DrawMidgame extends SurfaceView{
-
+    public static final int NUM_STARTING_SPOTS = 40;
     private Paint blackPaint = new Paint();
 
     public DrawMidgame(Context context) {//default constructor,
@@ -36,7 +38,6 @@ public class DrawMidgame extends SurfaceView{
         this.blackPaint.setColor(0xFF00FF00);
         this.blackPaint.setStyle(Paint.Style.FILL);
     }
-
 
     @Override
     public void onDraw(Canvas canvas){
@@ -83,6 +84,7 @@ public class DrawMidgame extends SurfaceView{
 //        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(userSelection, 540.0f, 450.0f, new Paint());
+
     }
 
 }

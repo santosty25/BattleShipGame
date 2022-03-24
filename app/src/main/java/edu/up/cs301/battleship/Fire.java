@@ -10,7 +10,7 @@ public class Fire extends GameAction {
 
     public Fire(GamePlayer player) {
         super(player);
-    }
+        }
 
     public void setX(int setX) {
         this.x = setX;
