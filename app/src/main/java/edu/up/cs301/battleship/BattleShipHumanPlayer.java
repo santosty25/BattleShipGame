@@ -39,8 +39,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
 
-
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
