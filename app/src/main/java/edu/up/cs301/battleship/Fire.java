@@ -5,7 +5,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
 public class Fire extends GameAction {
 
-    //add x and y
     private int x;
     private int y;
 
