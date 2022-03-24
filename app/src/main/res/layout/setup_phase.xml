@@ -7,7 +7,7 @@
 
 
     <edu.up.cs301.battleship.DrawSetup
-        android:id="@+id/surfaceView3"
+        android:id="@+id/boardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
