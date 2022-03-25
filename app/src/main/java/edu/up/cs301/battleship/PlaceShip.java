@@ -8,6 +8,7 @@ public class PlaceShip extends GameAction {
     private int x;
     private int y;
 
+    //make constructor param take a battleship obj
     public PlaceShip(GamePlayer player) {
         super(player);
     }

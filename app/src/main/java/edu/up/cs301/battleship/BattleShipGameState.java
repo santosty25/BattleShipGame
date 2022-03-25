@@ -18,6 +18,9 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @version Spring 2022 - 2/22/22
  */
 public class BattleShipGameState extends GameState {
+    //add static instance variables for phases
+    public static final int SETUP_PHASE = 0;
+
     private int[] playerID; //an array of each player's ID
     private GameBoard playersBoard; //the Battleship game board
     private int playersTurn; //determines who's turn it is
@@ -40,6 +43,7 @@ public class BattleShipGameState extends GameState {
         this.playersTurn = num;
         //Log.i("BSG", "Made player turn");
         this.timer = 30;
+        this.phase = SETUP_PHASE;
         //Log.i("BSG", "Made timer");
         this.remainingShips = 6;
         this.playersFleet = new BattleshipObj[2][6];
@@ -74,6 +78,8 @@ public class BattleShipGameState extends GameState {
      * @param copy - A copy of the original BattleShipGameState
      */
     public BattleShipGameState(BattleShipGameState copy) {
+        //change so that certain information doeesn't get sent to a specific player
+        //add param for specif player
         this.playerID = new int[2];
         for(int k = 0; k < 2; k++){
             this.playerID[k] = copy.playerID[k];
@@ -265,6 +271,42 @@ public class BattleShipGameState extends GameState {
     public int getPhase() { return this.phase; }
 
     public int getRemainingShips() { return this.remainingShips;}
+
+    public void setPhase(int changePhase) {this.phase = changePhase;}
+
+    public void setPlayersTurn(int initTurn) { this.playersTurn = initTurn;}
+
+    /**
+     * checkPlayerFleet - Checks the state of each players fleet.
+     * @return - 0 if player 0's fleet still remains
+     *           1 if player 1's fleet still remains
+     *           2 if both players' fleet still remain
+     */
+    public int checkPlayerFleet() {
+        boolean allSunk0 = false;
+        boolean allSunk1 = false;
+
+        //check the state of each player's fleet
+        for(int i = 0; i < playersFleet[0].length; i++) {
+            allSunk0 = playersFleet[0][i].getSunk();
+        }
+        for(int j = 0; j < playersFleet[1].length; j++) {
+            allSunk1 = playersFleet[1][j].getSunk();
+        }
+
+        //player 1 won
+        if(allSunk0 == true && allSunk1 == false) {
+            return 1;
+        }
+        //player 0 won
+        else if(allSunk0 == false && allSunk1 == true) {
+            return 0;
+        }
+        //game is not over
+        return 2;
+    }
+
+
 
 
 
