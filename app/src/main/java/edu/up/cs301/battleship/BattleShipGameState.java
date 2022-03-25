@@ -245,6 +245,32 @@ public class BattleShipGameState extends GameState {
         return tappedCoordinate;
     }
 
+    /**
+     * middleXOfCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the grid
+     * @param selected - coordinates of a selected grid on the board
+     * @return float value of x that corresponds to the middle of that selected grid
+     */
+    public float middleXOfCoord(Coordinates selected) {
+        float squareWidth = 74;
+        float pixelX = selected.getX();
+        float middleX = ((pixelX * squareWidth) + squareWidth) - 37;
+        middleX += 713;
+        return middleX;
+    }
+
+    /**
+     * middleYOfCoord - Returns a float value of Y corresponding to the middle of a selected coordinate on the grid
+     * @param selected - coordinates of a selected grid on the board
+     * @return float value of y that corresponds to the middle of that selected grid
+     */
+    public float middleYOfCoord(Coordinates selected) {
+        float squareHeight = 74;
+        float pixelY = selected.getY();
+        float middleY = ((pixelY * squareHeight) + squareHeight) - 37;
+        middleY += 185;
+        return middleY;
+    }
+
     /** toString - Returns the number of ships remaining for the player if it is their turn or
      * returns that it is not their turn.
      */
