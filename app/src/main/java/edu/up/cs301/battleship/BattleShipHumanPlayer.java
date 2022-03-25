@@ -48,7 +48,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
@@ -74,7 +73,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 float x = motionEvent.getX();
                 float y = motionEvent.getY();
-                Log.d("In setupPhase", "Coords: " + x + ", " + y);
+                Log.d("Coords Test", "Coords: " + x + ", " + y);
+                BattleShipGameState testing = new BattleShipGameState();
+                testing.xyToCoordMidGame(x,y);
                 return false;
             }
         });
