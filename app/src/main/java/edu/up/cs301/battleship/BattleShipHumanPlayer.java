@@ -56,6 +56,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
                         Log.d("Coords Test", "Coords: " + x + ", " + y);
+                        BattleShipGameState testing = new BattleShipGameState();
+                        testing.xyToCoordMidGame(x,y);
                         return false;
                     }
                 });
@@ -67,6 +69,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 float x = motionEvent.getX();
                 float y = motionEvent.getY();
                 Log.d("Coords Test", "Coords: " + x + ", " + y);
+                BattleShipGameState testing = new BattleShipGameState();
+                testing.xyToCoordMidGame(x,y);
                 return false;
             }
         });

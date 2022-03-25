@@ -241,7 +241,7 @@ public class BattleShipGameState extends GameState {
         if (newX >= 10 || newX < 0 || newY >= 10 || newX <= 0)  {
             return null;
         }
-        Log.d("Converted Coords", "New Coords:" + newX + ", " + letterRow);
+        Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
         return tappedCoordinate;
     }
 
