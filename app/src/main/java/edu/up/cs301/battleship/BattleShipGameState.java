@@ -238,7 +238,7 @@ public class BattleShipGameState extends GameState {
 
         Coordinates tappedCoordinate = new Coordinates(false, false, newX, newY);
         char letterRow = boardRows[newY];
-        if (newX >= 10 || newX < 0 || newY >= 10 || newX <= 0)  {
+        if (newX >= 10 || newX < 0 || newY >= 10 || newY < 0)  {
             return null;
         }
         Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
