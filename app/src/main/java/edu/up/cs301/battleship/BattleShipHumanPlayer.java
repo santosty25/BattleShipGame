@@ -63,6 +63,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 });
             }
         });
+        //
         gameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
