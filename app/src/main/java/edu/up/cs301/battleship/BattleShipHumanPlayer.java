@@ -56,10 +56,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
+                        BattleShipGameState bsgs = new BattleShipGameState();
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
                         Log.d("In midGame", "Coords: " + x + ", " + y);
-                        game.sendAction(new Fire(reference));
+                        Coordinates sendFireto = bsgs.xyToCoordMidGame(x, y);
+                        game.sendAction(new Fire(reference, sendFireto));
                         return false;
                     }
                 });

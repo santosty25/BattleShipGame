@@ -17,6 +17,7 @@ public class Fire extends GameAction {
         }
     public Fire(GamePlayer player, Coordinates coord) {
         super(player);
+        Log.i("fire action", "Instance of fire action ");
         this.coord = new Coordinates(coord);
     }
     public void setX(int setX) {

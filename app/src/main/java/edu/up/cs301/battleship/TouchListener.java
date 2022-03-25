@@ -23,7 +23,7 @@ public class TouchListener implements View.OnTouchListener {
         x-=150;
         y-=110;
         drawing.addTap(new TapValues(x, y));
-        Log.i("midgame", "onDraw: AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH") ;
+        //Log.i("midgame", "onDraw: AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH") ;
         //tell the View that it needs to redraw itself
         drawing.invalidate();
         return true;

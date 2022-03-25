@@ -332,11 +332,7 @@ public class BattleShipGameState extends GameState {
         return 2;
     }
 
-
-
-
-
-
-
-
+    public BattleshipObj[][] getPlayersFleet() {
+        return playersFleet;
+    }
 }
