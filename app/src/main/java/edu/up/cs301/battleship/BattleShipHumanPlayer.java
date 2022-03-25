@@ -6,6 +6,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
@@ -19,6 +20,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     private GameMainActivity myActivity = null;
     private boolean switchPhase = false;
+    private BattleShipHumanPlayer reference = this;
 
     public BattleShipHumanPlayer(String name) {
         super(name);
@@ -46,6 +48,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
@@ -55,18 +58,21 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     public boolean onTouch(View view, MotionEvent motionEvent) {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
-                        Log.d("Coords Test", "Coords: " + x + ", " + y);
+                        Log.d("In midGame", "Coords: " + x + ", " + y);
+                        game.sendAction(new Fire(reference));
                         return false;
                     }
                 });
             }
         });
+
+        /** On Touch for setupphase*/
         gameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 float x = motionEvent.getX();
                 float y = motionEvent.getY();
-                Log.d("Coords Test", "Coords: " + x + ", " + y);
+                Log.d("In setupPhase", "Coords: " + x + ", " + y);
                 return false;
             }
         });

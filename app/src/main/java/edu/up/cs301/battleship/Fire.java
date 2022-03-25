@@ -1,5 +1,7 @@
 package edu.up.cs301.battleship;
 
+import android.util.Log;
+
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
@@ -11,6 +13,7 @@ public class Fire extends GameAction {
 
     public Fire(GamePlayer player) {
         super(player);
+        Log.i("fire action", "Fire: test");
         }
     public Fire(GamePlayer player, Coordinates coord) {
         super(player);

@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
@@ -13,8 +14,9 @@ import java.util.ArrayList;
 import edu.up.cs301.game.R;
 
 public class DrawMidgame extends SurfaceView{
-    public static final int NUM_STARTING_SPOTS = 40;
     private Paint blackPaint = new Paint();
+    private Context context;
+    private ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
 
     public DrawMidgame(Context context) {//default constructor,
         super(context);
@@ -39,9 +41,15 @@ public class DrawMidgame extends SurfaceView{
         this.blackPaint.setStyle(Paint.Style.FILL);
     }
 
+    public void addTap(TapValues tap){
+        tapValues.add(tap);
+    }
+
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
+        TouchListener listener = new TouchListener(this, this.context);
+        this.setOnTouchListener(listener);
 
         //FLOAT - like a double but half the number of bits
         //drawOval(x,y x2, y2, paint);
@@ -84,6 +92,10 @@ public class DrawMidgame extends SurfaceView{
 //        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(userSelection, 540.0f, 450.0f, new Paint());
+        for(TapValues tap : tapValues){
+            Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
+            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), new Paint());
+        }
 
     }
 
