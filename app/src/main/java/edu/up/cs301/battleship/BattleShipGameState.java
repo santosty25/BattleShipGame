@@ -247,6 +247,7 @@ public class BattleShipGameState extends GameState {
 
     /**
      * middleXOfCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the grid
+     * these are based on indicies and not actual board coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
      * @return float value of x that corresponds to the middle of that selected grid
      */
@@ -260,6 +261,7 @@ public class BattleShipGameState extends GameState {
 
     /**
      * middleYOfCoord - Returns a float value of Y corresponding to the middle of a selected coordinate on the grid
+     * these are based on indicies and not actual board coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
      * @return float value of y that corresponds to the middle of that selected grid
      */
