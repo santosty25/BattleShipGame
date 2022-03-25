@@ -13,8 +13,6 @@ import android.util.Log;
  * @author Tyler Santos
  * @version Spring 2022 - 2/22/22
  */
-
-
 public class BattleshipObj {
     private int size; //the size of this battleship
     private boolean sunk; //boolean that states whether this battleship has been sunk

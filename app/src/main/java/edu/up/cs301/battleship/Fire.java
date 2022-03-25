@@ -9,9 +9,6 @@ public class Fire extends GameAction {
     private int y;
     private Coordinates coord;
 
-    public Fire(GamePlayer player) {
-        super(player);
-        }
     public Fire(GamePlayer player, Coordinates coord) {
         super(player);
         this.coord = new Coordinates(coord);

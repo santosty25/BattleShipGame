@@ -18,6 +18,9 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @version Spring 2022 - 2/22/22
  */
 public class BattleShipGameState extends GameState {
+    //add static instance variables for phases
+    public static final int SETUP_PHASE = 0;
+
     private int[] playerID; //an array of each player's ID
     private GameBoard playersBoard; //the Battleship game board
     private int playersTurn; //determines who's turn it is
@@ -40,6 +43,7 @@ public class BattleShipGameState extends GameState {
         this.playersTurn = num;
         //Log.i("BSG", "Made player turn");
         this.timer = 30;
+        this.phase = SETUP_PHASE;
         //Log.i("BSG", "Made timer");
         this.remainingShips = 6;
         this.playersFleet = new BattleshipObj[2][6];
@@ -74,6 +78,8 @@ public class BattleShipGameState extends GameState {
      * @param copy - A copy of the original BattleShipGameState
      */
     public BattleShipGameState(BattleShipGameState copy) {
+        //change so that certain information doeesn't get sent to a specific player
+        //add param for specif player
         this.playerID = new int[2];
         for(int k = 0; k < 2; k++){
             this.playerID[k] = copy.playerID[k];
