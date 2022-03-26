@@ -30,9 +30,9 @@ public class BattleShipDumbAI extends GameComputerPlayer {
 
 
         Random r = new Random();
-        int row = r.nextInt(10) + 1;
-        int col = r.nextInt(10) + 1;
-        int dir = r.nextInt(2) + 1;
+        int row;
+        int col;
+        int dir;
         // 2 x 3 length battleships
         // 2 x 4 length battleships
         // 1 x 2 length battleships
