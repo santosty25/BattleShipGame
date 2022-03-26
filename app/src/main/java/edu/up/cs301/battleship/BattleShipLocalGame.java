@@ -97,7 +97,7 @@ public class BattleShipLocalGame extends LocalGame {
 
         if(action instanceof Fire) {
             Log.i("fire action", "Instance of fire action ");
-            if(phase != 1) {
+            if(phase == 1) {
                 Log.i("test", " wrong phase" + phase);
                 //checks if the phase is in battle phase
                 return false;
