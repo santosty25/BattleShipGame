@@ -39,7 +39,10 @@ public class BattleShipGameState extends GameState {
     public BattleShipGameState(){
         this.playerID = new int[]{0,1};
         //Log.i("BSG", "Made playerID");
-        this.playersBoard = new GameBoard[]{};
+        this.playersBoard = new GameBoard[2];
+        this.playersBoard[0] = new GameBoard();
+        this.playersBoard[1] = new GameBoard();
+
         //Log.i("BSG", "Made gameBoard");
         int num = (int) Math.random() * 1;
         this.playersTurn = num;
@@ -49,7 +52,19 @@ public class BattleShipGameState extends GameState {
         //Log.i("BSG", "Made timer");
         this.remainingShips = 6;
         this.playersFleet = new BattleshipObj[2][6];
-        //Log.i("BSG", "fleet");
+
+        /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
+        Coordinates[] locations = new Coordinates[1];
+        locations[0] = new Coordinates(true, true, 0, 0);
+        BattleshipObj testShip = new BattleshipObj(1, locations);
+        int i, j;
+        for(i = 0; i < playersFleet.length; i++){
+            for(j = 0; j < playersFleet[i].length; j++){
+                playersFleet[i][j] = new BattleshipObj(testShip);
+            }
+        }
+
+        Log.i("BSGS", "Initial setup");
     }
 
     /**
@@ -83,9 +98,11 @@ public class BattleShipGameState extends GameState {
         //change so that certain information doeesn't get sent to a specific player
         //add param for specif player
         this.playerID = new int[2];
+
         for(int k = 0; k < 2; k++){
             this.playerID[k] = copy.playerID[k];
         }
+        this.playersBoard = new GameBoard[2];
         for(int l = 0; l < 2; l++) {
             this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
         }
@@ -97,10 +114,10 @@ public class BattleShipGameState extends GameState {
 
         int i;
         int j;
-        Log.i("Test", "before Players fleet for loop");
+        //Log.i("Test", "before Players fleet for loop");
         for (i = 0;  i < playerID.length; i++) {
             for (j = 0;j < 6; j++) {
-                Log.i("Test", i + " " + j);
+                //Log.i("Test", i + " " + j);
                 if(copy.playersFleet[i][j] == null){
                     Log.i("IS NULL", "NULL");
                 }
@@ -109,7 +126,7 @@ public class BattleShipGameState extends GameState {
                 }
             }
         }
-        Log.i("Test", "after Players fleet for loop");
+        //Log.i("Test", "after Players fleet for loop");
 
     }
 
@@ -320,7 +337,6 @@ public class BattleShipGameState extends GameState {
         this.phase = changePhase;}
 
     public void setPlayersTurn(int initTurn) {
-        Log.i("Players turn UPDATED ", "setPlayersTurn: " + initTurn);
         this.playersTurn = initTurn;
     }
 

@@ -47,9 +47,9 @@ public class BattleshipObj {
         //Log.i("in BSOBJ", "BattleshipObj: ");
         this.location = new Coordinates[orig.location.length];
         for(i = 0; i < orig.location.length; i++){
-            //Log.i("in BSOBJ", "BattleshipObj: " + i);
             this.location[i] = new Coordinates(orig.location[i]);
         }
+        //Log.i("in BSOBJ", "BattleshipObj: size " + orig.size);
     }
 
     /**

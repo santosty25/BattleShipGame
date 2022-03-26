@@ -23,6 +23,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private BattleShipHumanPlayer reference = this;
     private BattleShipGameState currGS;
 
+
     public BattleShipHumanPlayer(String name) {
         super(name);
     }
@@ -68,6 +69,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         Log.d("In midGame", "Coords: " + x + ", " + y);
                         Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
                         if(sendFireto != null){
+                            Log.i("Touch", "onTouch: sending fire ");
                             game.sendAction(new Fire(reference, sendFireto));
                         }
                         return false;
@@ -83,8 +85,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 float x = motionEvent.getX();
                 float y = motionEvent.getY();
                 Log.d("Coords Test", "Coords: " + x + ", " + y);
-                BattleShipGameState testing = new BattleShipGameState();
-                testing.xyToCoordMidGame(x,y);
+                currGS.xyToCoordMidGame(x,y);
                 return false;
             }
         });

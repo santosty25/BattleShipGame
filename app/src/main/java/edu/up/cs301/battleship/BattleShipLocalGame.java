@@ -117,22 +117,27 @@ public class BattleShipLocalGame extends LocalGame {
                     Log.i("Firing", " ");
                     if (whoseTurn == 0) {
                         for(i = 0; i < shipsOnBoard[1].length; i++){
+                            Log.i("length", "ships " + shipsOnBoard[1].length);
                             for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){
-                                if(shipsOnBoard[1][i].getLocation()[j] == coord){
+                                if(shipsOnBoard[1][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[1][i].getLocation()[j].getY() == coord.getY()){
                                     //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
-                                    Log.i("SUCCESSFUL SHOT", "makeMove: ");
+                                    Log.i("SUCCESSFUL SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                                     return true;
                                 }
                             }
                         }
                         //DRAW WHITE
+                        Log.i("MISSED SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                         state.setPlayersTurn(1);
+                        Log.i("Players turn UPDATED ", "setPlayersTurn: " + state.getPlayersTurn());
+                        return true;
 
 
                     } else { //PLAYER 1's turn
                         for(i = 0; i < shipsOnBoard[0].length; i++){
+                            Log.i("length", "ships " + shipsOnBoard[0].length);
                             for(j = 0; j < shipsOnBoard[0][i].getLocation().length; j++){
-                                if(shipsOnBoard[0][i].getLocation()[j] == coord){
+                                if(shipsOnBoard[0][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[0][i].getLocation()[j].getY() == coord.getY()){
                                     //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
                                     Log.i("SUCCESSFUL SHOT", "makeMove: ");
                                     return true;
@@ -141,7 +146,9 @@ public class BattleShipLocalGame extends LocalGame {
                         }
 
                         //DRAW WHITE
+                        Log.i("MISSED SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                         state.setPlayersTurn(0);
+                        Log.i("Players turn UPDATED ", "setPlayersTurn: " + state.getPlayersTurn());
                     }
                     return true;
                 }
