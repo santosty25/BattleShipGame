@@ -24,7 +24,7 @@ public class BattleShipGameState extends GameState {
     public static final int END_PHASE = 2;
 
     private int[] playerID; //an array of each player's ID
-    private GameBoard[] playersBoard; //the Battleship game board
+    private GameBoard[] playersBoard; //the Battleship game board for each player
     private int playersTurn; //determines who's turn it is
     private int timer; //a set timer for how long each turn should take
     // 0 = setup | 1 = game phase | 2 = end phase
