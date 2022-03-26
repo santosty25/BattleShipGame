@@ -18,7 +18,6 @@ import edu.up.cs301.tictactoe.infoMessage.TTTState;
  * @version 3/22/22
  */
 public class BattleShipLocalGame extends LocalGame {
-
     /**
      * BattleShipLocalGame - Constructor for the BattleShipLocalGame.
      */
@@ -94,11 +93,12 @@ public class BattleShipLocalGame extends LocalGame {
         GameBoard board = state.getBoard(); //the board
         int remainingShips = state.getRemainingShips(); //the number of remaining ships
         int whoseTurn = state.getPlayersTurn(); //whose turn it is
+        Log.i("Players turn ", "makeMove: " + whoseTurn);
 
         if(action instanceof Fire) {
             Log.i("fire action", "Instance of fire action ");
             if(phase != 1) {
-                Log.i("test", " wrong phase");
+                Log.i("test", " wrong phase" + phase);
                 //checks if the phase is in battle phase
                 return false;
             }
@@ -109,8 +109,9 @@ public class BattleShipLocalGame extends LocalGame {
                     state.getBoard().setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
                     int i, j;
                     BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
+                    Log.i("Players turn ", "makeMove: " + whoseTurn);
+                    Log.i("Firing", " ");
                     if (whoseTurn == 0) {
-                        Log.i("Firing", " ");
                         for(i = 0; i < shipsOnBoard[1].length; i++){
                             for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){
                                 if(shipsOnBoard[1][i].getLocation()[j] == coord){
@@ -122,9 +123,9 @@ public class BattleShipLocalGame extends LocalGame {
                         }
                         //DRAW WHITE
                         state.setPlayersTurn(1);
-                        return true;
+
+
                     } else { //PLAYER 1's turn
-                        Log.i("Firing", " ");
                         for(i = 0; i < shipsOnBoard[0].length; i++){
                             for(j = 0; j < shipsOnBoard[0][i].getLocation().length; j++){
                                 if(shipsOnBoard[0][i].getLocation()[j] == coord){
@@ -137,8 +138,8 @@ public class BattleShipLocalGame extends LocalGame {
 
                         //DRAW WHITE
                         state.setPlayersTurn(0);
-                        return true;
                     }
+                    return true;
                 }
                 else{
                     //flash

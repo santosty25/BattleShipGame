@@ -39,6 +39,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             flash(0xFFFF0000, 100);
             return;
         }
+        this.reference = this;
         currGS = new BattleShipGameState((BattleShipGameState) info);
     }
 
@@ -57,6 +58,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
+                currGS.setPhase(1);
 
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
