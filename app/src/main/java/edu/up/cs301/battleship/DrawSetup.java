@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.text.method.Touch;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
@@ -18,7 +19,8 @@ public class DrawSetup extends SurfaceView {
     private Paint blackPaint = new Paint();
     private ArrayList<BattleshipObj> battleshipArrayList= new ArrayList<>();
     private Paint orangePaint = new Paint();
-
+    private Context context;
+//
     public DrawSetup(Context context) {//default constructor,
         super(context);
         initPaints();
@@ -42,6 +44,7 @@ public class DrawSetup extends SurfaceView {
         this.blackPaint.setStyle(Paint.Style.FILL);
         this.orangePaint.setColor(0xFFFF6700);
         this.orangePaint.setStyle(Paint.Style.FILL);
+
 
     }
 
@@ -100,7 +103,7 @@ public class DrawSetup extends SurfaceView {
          *Draws static elements onto screen
          */
         canvas.drawBitmap(background, 0.0f, 0.0f, new Paint());
-        canvas.drawBitmap(grid, 400, 50.0f, new Paint());
+        canvas.drawBitmap(grid, 550.0f, 25.0f, new Paint());
 
         canvas.drawRect(1650.0f, 50.0f, 1900, 1050, orangePaint);
 

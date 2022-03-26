@@ -1,5 +1,7 @@
 package edu.up.cs301.battleship;
 
+import android.util.Log;
+
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
@@ -94,6 +96,7 @@ public class BattleShipLocalGame extends LocalGame {
         int whoseTurn = state.getPlayersTurn(); //whose turn it is
 
         if(action instanceof Fire) {
+            Log.i("fire action", "Instance of fire action ");
             if(phase != 1) {
                 //checks if the phase is in battle phase
                 return false;
@@ -101,12 +104,41 @@ public class BattleShipLocalGame extends LocalGame {
             else {
                 //get the coordinate given by the player and calls the fire method in gamestate
                 Coordinates coord = ((Fire) action).getCoord();
-                state.canFire(coord);
-                if(whoseTurn == 0) {
-                    state.setPlayersTurn(1);
+                if (state.canFire(coord)) { //If the coord has NOT already been hit
+                    state.getBoard().setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
+                    int i, j;
+                    BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
+                    if (whoseTurn == 0) {
+                        for(i = 0; i < shipsOnBoard[1].length; i++){
+                            for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){
+                                if(shipsOnBoard[1][i].getLocation()[j] == coord){
+                                    //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                                    return true;
+                                }
+                            }
+                        }
+                        //DRAW WHITE
+
+
+                        state.setPlayersTurn(1);
+                        return true;
+                    } else { //PLAYER 1's turn
+                        for(i = 0; i < shipsOnBoard[0].length; i++){
+                            for(j = 0; j < shipsOnBoard[0][i].getLocation().length; j++){
+                                if(shipsOnBoard[0][i].getLocation()[j] == coord){
+                                    //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                                    return true;
+                                }
+                            }
+                        }
+
+                        //DRAW WHITE
+                        state.setPlayersTurn(0);
+                        return true;
+                    }
                 }
-                else {
-                    state.setPlayersTurn(0);
+                else{
+                    //flash
                 }
             }
         }

@@ -237,16 +237,17 @@ public class BattleShipGameState extends GameState {
         int newY = (int)((touchY - boardStartY) / cellWidth);
 
         Coordinates tappedCoordinate = new Coordinates(false, false, newX, newY);
-        char letterRow = boardRows[newY];
-        if (newX >= 10 || newX < 0 || newY >= 10 || newX <= 0)  {
+        if (newX >= 10 || newX < 0 || newY >= 10 || newY < 0)  {
             return null;
         }
-        Log.d("Converted Coords", "New Coords:" + newX + ", " + letterRow);
+        char letterRow = boardRows[newY];
+        Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
         return tappedCoordinate;
     }
 
     /**
      * middleXOfCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the grid
+     * these are based on indicies and not actual board coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
      * @return float value of x that corresponds to the middle of that selected grid
      */
@@ -260,6 +261,7 @@ public class BattleShipGameState extends GameState {
 
     /**
      * middleYOfCoord - Returns a float value of Y corresponding to the middle of a selected coordinate on the grid
+     * these are based on indicies and not actual board coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
      * @return float value of y that corresponds to the middle of that selected grid
      */
@@ -332,11 +334,7 @@ public class BattleShipGameState extends GameState {
         return 2;
     }
 
-
-
-
-
-
-
-
+    public BattleshipObj[][] getPlayersFleet() {
+        return playersFleet;
+    }
 }
