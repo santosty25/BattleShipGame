@@ -5,7 +5,6 @@ import android.util.Log;
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
-import edu.up.cs301.tictactoe.infoMessage.TTTState;
 
 /**
  * BattleShipLocalGame - A local game glass for a game of Battleship. This class handles
@@ -90,9 +89,14 @@ public class BattleShipLocalGame extends LocalGame {
         BattleShipGameState state = (BattleShipGameState) super.state; //the gameState
         int phase = state.getPhase(); //the phase
         int player = state.getPlayerID(); //the playerID
-        GameBoard board = state.getBoard(); //the board
-        int remainingShips = state.getRemainingShips(); //the number of remaining ships
         int whoseTurn = state.getPlayersTurn(); //whose turn it is
+        int enemy = 0;
+        //checks whose turn it is and to set the enemy's board
+        if (whoseTurn == 0) {
+            enemy = 1;
+        }
+        GameBoard board = state.getBoard(enemy); //the enemy's board
+        int remainingShips = state.getRemainingShips(); //the number of remaining ships
         Log.i("Players turn ", "makeMove: " + whoseTurn);
 
         if(action instanceof Fire) {
@@ -106,7 +110,7 @@ public class BattleShipLocalGame extends LocalGame {
                 //get the coordinate given by the player and calls the fire method in gamestate
                 Coordinates coord = ((Fire) action).getCoord();
                 if (state.canFire(coord)) { //If the coord has NOT already been hit
-                    state.getBoard().setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
+                    state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
                     int i, j;
                     BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
                     Log.i("Players turn ", "makeMove: " + whoseTurn);

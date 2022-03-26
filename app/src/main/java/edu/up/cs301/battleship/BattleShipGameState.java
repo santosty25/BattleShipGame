@@ -24,7 +24,7 @@ public class BattleShipGameState extends GameState {
     public static final int END_PHASE = 2;
 
     private int[] playerID; //an array of each player's ID
-    private GameBoard playersBoard; //the Battleship game board
+    private GameBoard[] playersBoard; //the Battleship game board
     private int playersTurn; //determines who's turn it is
     private int timer; //a set timer for how long each turn should take
     // 0 = setup | 1 = game phase | 2 = end phase
@@ -39,7 +39,7 @@ public class BattleShipGameState extends GameState {
     public BattleShipGameState(){
         this.playerID = new int[]{0,1};
         //Log.i("BSG", "Made playerID");
-        this.playersBoard = new GameBoard();
+        this.playersBoard = new GameBoard[]{};
         //Log.i("BSG", "Made gameBoard");
         int num = (int) Math.random() * 1;
         this.playersTurn = num;
@@ -63,7 +63,7 @@ public class BattleShipGameState extends GameState {
      * @param remainingShips - a player's remaining ships
      * @param playersFleet - a player's fleet of ships
      */
-    public BattleShipGameState(int[] playerID, GameBoard playersBoard, int playersTurn, int timer,
+    public BattleShipGameState(int[] playerID, GameBoard[] playersBoard, int playersTurn, int timer,
                                int phase, int remainingShips, BattleshipObj[][] playersFleet) {
         this.playerID = playerID;
         this.playersBoard = playersBoard;
@@ -86,7 +86,9 @@ public class BattleShipGameState extends GameState {
         for(int k = 0; k < 2; k++){
             this.playerID[k] = copy.playerID[k];
         }
-        this.playersBoard = new GameBoard(copy.playersBoard);
+        for(int l = 0; l < 2; l++) {
+            this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
+        }
         this.playersTurn = copy.playersTurn;
         this.timer = copy.timer;
         this.phase = copy.phase;
@@ -121,16 +123,27 @@ public class BattleShipGameState extends GameState {
     public boolean canFire(Coordinates coord) {
         int row = coord.getX();
         int col = coord.getY();
-
-        boolean isHit = this.playersBoard.getCoordHit(row, col);
-        if (isHit == true) {
-            return false;
+        if(playersTurn == 0) {
+            boolean isHit = this.playersBoard[1].getCoordHit(row, col);
+            if (isHit == true) {
+                return false;
+            } else {
+                this.playersBoard[1].setCoordHit(row, col, true);
+                //this.printFire(row, col, true);
+                return true;
+            }
         }
-        else {
-            this.playersBoard.setCoordHit(row, col, true);
-            //this.printFire(row, col, true);
-            return true;
+        else if (playersTurn == 1){
+            boolean isHit = this.playersBoard[0].getCoordHit(row, col);
+            if (isHit == true) {
+                return false;
+            } else {
+                this.playersBoard[0].setCoordHit(row, col, true);
+                //this.printFire(row, col, true);
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -286,8 +299,8 @@ public class BattleShipGameState extends GameState {
         return "It is not " + playerID[this.playersTurn] + "'s turn.";
     }
 
-    public GameBoard getBoard() {
-        return this.playersBoard;
+    public GameBoard getBoard(int playerNum) {
+        return this.playersBoard[playerNum];
     }
 
     public int getPlayersTurn(){
