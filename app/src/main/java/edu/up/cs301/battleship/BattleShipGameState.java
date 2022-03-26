@@ -237,10 +237,10 @@ public class BattleShipGameState extends GameState {
         int newY = (int)((touchY - boardStartY) / cellWidth);
 
         Coordinates tappedCoordinate = new Coordinates(false, false, newX, newY);
-        char letterRow = boardRows[newY];
         if (newX >= 10 || newX < 0 || newY >= 10 || newY < 0)  {
             return null;
         }
+        char letterRow = boardRows[newY];
         Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
         return tappedCoordinate;
     }
