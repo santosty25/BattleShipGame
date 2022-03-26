@@ -21,6 +21,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private GameMainActivity myActivity = null;
     private boolean switchPhase = false;
     private BattleShipHumanPlayer reference = this;
+    private BattleShipGameState currGS;
 
     public BattleShipHumanPlayer(String name) {
         super(name);
@@ -33,7 +34,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     @Override
     public void receiveInfo(GameInfo info) {
-
+        if(!(info instanceof BattleShipGameState)){
+            Log.i("FLASHING", "");
+            flash(0xFFFF0000, 100);
+            return;
+        }
+        currGS = new BattleShipGameState((BattleShipGameState) info);
     }
 
     @Override
@@ -55,11 +61,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
-                        BattleShipGameState bsgs = new BattleShipGameState();
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
                         Log.d("In midGame", "Coords: " + x + ", " + y);
-                        Coordinates sendFireto = bsgs.xyToCoordMidGame(x, y);
+                        Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
                         if(sendFireto != null){
                             game.sendAction(new Fire(reference, sendFireto));
                         }

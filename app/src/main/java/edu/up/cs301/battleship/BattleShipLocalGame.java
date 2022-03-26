@@ -98,6 +98,7 @@ public class BattleShipLocalGame extends LocalGame {
         if(action instanceof Fire) {
             Log.i("fire action", "Instance of fire action ");
             if(phase != 1) {
+                Log.i("test", " wrong phase");
                 //checks if the phase is in battle phase
                 return false;
             }
@@ -109,10 +110,12 @@ public class BattleShipLocalGame extends LocalGame {
                     int i, j;
                     BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
                     if (whoseTurn == 0) {
+                        Log.i("Firing", " ");
                         for(i = 0; i < shipsOnBoard[1].length; i++){
                             for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){
                                 if(shipsOnBoard[1][i].getLocation()[j] == coord){
                                     //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                                    Log.i("SUCCESSFUL SHOT", "makeMove: ");
                                     return true;
                                 }
                             }
@@ -121,10 +124,12 @@ public class BattleShipLocalGame extends LocalGame {
                         state.setPlayersTurn(1);
                         return true;
                     } else { //PLAYER 1's turn
+                        Log.i("Firing", " ");
                         for(i = 0; i < shipsOnBoard[0].length; i++){
                             for(j = 0; j < shipsOnBoard[0][i].getLocation().length; j++){
                                 if(shipsOnBoard[0][i].getLocation()[j] == coord){
                                     //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                                    Log.i("SUCCESSFUL SHOT", "makeMove: ");
                                     return true;
                                 }
                             }
