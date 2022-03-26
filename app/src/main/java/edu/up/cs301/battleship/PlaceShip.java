@@ -7,10 +7,12 @@ public class PlaceShip extends GameAction {
 
     private int x;
     private int y;
+    private BattleshipObj battleship;
 
     //make constructor param take a battleship obj
-    public PlaceShip(GamePlayer player) {
+    public PlaceShip(GamePlayer player, BattleshipObj ship) {
         super(player);
+        this.battleship = ship;
     }
 
     public void setX(int setX) {
@@ -27,6 +29,11 @@ public class PlaceShip extends GameAction {
 
     public int getY() {
         return this.y;
+    }
+
+    public Coordinates[] getCoord() {
+        Coordinates[] coords = this.battleship.getLocation();
+        return coords;
     }
 
 }
