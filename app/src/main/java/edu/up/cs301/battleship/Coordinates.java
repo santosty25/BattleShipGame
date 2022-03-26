@@ -1,5 +1,7 @@
 package edu.up.cs301.battleship;
 
+import android.util.Log;
+
 /**
  * coordinates - A representation of the coordinates on a Battleship board.
  *
@@ -41,6 +43,7 @@ public class Coordinates {
      * @param orig
      */
     public Coordinates(Coordinates orig){
+        Log.i("Copying ", "Hit: " + orig.hit + " x " + orig.x + " y " + orig.y);
         this.hit = orig.hit;
         this.hasShip = orig.hasShip;
         this.x = orig.x;

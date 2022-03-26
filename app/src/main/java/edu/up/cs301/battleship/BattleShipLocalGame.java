@@ -118,8 +118,6 @@ public class BattleShipLocalGame extends LocalGame {
                             }
                         }
                         //DRAW WHITE
-
-
                         state.setPlayersTurn(1);
                         return true;
                     } else { //PLAYER 1's turn
