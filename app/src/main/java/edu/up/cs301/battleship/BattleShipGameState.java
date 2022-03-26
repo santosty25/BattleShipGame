@@ -20,6 +20,8 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 public class BattleShipGameState extends GameState {
     //add static instance variables for phases
     public static final int SETUP_PHASE = 0;
+    public static final int BATTLE_PHASE = 1;
+    public static final int END_PHASE = 2;
 
     private int[] playerID; //an array of each player's ID
     private GameBoard playersBoard; //the Battleship game board
