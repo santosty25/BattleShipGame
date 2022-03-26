@@ -14,16 +14,19 @@ public class BattleShipDumbAI extends GameComputerPlayer {
     }
     @Override
     protected void receiveInfo(GameInfo info) {
-        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState)info);
-        Coordinates coord1 = new Coordinates(false, true, 0, 0);
-        Coordinates coord2 = new Coordinates(false, true, 0, 1);
-        Coordinates coord3 = new Coordinates(false, true, 0,2);
-        Coordinates[] position = new Coordinates[3];
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        BattleshipObj topLeft = new BattleshipObj(3, position);
-        game.sendAction(new PlaceShip(this, topLeft));
+        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
+
+        if (playerNum == gameState.getPlayersTurn()) {
+            Coordinates coord1 = new Coordinates(false, true, 0, 0);
+            Coordinates coord2 = new Coordinates(false, true, 0, 1);
+            Coordinates coord3 = new Coordinates(false, true, 0, 2);
+            Coordinates[] position = new Coordinates[3];
+            position[0] = coord1;
+            position[1] = coord2;
+            position[2] = coord3;
+            BattleshipObj topLeft = new BattleshipObj(3, position);
+            game.sendAction(new PlaceShip(this, topLeft));
+        }
 
 
         Random r = new Random();
