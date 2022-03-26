@@ -60,7 +60,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         float y = motionEvent.getY();
                         Log.d("In midGame", "Coords: " + x + ", " + y);
                         Coordinates sendFireto = bsgs.xyToCoordMidGame(x, y);
-                        game.sendAction(new Fire(reference, sendFireto));
+                        if(sendFireto != null){
+                            game.sendAction(new Fire(reference, sendFireto));
+                        }
                         return false;
                     }
                 });
