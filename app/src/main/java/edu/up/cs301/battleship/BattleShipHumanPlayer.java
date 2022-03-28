@@ -60,6 +60,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
                 currGS.setPhase(1);
+                Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
@@ -82,15 +83,59 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         gameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                float x = motionEvent.getX();
-                float y = motionEvent.getY();
-                Log.d("Coords Test", "Coords: " + x + ", " + y);
-                currGS.xyToCoordMidGame(x,y);
+                if (motionEvent.getAction() == motionEvent.ACTION_DOWN) {
+                    float x = motionEvent.getX();
+                    float y = motionEvent.getY();
+
+                    BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
+                    //Conditionals for selected ship
+                    if (x >= 1684 && x <= 1741 && y >= 70 && y <= 328) { // top left 4hp
+                        Log.i("Ship touched", "Top left selected");
+                        selectedBattleShip = new BattleshipObj(4, null);
+                    } else if (x >= 1814 && x <= 1888 && y >= 108 && y <= 399) { // top right 5hp
+                        Log.i("Ship touched", "Top right selected");
+                        selectedBattleShip = new BattleshipObj(5, null);
+                    } else if (x >= 1677 && x <= 1747 && y >= 393 && y <= 665) { // middle left 4 hp
+                        Log.i("Ship touched", "middle left selected");
+                        selectedBattleShip = new BattleshipObj(4, null);
+                    } else if (x >= 1828 && x <= 1874 && y >= 460 && y <= 628) { // middle right 3 hp
+                        Log.i("Ship touched", "middle right selected");
+                        selectedBattleShip = new BattleshipObj(3, null);
+                    } else if (x >= 1680 && x <= 1725 && y >= 807 && y <= 937) { // bottom left 2hp
+                        Log.i("Ship touched", "bottom left selected");
+                        selectedBattleShip = new BattleshipObj(2, null);
+                    } else if (x >= 1830 && x <= 1874 && y >= 747 && y <= 940) { // bottom right 3 hp
+                        Log.i("Ship touched", "bottom right selected");
+                        selectedBattleShip = new BattleshipObj(3, null);
+                    } else { //no ship
+                        Log.i("Ship touched", "no ship selected");
+                    }
+                }
+                if(motionEvent.getAction() == motionEvent.ACTION_UP) {
+                    float xUp = motionEvent.getX();
+                    float yUp = motionEvent.getY();
+                    Log.i("placed ship", "at" + xUp + ", " + yUp);
+                }
+
+//                Coordinates placedTap = currGS.xyToCoordMidGame(x, y);
+//
+//                if (placedTap != null) {
+//                    Log.i("Touch", "onTouch: placing ship ");
+//                    Coordinates placedArray[] = null;
+//                    int currentY = placedTap.getY();
+//                    for (int i = 0; i < selectedBattleShip.getSize(); i++) {
+//                        placedArray[i] = new Coordinates(false, true, placedTap.getX(), currentY + 1);
+//                        currentY +=1;
+//                    }
+//                    if (placedArray != null) {
+//                        selectedBattleShip.setLocation(placedArray);
+//                        game.sendAction(new PlaceShip(reference, selectedBattleShip));
+//                    }
+//                }
+                //currGS.xyToCoordMidGame(x,y);
                 return false;
             }
         });
-
-
-
     }
 }
+
