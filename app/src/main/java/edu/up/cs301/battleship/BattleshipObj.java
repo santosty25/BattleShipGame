@@ -33,7 +33,6 @@ public class BattleshipObj {
         int i;
         if (location != null) {
             for (i = 0; i < location.length; i++) {
-                ;
                 this.location[i] = new Coordinates(location[i]);
             }
         }
