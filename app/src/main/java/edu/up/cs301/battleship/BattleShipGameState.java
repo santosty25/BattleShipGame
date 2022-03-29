@@ -103,7 +103,6 @@ public class BattleShipGameState extends GameState {
         this.playerID = new int[2];
 
         for(int k = 0; k < 2; k++){
-            Log.i("k", "BattleShipGameState: " + copy.playerID[k]);
             this.playerID[k] = copy.playerID[k];
         }
         this.playersBoard = new GameBoard[2];

@@ -69,8 +69,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
                         Log.d("In midGame", "Coords: " + x + ", " + y);
-                        Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
+                        Log.i("Players Turn", "" + currGS.getPlayersTurn());
                         if (currGS.getPlayersTurn() == playerNum) {
+                            Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
                             if (sendFireto != null) {
                                 Log.i("Touch", "onTouch: sending fire ");
                                 game.sendAction(new Fire(reference, sendFireto));

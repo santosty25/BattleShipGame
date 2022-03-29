@@ -21,33 +21,19 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         }
 
         BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
-
-//        if (playerNum == gameState.getPlayersTurn()) {
-//            Coordinates coord1 = new Coordinates(false, true, 0, 0);
-//            Coordinates coord2 = new Coordinates(false, true, 0, 1);
-//            Coordinates coord3 = new Coordinates(false, true, 0, 2);
-//            Coordinates[] position = new Coordinates[3];
-//            position[0] = coord1;
-//            position[1] = coord2;
-//            position[2] = coord3;
-//            BattleshipObj topLeft = new BattleshipObj(3, position);
-//            game.sendAction(new PlaceShip(this, topLeft));
-//        }
         Log.i("COMPUTER PLAYERS TURN", "");
+
         if (gameState.getPlayersTurn() == playerNum) {
             Log.i("COMPUTER PLAYERS TURN", "");
             Random r = new Random();
             int row;
             int col;
-            int dir;
-            if (gameState.getPhase() == 1) {
                 sleep(5);
                 row = r.nextInt(10) + 1;
                 col = r.nextInt(10) + 1;
                 Coordinates fire = new Coordinates(false, false, row, col);
                 Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
                 game.sendAction(new Fire(this, fire));
-            }
         }
 
 //        // 2 x 3 length battleships
@@ -81,6 +67,17 @@ public class BattleShipDumbAI extends GameComputerPlayer {
 //                }
 //            }
             // Fire at coordinate
+        //        if (playerNum == gameState.getPlayersTurn()) {
+//            Coordinates coord1 = new Coordinates(false, true, 0, 0);
+//            Coordinates coord2 = new Coordinates(false, true, 0, 1);
+//            Coordinates coord3 = new Coordinates(false, true, 0, 2);
+//            Coordinates[] position = new Coordinates[3];
+//            position[0] = coord1;
+//            position[1] = coord2;
+//            position[2] = coord3;
+//            BattleshipObj topLeft = new BattleshipObj(3, position);
+//            game.sendAction(new PlaceShip(this, topLeft));
+//        }
         }
     }
 //}
