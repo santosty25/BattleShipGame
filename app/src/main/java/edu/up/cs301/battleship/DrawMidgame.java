@@ -46,7 +46,7 @@ public class DrawMidgame extends SurfaceView{
     }
 
     public void setState(BattleShipGameState state) {
-        this.state = new BattleShipGameState(state);
+        this.state = new BattleShipGameState(state, state.getPlayersTurn());
     }
 
 

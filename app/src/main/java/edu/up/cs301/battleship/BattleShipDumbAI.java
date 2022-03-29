@@ -20,7 +20,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             return;
         }
 
-        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
+        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info, playerNum);
         Log.i("COMPUTER PLAYERS TURN", "");
 
         if (gameState.getPlayersTurn() == playerNum) {

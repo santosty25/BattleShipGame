@@ -46,7 +46,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             return;
         }
         this.reference = this;
-        currGS = new BattleShipGameState((BattleShipGameState) info);
+        currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
         if(midGameView != null) {
             midGameView.setState(currGS);
         }
