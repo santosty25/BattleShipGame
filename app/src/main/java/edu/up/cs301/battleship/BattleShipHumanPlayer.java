@@ -132,12 +132,14 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             Log.i("Selected ship is", "selected ship is size " + selectedBattleShip.getSize());
                         }
 //                        Log.d("placed ship", "at " + xUp + ", " + yUp);
-//                        Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
-//                        for (int i = 0; i < selectedBattleShip.getSize(); i++) {
-//                            eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
-//                            xUp += 74;
-//                            yUp += 74;
-//                        }
+                        Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
+
+                        for (int i = 0; i < selectedBattleShip.getSize(); i++) {
+                            eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
+                            xUp += 74;
+                            yUp += 74;
+                        }
+
 //                        if (eachShipCoord != null) {
 //                            selectedBattleShip.setLocation(eachShipCoord);
 //                            char letters[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
