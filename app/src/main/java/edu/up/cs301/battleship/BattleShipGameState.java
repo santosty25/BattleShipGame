@@ -281,6 +281,31 @@ public class BattleShipGameState extends GameState {
     }
 
     /**
+     * xyToCoordSetupGame - Returns a coordinate object based on where the player taps on the setup board and creates a coordianate
+     * with a has ship boolean
+     * @param touchX - float x coordinate of user tap
+     * @param touchY - float y coordinate of user tap
+     * @return coordinate object based on board
+     */
+    public Coordinates xyToCoordSetupGame(float touchX, float touchY) {
+        //Top left corner of board/grid
+        float boardStartX = 713;
+        float boardStartY = 185;
+        float cellWidth = 74;
+        char boardRows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+        int newX = (int)((touchX - boardStartX) / cellWidth);
+        int newY = (int)((touchY - boardStartY) / cellWidth);
+
+        Coordinates tappedCoordinate = new Coordinates(false, true, newX, newY);
+        if (newX >= 10 || newX < 0 || newY >= 10 || newY < 0)  {
+            return null;
+        }
+        char letterRow = boardRows[newY];
+        Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
+        return tappedCoordinate;
+    }
+
+    /**
      * middleXOfCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the grid
      * these are based on indicies and not actual board coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
