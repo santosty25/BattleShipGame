@@ -22,10 +22,11 @@ public class BattleshipObj {
     /**
      * BattleshipObj - Basic constructor that initializes the instance variables with
      * arguments.
-     * @param size - the size of the ship
+     *
+     * @param size     - the size of the ship
      * @param location - the location of the ship on the board
      */
-    public BattleshipObj(int size, Coordinates[] location){
+    public BattleshipObj(int size, Coordinates[] location) {
         this.size = size;
         this.sunk = false;
         this.location = new Coordinates[this.size];
@@ -40,15 +41,16 @@ public class BattleshipObj {
 
     /**
      * BattleshipObj - A copy constructor of a BattleshipObj
+     *
      * @param orig
      */
-    public BattleshipObj(BattleshipObj orig){
+    public BattleshipObj(BattleshipObj orig) {
         this.size = orig.size;
         this.sunk = orig.sunk;
         int i;
         //Log.i("in BSOBJ", "BattleshipObj: ");
         this.location = new Coordinates[orig.location.length];
-        for(i = 0; i < orig.location.length; i++){
+        for (i = 0; i < orig.location.length; i++) {
             this.location[i] = new Coordinates(orig.location[i]);
         }
         //Log.i("in BSOBJ", "BattleshipObj: size " + orig.size);
@@ -56,13 +58,14 @@ public class BattleshipObj {
 
     /**
      * checkIfSunk - Checks if this battleship has been sunk
+     *
      * @param ship - a given battleship
      * @return true or false depending on whether a battleship has been hit
      */
-    public boolean checkIfSunk(BattleshipObj ship){
+    public boolean checkIfSunk(BattleshipObj ship) {
         int i;
-        for(i = 0; i < location.length; i++){
-            if(ship.location[i].getHit() == false){
+        for (i = 0; i < location.length; i++) {
+            if (ship.location[i].getHit() == false) {
                 return false;
             }
         }
@@ -72,27 +75,42 @@ public class BattleshipObj {
     }
 
 
-
     public int getSize() {
         return size;
     }
+
     public boolean getSunk() {
         return sunk;
     }
+
     public Coordinates[] getLocation() {
         return location;
     }
 
-    public void setSize(int size){
+    public void setSize(int size) {
         this.size = size;
     }
-    public void setSunk(boolean sunk){
+
+    public void setSunk(boolean sunk) {
         this.sunk = sunk;
     }
+
     public void setLocation(Coordinates[] location) {
         int i;
-        for(i = 0; i < this.location.length; i++) {
+        for (i = 0; i < this.location.length; i++) {
             this.location[i] = new Coordinates(location[i]);
         }
+    }
+
+    public boolean checkIfHit() {
+        boolean sunk;
+        for (int i = 0; i < location.length; i++) {
+            if (location[i].getHit() == true) {
+                sunk = true;
+            } else {
+                sunk = false;
+            }
+        }
+        return this.sunk;
     }
 }

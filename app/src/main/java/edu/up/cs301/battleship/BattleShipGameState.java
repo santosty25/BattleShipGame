@@ -359,6 +359,7 @@ public class BattleShipGameState extends GameState {
      * @param touchX - float x coordinate of user tap
      * @param touchY - float y coordinate of user tap
      * @return coordinate object based on board
+     *
      */
     public Coordinates xyToCoordSetupGame(float touchX, float touchY) {
         //Top left corner of board/grid
@@ -564,5 +565,25 @@ public class BattleShipGameState extends GameState {
 
     public BattleshipObj[][] getPlayersFleet() {
         return playersFleet;
+    }
+
+    /**
+     * checkAllShipsSunk - Checks if each coord on a ship has been hit.
+     * @param playerNum
+     * @return true - if all the ships were fully hit
+     *         false - if one of the ships hasn't been fully hit
+     */
+    public boolean checkAllShipsSunk(int playerNum) {
+        int numSunk = 0;
+        for(int i = 0; i < playersFleet.length; i++) {
+            boolean isSunk = playersFleet[playerNum][i].checkIfHit();
+            if(isSunk == false) {
+                numSunk++;
+            }
+        }
+        if(numSunk > 0) {
+            return false;
+        }
+        return true;
     }
 }

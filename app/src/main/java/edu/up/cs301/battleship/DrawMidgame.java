@@ -76,6 +76,7 @@ public class DrawMidgame extends SurfaceView{
         //When user hits a ship a red marker will be placed
         Bitmap redMarker = BitmapFactory.decodeResource(getResources(), R.drawable.hitmarker);
         redMarker =  Bitmap.createScaledBitmap(redMarker, 300, 250, false);
+        Bitmap enemyRedMarker = Bitmap.createScaledBitmap(redMarker, 100, 83, false);
 
         //A missed shot will be indicated with a white marker
         Bitmap whiteMarker = BitmapFactory.decodeResource(getResources(), R.drawable.missmarker);
@@ -142,7 +143,7 @@ public class DrawMidgame extends SurfaceView{
                     float yVal = state.middleYOfEnemyBoard(board[row][col])  - (75 + yDrift);
                     float xVal = state.middleXOfEnemyBoard(board[row][col]) - (82 + xDrift);
                     if(board[row][col].getHasShip()){
-                        canvas.drawBitmap(redMarker, xVal, yVal, new Paint());
+                        canvas.drawBitmap(enemyRedMarker, xVal, yVal, new Paint());
                     }
                     else {
                         canvas.drawBitmap(enemyWhiteMarker, xVal, yVal, new Paint());
