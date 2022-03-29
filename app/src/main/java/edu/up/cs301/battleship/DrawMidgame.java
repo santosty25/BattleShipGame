@@ -80,6 +80,7 @@ public class DrawMidgame extends SurfaceView{
         //A missed shot will be indicated with a white marker
         Bitmap whiteMarker = BitmapFactory.decodeResource(getResources(), R.drawable.missmarker);
         whiteMarker =  Bitmap.createScaledBitmap(whiteMarker, 300, 250, false);
+        Bitmap enemyWhiteMarker =  Bitmap.createScaledBitmap(whiteMarker, 100, 83, false);
 
         //When the user selects their move the COOR will be identified with a target
         Bitmap userSelection = BitmapFactory.decodeResource(getResources(), R.drawable.tagetselector);
@@ -106,7 +107,7 @@ public class DrawMidgame extends SurfaceView{
             Log.i("State is Null", "onDraw: NULL");
             return;
         }
-
+        //Draw on enemies board
         GameBoard drawBoard = this.state.getBoard(1);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
@@ -127,7 +128,29 @@ public class DrawMidgame extends SurfaceView{
                 }
             }
         }
+        /**Draw on your board
+         * Need to change the center methodsd
+         * */
+        GameBoard drawEnemyBoard = this.state.getBoard(0);
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                Log.i("NOT NULL", "");
+                if(drawEnemyBoard.getCoordHit(row, col)){
+                    Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
+                    float xDrift =  1.8f * (float)row;
+                    float yDrift =  1.75f * (float)col;
+                    float yVal = state.middleYOfEnemyBoard(board[row][col])  - (75 + yDrift);
+                    float xVal = state.middleXOfEnemyBoard(board[row][col]) - (82 + xDrift);
+                    if(board[row][col].getHasShip()){
+                        canvas.drawBitmap(redMarker, xVal, yVal, new Paint());
+                    }
+                    else {
+                        canvas.drawBitmap(enemyWhiteMarker, xVal, yVal, new Paint());
+                    }
+                    this.invalidate();
+                }
+            }
+        }
 
     }
-
 }
