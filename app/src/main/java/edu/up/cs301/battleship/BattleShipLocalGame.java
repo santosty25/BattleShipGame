@@ -18,7 +18,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
      */
     public class BattleShipLocalGame extends LocalGame {
         private BattleShipGameState localState;
-        //AHHHHHHHHHHHHHHHHHH
         /**
          * BattleShipLocalGame - Constructor for the BattleShipLocalGame.
          */
