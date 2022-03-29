@@ -136,7 +136,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
                         for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                             eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
-                            xUp += 74;
                             yUp += 74;
                         }
 
