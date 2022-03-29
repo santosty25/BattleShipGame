@@ -67,6 +67,9 @@ public class BattleShipGameState extends GameState {
             }
         }
 
+        GameBoard setup = this.getBoard(1);
+        currentBoard[0][0] = new Coordinates(false, true, 0, 0);
+
         Log.i("BSGS", "Initial setup");
     }
 

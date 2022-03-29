@@ -73,4 +73,4 @@ public class GameBoard extends Coordinates {
         return this.currentBoard[row][col].getHit();
     }
 
-}
+    }
