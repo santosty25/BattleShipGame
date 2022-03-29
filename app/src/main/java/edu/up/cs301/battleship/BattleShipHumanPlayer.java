@@ -28,6 +28,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     //mid game surface view
     private DrawMidgame midGameView;
+    private DrawSetup setupView;
 
 
     public BattleShipHumanPlayer(String name) {
@@ -134,6 +135,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                        Log.d("placed ship", "at " + xUp + ", " + yUp);
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
 
+                        int selectToBoardEnd = 9 - currGS.xyToCoordSetupGame(xUp,yUp).getY() + 1;
+
+                        if (selectToBoardEnd < selectedBattleShip.getSize()) {
+                            int adjustment = (selectedBattleShip.getSize() - selectToBoardEnd) * 74;
+                            yUp -= adjustment;
+                        }
+
                         for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                             eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
                             yUp += 74;
@@ -142,7 +150,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if (selectedBattleShip != null) {
                             Log.i("Place ship action", "Sending action");
                             game.sendAction(new PlaceShip(reference, selectedBattleShip));
-                            gameView.invalidate();
                         }
 
 //                        if (eachShipCoord != null) {
