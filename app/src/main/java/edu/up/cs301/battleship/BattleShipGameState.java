@@ -330,10 +330,10 @@ public class BattleShipGameState extends GameState {
      */
     public float middleYOfEnemyBoard(Coordinates selected) {
         float squareHeight = 32;
-        float pixelX = selected.getY();
-        float middleX = ((pixelX * squareHeight) + squareHeight) - 16;
-        middleX += 664;
-        return middleX;
+        float pixelY = selected.getY();
+        float middleY = ((pixelY * squareHeight) + squareHeight) - 16;
+        middleY += 664;
+        return middleY;
     }
 
     /** toString - Returns the number of ships remaining for the player if it is their turn or
