@@ -15,6 +15,7 @@ import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.R;
 import edu.up.cs301.tictactoe.infoMessage.TTTState;
+import edu.up.cs301.tictactoe.views.TTTSurfaceView;
 
 public class BattleShipHumanPlayer extends GameHumanPlayer {
 
@@ -23,6 +24,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private BattleShipHumanPlayer reference = this;
     private BattleShipGameState currGS;
     boolean shipIsSelected = false;
+
+    //mid game surface view
+    private DrawMidgame midGameView;
 
 
     public BattleShipHumanPlayer(String name) {
@@ -43,6 +47,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         }
         this.reference = this;
         currGS = new BattleShipGameState((BattleShipGameState) info);
+        if(midGameView != null) {
+            midGameView.setState(currGS);
+        }
     }
 
     @Override
@@ -60,6 +67,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
+                midGameView = activity.findViewById(R.id.boardView);
                 currGS.setPhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
@@ -76,6 +84,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 Log.i("Touch", "onTouch: sending fire ");
                                 game.sendAction(new Fire(reference, sendFireto));
                             }
+                            midGameView.invalidate();
                         }
                         return false;
                     }

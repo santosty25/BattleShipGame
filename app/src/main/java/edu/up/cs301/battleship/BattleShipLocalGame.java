@@ -124,6 +124,8 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                                 for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){
                                     if(shipsOnBoard[1][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[1][i].getLocation()[j].getY() == coord.getY()){
                                         //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                                        Coordinates[][] enemyBoard = state.getBoard(1).getCurrentBoard();
+                                        enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
                                         Log.i("SUCCESSFUL SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                                         state.setPlayersTurn(0);
                                         return true;
@@ -144,6 +146,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                                     if(shipsOnBoard[0][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[0][i].getLocation()[j].getY() == coord.getY()){
                                         //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
                                         Log.i("SUCCESSFUL SHOT", "makeMove: ");
+                                        Coordinates[][] enemyBoard = state.getBoard(0).getCurrentBoard();
+                                        enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
+                                        Log.i("SUCCESSFUL SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                                         state.setPlayersTurn(1);
                                         return true;
                                     }
