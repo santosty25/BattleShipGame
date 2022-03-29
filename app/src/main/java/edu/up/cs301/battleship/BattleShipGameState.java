@@ -70,7 +70,7 @@ public class BattleShipGameState extends GameState {
             }
         }
 
-        GameBoard setup = this.getBoard(1);
+        // creates the first 3 length ship
         Coordinates coord1 = new Coordinates(false, true, 0, 0);
         Coordinates coord2 = new Coordinates(false, true, 1, 0);
         Coordinates coord3 = new Coordinates(false, true, 2, 0);
@@ -79,6 +79,8 @@ public class BattleShipGameState extends GameState {
         position[1] = coord2;
         position[2] = coord3;
         BattleshipObj threeOne = new BattleshipObj(3, position);
+
+        // creates the second 3 length ship
         coord1 = new Coordinates(false, true, 0, 1);
         coord2 = new Coordinates(false, true, 1, 1);
         coord3 = new Coordinates(false, true, 2, 1);
@@ -86,6 +88,8 @@ public class BattleShipGameState extends GameState {
         position[1] = coord2;
         position[2] = coord3;
         BattleshipObj threeTwo = new BattleshipObj(3, position);
+
+        // creates the first 4 length ship
         position = new Coordinates[4];
         coord1 = new Coordinates(false, true, 0, 2);
         coord2 = new Coordinates(false, true, 1, 2);
@@ -96,6 +100,8 @@ public class BattleShipGameState extends GameState {
         position[2] = coord3;
         position[3] = coord4;
         BattleshipObj fourOne = new BattleshipObj(4, position);
+
+        // creates the second 4 length ship
         coord1 = new Coordinates(false, true, 0, 3);
         coord2 = new Coordinates(false, true, 1, 3);
         coord3 = new Coordinates(false, true, 2, 3);
@@ -105,12 +111,16 @@ public class BattleShipGameState extends GameState {
         position[2] = coord3;
         position[3] = coord4;
         BattleshipObj fourTwo = new BattleshipObj(4, position);
+
+        // creates 2 length ship
         position = new Coordinates[2];
         coord1 = new Coordinates(false, true, 0, 4);
         coord2 = new Coordinates(false, true, 1, 4);
         position[0] = coord1;
         position[1] = coord2;
         BattleshipObj twoOne = new BattleshipObj(2, position);
+
+        // creates 5 length ship
         position = new Coordinates[5];
         coord1 = new Coordinates(false, true, 0, 5);
         coord2 = new Coordinates(false, true, 1, 5);
