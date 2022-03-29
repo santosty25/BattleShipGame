@@ -134,6 +134,7 @@ public class BattleShipGameState extends GameState {
         position[4] = coord5;
         BattleshipObj fiveOne = new BattleshipObj(5, position);
 
+        // input the ships into player 1's fleet
         this.playersFleet[1][0] = threeOne;
         this.playersFleet[1][1] = threeTwo;
         this.playersFleet[1][2] = fourOne;
