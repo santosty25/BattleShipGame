@@ -31,8 +31,10 @@ public class BattleshipObj {
         this.location = new Coordinates[this.size];
         //Log.i("in battleship", "BEFORE LOOP");
         int i;
-        for(i = 0; i < location.length; i++){;
-            this.location[i] = new Coordinates(location[i]);
+        if (location != null) {
+            for (i = 0; i < location.length; i++) {
+                this.location[i] = new Coordinates(location[i]);
+            }
         }
     }
 
