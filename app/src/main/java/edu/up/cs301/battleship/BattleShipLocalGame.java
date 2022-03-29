@@ -18,7 +18,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
      */
     public class BattleShipLocalGame extends LocalGame {
         private BattleShipGameState localState;
-        //AHHHHHHHHHHHHHHHHHH
         /**
          * BattleShipLocalGame - Constructor for the BattleShipLocalGame.
          */
@@ -34,7 +33,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
          */
         public BattleShipLocalGame(BattleShipGameState battleshipState){
             super();
-            super.state = new BattleShipGameState(battleshipState);
+            super.state = new BattleShipGameState(battleshipState, battleshipState.getPlayersTurn());
         }
 
         /**
@@ -47,7 +46,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
         @Override
         protected void sendUpdatedStateTo(GamePlayer p) {
             // make a copy of the state, and send it to the player
-            BattleShipGameState copy = new BattleShipGameState((BattleShipGameState)state);
+            BattleShipGameState copy = new BattleShipGameState((BattleShipGameState)state, ((BattleShipGameState) state).getPlayersTurn());
             p.sendInfo(copy);
         }
 
@@ -99,7 +98,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 enemy = 1;
             }
             GameBoard board = state.getBoard(enemy); //the enemy's board
-            int remainingShips = state.getRemainingShips(); //the number of remaining ships
+            //int remainingShips = state.getRemainingShips(); //the number of remaining ships
             Log.i("Players turn ", "makeMove: " + whoseTurn);
 
             if(action instanceof Fire) {

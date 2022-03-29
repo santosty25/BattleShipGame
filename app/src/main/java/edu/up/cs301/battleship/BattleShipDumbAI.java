@@ -20,7 +20,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             return;
         }
 
-        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
+        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info, playerNum);
         Log.i("COMPUTER PLAYERS TURN", "");
 
         if (gameState.getPlayersTurn() == playerNum) {
@@ -28,9 +28,9 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             Random r = new Random();
             int row;
             int col;
-                sleep(5);
-                row = r.nextInt(9) + 1;
-                col = r.nextInt(9) + 1;
+                sleep(1);
+                row = r.nextInt(10);
+                col = r.nextInt(10);
                 Coordinates fire = new Coordinates(false, false, row, col);
                 Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
                 game.sendAction(new Fire(this, fire));
