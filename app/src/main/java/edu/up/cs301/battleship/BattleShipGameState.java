@@ -29,7 +29,7 @@ public class BattleShipGameState extends GameState {
     private int timer; //a set timer for how long each turn should take
     // 0 = setup | 1 = game phase | 2 = end phase
     private int phase; //determines the phase of the game
-    private int remainingShips; //a player's remaining ships
+    private int remainingShips[]; //a player's remaining ships
     private BattleshipObj[][] playersFleet; //a player's fleet
 
 
@@ -53,7 +53,10 @@ public class BattleShipGameState extends GameState {
         this.timer = 30;
         this.phase = SETUP_PHASE;
         //Log.i("BSG", "Made timer");
-        this.remainingShips = 6;
+        this.remainingShips = new int[2];
+        for (int k = 0; k < remainingShips.length; k++) {
+            this.remainingShips[k] = 6;
+        }
         this.playersFleet = new BattleshipObj[2][6];
 
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
@@ -143,7 +146,7 @@ public class BattleShipGameState extends GameState {
      * @param playersFleet - a player's fleet of ships
      */
     public BattleShipGameState(int[] playerID, GameBoard[] playersBoard, int playersTurn, int timer,
-                               int phase, int remainingShips, BattleshipObj[][] playersFleet) {
+                               int phase, int remainingShips[], BattleshipObj[][] playersFleet) {
         this.playerID = playerID;
         this.playersBoard = playersBoard;
         this.playersTurn = playersTurn;
@@ -158,7 +161,7 @@ public class BattleShipGameState extends GameState {
      * BattleShipGameState
      * @param copy - A copy of the original BattleShipGameState
      */
-    public BattleShipGameState(BattleShipGameState copy) {
+    public BattleShipGameState(BattleShipGameState copy, int playerNum) {
         //change so that certain information doeesn't get sent to a specific player
         //add param for specif player
         this.playerID = new int[2];
@@ -177,18 +180,16 @@ public class BattleShipGameState extends GameState {
         this.playersFleet = new BattleshipObj[playerID.length][6];
 
         int i;
-        int j;
         //Log.i("Test", "before Players fleet for loop");
         for (i = 0;  i < playerID.length; i++) {
-            for (j = 0;j < 6; j++) {
                 //Log.i("Test", i + " " + j);
-                if(copy.playersFleet[i][j] == null){
+                if(copy.playersFleet[playerNum][i] == null){
                     Log.i("IS NULL", "NULL");
                 }
                 else {
-                    this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
+                    this.playersFleet[playerNum][i] = new BattleshipObj(copy.playersFleet[playerNum][i]);
                 }
-            }
+
         }
         //Log.i("Test", "after Players fleet for loop");
 
@@ -391,10 +392,10 @@ public class BattleShipGameState extends GameState {
      */
     public float middleYOfEnemyBoard(Coordinates selected) {
         float squareHeight = 32;
-        float pixelX = selected.getY();
-        float middleX = ((pixelX * squareHeight) + squareHeight) - 16;
-        middleX += 664;
-        return middleX;
+        float pixelY = selected.getY();
+        float middleY = ((pixelY * squareHeight) + squareHeight) - 16;
+        middleY += 664;
+        return middleY;
     }
 
     /** toString - Returns the number of ships remaining for the player if it is their turn or
@@ -422,7 +423,7 @@ public class BattleShipGameState extends GameState {
 
     public int getPhase() { return this.phase; }
 
-    public int getRemainingShips() { return this.remainingShips;}
+    public int getRemainingShips(int playerNum) { return this.remainingShips[playerNum];}
 
     public void setPhase(int changePhase) {
         Log.i("Phase", "setPhase: " + changePhase);
@@ -461,6 +462,68 @@ public class BattleShipGameState extends GameState {
         }
         //game is not over
         return 2;
+    }
+
+    /**
+     * checkNumPlayerFleet - Checks the number of ships in a player's fleet
+     * @param playerNum - the player who is checking for the amount of ships in their fleet
+     * @return the number of ships in a player's fleet
+     */
+    public int checkNumPlayerFleet(int playerNum) {
+        boolean allSunk0 = false;
+        boolean allSunk1 = false;
+        int player0fleet = 0;
+        int player1fleet = 0;
+
+        //check each player's fleet
+        for(int i = 0; i < playersFleet[0].length; i++) {
+            allSunk0 = playersFleet[0][i].getSunk();
+            if(allSunk0 == false) {
+                player0fleet++;
+            }
+        }
+        for(int j = 0; j < playersFleet[1].length; j++) {
+            allSunk1 = playersFleet[1][j].getSunk();
+            if (allSunk1 == false) {
+                player1fleet++;
+            }
+        }
+
+        //checks who is checking the remaining ships
+        if(playerNum == 0) {
+            this.remainingShips[playerNum] = player0fleet;
+        }
+        else {
+            this.remainingShips[playerNum] = player1fleet;
+        }
+
+        return this.remainingShips[playerNum];
+    }
+
+    /**
+     * checkIndividualShip - Checks whether a specific ship has been sunk/
+     * @param shipSize - the size of the ship that is being checked
+     * @param playerNum - the player who is being checked
+     * @return 0 - no ships have been sunk
+     *         1 - a ship of a given size has been sunk
+     *         2 - 2 ships of a given size has been sunk
+     */
+    public int checkIndividualShip (int shipSize, int playerNum) {
+        int size; // the size of the ship
+        int sunk = 0; // the amount of ships of a given size that have been sunk
+        for(int i = 0; i < playersFleet[playerNum].length; i++) {
+            size = playersFleet[playerNum][i].getSize();
+            boolean isSunk = playersFleet[playerNum][i].getSunk();
+            if(size == shipSize) {
+                if(isSunk == true) {
+                    sunk++;
+                }
+            }
+            else {
+                continue;
+            }
+        }
+        return sunk;
     }
 
     public BattleshipObj[][] getPlayersFleet() {
