@@ -68,7 +68,65 @@ public class BattleShipGameState extends GameState {
         }
 
         GameBoard setup = this.getBoard(1);
-        currentBoard[0][0] = new Coordinates(false, true, 0, 0);
+        Coordinates coord1 = new Coordinates(false, true, 0, 0);
+        Coordinates coord2 = new Coordinates(false, true, 1, 0);
+        Coordinates coord3 = new Coordinates(false, true, 2, 0);
+        Coordinates[] position = new Coordinates[3];
+        position[0] = coord1;
+        position[1] = coord2;
+        position[2] = coord3;
+        BattleshipObj threeOne = new BattleshipObj(3, position);
+        coord1 = new Coordinates(false, true, 0, 1);
+        coord2 = new Coordinates(false, true, 1, 1);
+        coord3 = new Coordinates(false, true, 2, 1);
+        position[0] = coord1;
+        position[1] = coord2;
+        position[2] = coord3;
+        BattleshipObj threeTwo = new BattleshipObj(3, position);
+        position = new Coordinates[4];
+        coord1 = new Coordinates(false, true, 0, 2);
+        coord2 = new Coordinates(false, true, 1, 2);
+        coord3 = new Coordinates(false, true, 2, 2);
+        Coordinates coord4 = new Coordinates(false, true, 3, 2);
+        position[0] = coord1;
+        position[1] = coord2;
+        position[2] = coord3;
+        position[3] = coord4;
+        BattleshipObj fourOne = new BattleshipObj(4, position);
+        coord1 = new Coordinates(false, true, 0, 3);
+        coord2 = new Coordinates(false, true, 1, 3);
+        coord3 = new Coordinates(false, true, 2, 3);
+        coord4 = new Coordinates(false, true, 3, 3);
+        position[0] = coord1;
+        position[1] = coord2;
+        position[2] = coord3;
+        position[3] = coord4;
+        BattleshipObj fourTwo = new BattleshipObj(4, position);
+        position = new Coordinates[2];
+        coord1 = new Coordinates(false, true, 0, 4);
+        coord2 = new Coordinates(false, true, 1, 4);
+        position[0] = coord1;
+        position[1] = coord2;
+        BattleshipObj twoOne = new BattleshipObj(2, position);
+        position = new Coordinates[5];
+        coord1 = new Coordinates(false, true, 0, 5);
+        coord2 = new Coordinates(false, true, 1, 5);
+        coord3 = new Coordinates(false, true, 2, 5);
+        coord4 = new Coordinates(false, true, 3, 5);
+        Coordinates coord5 = new Coordinates(false, true, 4, 5);
+        position[0] = coord1;
+        position[1] = coord2;
+        position[2] = coord3;
+        position[3] = coord4;
+        position[4] = coord5;
+        BattleshipObj fiveOne = new BattleshipObj(5, position);
+
+        this.playersFleet[1][0] = threeOne;
+        this.playersFleet[1][1] = threeTwo;
+        this.playersFleet[1][2] = fourOne;
+        this.playersFleet[1][3] = fourTwo;
+        this.playersFleet[1][4] = twoOne;
+        this.playersFleet[1][5] = fiveOne;
 
         Log.i("BSGS", "Initial setup");
     }
