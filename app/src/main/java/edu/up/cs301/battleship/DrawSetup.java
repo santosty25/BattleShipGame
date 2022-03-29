@@ -8,6 +8,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.text.method.Touch;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class DrawSetup extends SurfaceView {
     private ArrayList<BattleshipObj> battleshipArrayList= new ArrayList<>();
     private Paint orangePaint = new Paint();
     private Context context;
+    protected BattleShipGameState state;
     public DrawSetup(Context context) {//default constructor,
         super(context);
         initPaints();
@@ -45,6 +47,10 @@ public class DrawSetup extends SurfaceView {
         this.orangePaint.setStyle(Paint.Style.FILL);
 
 
+    }
+
+    public void setState(BattleShipGameState state) {
+        this.state = new BattleShipGameState(state, state.getPlayersTurn());
     }
 
 
@@ -112,6 +118,28 @@ public class DrawSetup extends SurfaceView {
         canvas.drawBitmap(threehp1, 1450.0f, 200.0f, new Paint());
         canvas.drawBitmap(threehp2, 1450.0f, 500.0f, new Paint());
         canvas.drawBitmap(twohp, 1400.0f, 550.0f, new Paint());
+
+        if (state == null) {
+            Log.i("State is Null", "onDraw: NULL");
+            return;
+        }
+
+        /**Draw on your board
+         * Need to change the center methods
+         * */
+        GameBoard drawEnemyBoard = this.state.getBoard(0);
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                Log.i("NOT NULL", "");
+                if(drawEnemyBoard.getCoordHit(row, col)){
+                    Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
+                    if (drawEnemyBoard.getHasShip()) {
+
+                    }
+                    this.invalidate();
+                }
+            }
+        }
 
 
 

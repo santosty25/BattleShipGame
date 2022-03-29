@@ -138,6 +138,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
                             yUp += 74;
                         }
+                        selectedBattleShip.setLocation(eachShipCoord);
+                        if (selectedBattleShip != null) {
+                            Log.i("Place ship action", "Sending action");
+                            game.sendAction(new PlaceShip(reference, selectedBattleShip));
+                            gameView.invalidate();
+                        }
 
 //                        if (eachShipCoord != null) {
 //                            selectedBattleShip.setLocation(eachShipCoord);
