@@ -134,6 +134,7 @@ public class BattleShipGameState extends GameState {
         position[4] = coord5;
         BattleshipObj fiveOne = new BattleshipObj(5, position);
 
+        // input the ships into player 1's fleet
         this.playersFleet[1][0] = threeOne;
         this.playersFleet[1][1] = threeTwo;
         this.playersFleet[1][2] = fourOne;
@@ -344,6 +345,32 @@ public class BattleShipGameState extends GameState {
         int newY = (int)((touchY - boardStartY) / cellWidth);
 
         Coordinates tappedCoordinate = new Coordinates(false, false, newX, newY);
+        if (newX >= 10 || newX < 0 || newY >= 10 || newY < 0)  {
+            return null;
+        }
+        char letterRow = boardRows[newY];
+        Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
+        return tappedCoordinate;
+    }
+
+    /**
+     * xyToCoordSetupGame - Returns a coordinate object based on where the player taps on the setup board and creates a coordianate
+     * with a has ship boolean
+     * @param touchX - float x coordinate of user tap
+     * @param touchY - float y coordinate of user tap
+     * @return coordinate object based on board
+     *
+     */
+    public Coordinates xyToCoordSetupGame(float touchX, float touchY) {
+        //Top left corner of board/grid
+        float boardStartX = 713;
+        float boardStartY = 185;
+        float cellWidth = 74;
+        char boardRows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+        int newX = (int)((touchX - boardStartX) / cellWidth);
+        int newY = (int)((touchY - boardStartY) / cellWidth);
+
+        Coordinates tappedCoordinate = new Coordinates(false, true, newX, newY);
         if (newX >= 10 || newX < 0 || newY >= 10 || newY < 0)  {
             return null;
         }
