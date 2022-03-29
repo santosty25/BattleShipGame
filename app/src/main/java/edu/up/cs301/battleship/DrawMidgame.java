@@ -11,12 +11,16 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.R;
+import edu.up.cs301.tictactoe.infoMessage.TTTState;
 
 public class DrawMidgame extends SurfaceView{
     private Paint blackPaint = new Paint();
     private Context context;
-    private ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
+    public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
+
+    protected BattleShipGameState state;
 
     public DrawMidgame(Context context) {//default constructor,
         super(context);
@@ -41,9 +45,10 @@ public class DrawMidgame extends SurfaceView{
         this.blackPaint.setStyle(Paint.Style.FILL);
     }
 
-    public void addTap(TapValues tap){
-        tapValues.add(tap);
+    public void setState(BattleShipGameState state) {
+        this.state = new BattleShipGameState(state);
     }
+
 
     @Override
     public void onDraw(Canvas canvas){
@@ -95,6 +100,32 @@ public class DrawMidgame extends SurfaceView{
         for(TapValues tap : tapValues){
             Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), new Paint());
+
+        }
+        if (state == null) {
+            Log.i("State is Null", "onDraw: NULL");
+            return;
+        }
+
+        GameBoard drawBoard = this.state.getBoard(1);
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                Log.i("NOT NULL", "");
+                if(drawBoard.getCoordHit(row, col)){
+                    Coordinates[][] board = drawBoard.getCurrentBoard();
+                    float xDrift = 1.5f * (float)row;
+                    float yDrift = 0.7f * (float)col;
+                    float yVal = state.middleYOfCoord(board[row][col]) - (195.0f - yDrift) ;
+                    float xVal = state.middleXOfCoord(board[row][col]) - (226.0f - xDrift);
+                    if(board[row][col].getHasShip()){
+                        canvas.drawBitmap(redMarker, xVal, yVal, new Paint());
+                    }
+                    else {
+                        canvas.drawBitmap(whiteMarker, xVal, yVal, new Paint());
+                    }
+                    this.invalidate();
+                }
+            }
         }
 
     }

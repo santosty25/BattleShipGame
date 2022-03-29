@@ -311,6 +311,34 @@ public class BattleShipGameState extends GameState {
         return middleY;
     }
 
+    /**
+     * middleXOfEnemyCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the enemy's grid
+     * these are based on indicies and not actual board coordinates that a player might think/read
+     * @param selected - coordinates of a selected grid on the board
+     * @return float value of x that corresponds to the middle of that selected grid
+     */
+    public float middleXOfEnemyBoard(Coordinates selected) {
+        float squareWidth = 32;
+        float pixelX = selected.getX();
+        float middleX = ((pixelX * squareWidth) + squareWidth) - 16;
+        middleX += 113.5;
+        return middleX;
+    }
+
+    /**
+     * middleYOfCoord - Returns a float value of Y corresponding to the middle of a selected coordinate on the enemy's grid
+     * these are based on indicies and not actual board coordinates that a player might think/read
+     * @param selected - coordinates of a selected grid on the board
+     * @return float value of y that corresponds to the middle of that selected grid
+     */
+    public float middleYOfEnemyBoard(Coordinates selected) {
+        float squareHeight = 32;
+        float pixelX = selected.getY();
+        float middleX = ((pixelX * squareHeight) + squareHeight) - 16;
+        middleX += 664;
+        return middleX;
+    }
+
     /** toString - Returns the number of ships remaining for the player if it is their turn or
      * returns that it is not their turn.
      */

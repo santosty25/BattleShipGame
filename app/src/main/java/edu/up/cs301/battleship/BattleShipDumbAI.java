@@ -29,8 +29,8 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             int row;
             int col;
                 sleep(5);
-                row = r.nextInt(10) + 1;
-                col = r.nextInt(10) + 1;
+                row = r.nextInt(9) + 1;
+                col = r.nextInt(9) + 1;
                 Coordinates fire = new Coordinates(false, false, row, col);
                 Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
                 game.sendAction(new Fire(this, fire));

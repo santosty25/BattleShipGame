@@ -27,7 +27,6 @@ public class backup {
 //     */
 //    public class BattleShipLocalGame extends LocalGame {
 //        private BattleShipGameState localState;
-//        //AHHHHHHHHHHHHHHHHHH
 //        /**
 //         * BattleShipLocalGame - Constructor for the BattleShipLocalGame.
 //         */
