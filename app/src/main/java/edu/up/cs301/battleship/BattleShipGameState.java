@@ -359,6 +359,7 @@ public class BattleShipGameState extends GameState {
      * @param touchX - float x coordinate of user tap
      * @param touchY - float y coordinate of user tap
      * @return coordinate object based on board
+     *
      */
     public Coordinates xyToCoordSetupGame(float touchX, float touchY) {
         //Top left corner of board/grid
