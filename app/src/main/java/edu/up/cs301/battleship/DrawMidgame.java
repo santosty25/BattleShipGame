@@ -129,7 +129,7 @@ public class DrawMidgame extends SurfaceView{
             }
         }
         /**Draw on your board
-         * Need to change the center methodsd
+         * Need to change the center methods
          * */
         GameBoard drawEnemyBoard = this.state.getBoard(0);
         for (int row = 0; row < 10; row++) {
