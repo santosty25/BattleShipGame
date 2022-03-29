@@ -33,6 +33,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
 //            BattleshipObj topLeft = new BattleshipObj(3, position);
 //            game.sendAction(new PlaceShip(this, topLeft));
 //        }
+        Log.i("COMPUTER PLAYERS TURN", "");
         if (gameState.getPlayersTurn() == playerNum) {
             Log.i("COMPUTER PLAYERS TURN", "");
             Random r = new Random();

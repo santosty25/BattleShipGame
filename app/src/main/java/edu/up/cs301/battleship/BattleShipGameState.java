@@ -37,7 +37,10 @@ public class BattleShipGameState extends GameState {
      * BattleShipGameState - Constructor that initializes the variables.
      */
     public BattleShipGameState(){
-        this.playerID = new int[]{0,1};
+        this.playerID = new int[2];
+        this.playerID[0] = 0;
+        this.playerID[1] = 1;
+
         //Log.i("BSG", "Made playerID");
         this.playersBoard = new GameBoard[2];
         this.playersBoard[0] = new GameBoard();
@@ -100,6 +103,7 @@ public class BattleShipGameState extends GameState {
         this.playerID = new int[2];
 
         for(int k = 0; k < 2; k++){
+            Log.i("k", "BattleShipGameState: " + copy.playerID[k]);
             this.playerID[k] = copy.playerID[k];
         }
         this.playersBoard = new GameBoard[2];
@@ -334,10 +338,11 @@ public class BattleShipGameState extends GameState {
 
     public void setPhase(int changePhase) {
         Log.i("Phase", "setPhase: " + changePhase);
-        this.phase = changePhase;}
+        this.phase = changePhase;
+    }
 
     public void setPlayersTurn(int initTurn) {
-        this.playersTurn = initTurn;
+        playersTurn = initTurn;
     }
 
     /**

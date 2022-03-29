@@ -16,7 +16,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.R;
 import edu.up.cs301.tictactoe.infoMessage.TTTState;
 
-public class BattleShipHumanPlayer extends GameHumanPlayer {
+public class BattleShipHumanPlayer extends GameHumanPlayer  {
 
     private GameMainActivity myActivity = null;
     private boolean switchPhase = false;
@@ -35,7 +35,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     @Override
     public void receiveInfo(GameInfo info) {
-        if(!(info instanceof BattleShipGameState)){
+        if (!(info instanceof BattleShipGameState)) {
             Log.i("FLASHING", "");
             flash(0xFFFF0000, 100);
             return;
@@ -52,6 +52,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
+//        nextButton.setOnClickListener(this);
+//        gameView.setOnTouchListener(this);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,13 +66,16 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
+                        Log.i("PLayers Turn", "" + currGS.getPlayersTurn() );
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
                         Log.d("In midGame", "Coords: " + x + ", " + y);
                         Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
-                        if(sendFireto != null){
-                            Log.i("Touch", "onTouch: sending fire ");
-                            game.sendAction(new Fire(reference, sendFireto));
+                        if (currGS.getPlayersTurn() == playerNum) {
+                            if (sendFireto != null) {
+                                Log.i("Touch", "onTouch: sending fire ");
+                                game.sendAction(new Fire(reference, sendFireto));
+                            }
                         }
                         return false;
                     }
@@ -85,12 +90,46 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 float x = motionEvent.getX();
                 float y = motionEvent.getY();
                 Log.d("Coords Test", "Coords: " + x + ", " + y);
-                currGS.xyToCoordMidGame(x,y);
+                currGS.xyToCoordMidGame(x, y);
                 return false;
             }
         });
 
 
-
     }
 }
+
+
+//    @Override
+//    public boolean onTouch(View view, MotionEvent motionEvent) {
+//        if(currGS.getPhase() == 0){
+//            float x = motionEvent.getX();
+//            float y = motionEvent.getY();
+//            Log.d("Coords Test", "Coords: " + x + ", " + y);
+//            currGS.xyToCoordMidGame(x,y);
+//            return false;
+//        }
+//        else{
+//            float x = motionEvent.getX();
+//            float y = motionEvent.getY();
+//            Log.d("In midGame", "Coords: " + x + ", " + y);
+//            Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
+//            if(currGS.getPlayersTurn() == playerNum) {
+//                if (sendFireto != null) {
+//                    Log.i("Touch", "onTouch: sending fire ");
+//                    game.sendAction(new Fire(reference, sendFireto));
+//                }
+//            }
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public void onClick(View view) {
+//        this.myActivity .setContentView(R.layout.midgame);
+//        //midgame phase surface view
+//        SurfaceView gameView = this.myActivity .findViewById(R.id.boardView);
+//        currGS.setPhase(1);
+//        gameView.setOnTouchListener(this);
+//    }
+//}
