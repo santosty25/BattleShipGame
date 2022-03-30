@@ -163,6 +163,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                                Log.i("Placed Ship", "Placed at" + (eachShipCoord[i].getX() + 1) + ", " + letters[eachShipCoord[i].getY()]);
 //                            }
 //                        }
+                        //
                         return true;
                     }
 
