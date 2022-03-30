@@ -146,6 +146,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
 
                         for (int i = 0; i < selectedBattleShip.getSize(); i++) {
+                            if (currGS.getBoard(playerNum).getHasShip()) {
+                                Log.i("Invalid Place", "Ship already placed here");
+                                return false;
+                            }
                             eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
                             yUp += 74;
                         }
