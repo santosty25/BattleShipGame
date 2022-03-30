@@ -53,6 +53,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         if(midGameView != null) {
             midGameView.setState(currGS);
         }
+        //test
     }
 
     @Override
