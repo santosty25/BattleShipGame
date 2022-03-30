@@ -165,6 +165,75 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         //flash
                     }
                 }
+            else if(action instanceof PlaceShip){
+                PlaceShip placeAction = new PlaceShip((PlaceShip) action);
+                BattleshipObj[][] currentFleet = state.getPlayersFleet();
+                int i, j;
+                for (i = 0;  i < 2; i++) {
+                    for (j =0; j < 6; j++){
+                        if (state.getPlayersFleet()[i][j] != null) {
+                            currentFleet[i][j] = new BattleshipObj(state.getPlayersFleet()[i][j]);
+                        }
+                    }
+                }
+                if(placeAction.getPlayerNum() == 0){
+                    if(placeAction.getBattleship().getSize() == 5) {
+                        Log.i("placing ship size: 0 ", "" + placeAction.getBattleship().getSize());
+                        currentFleet[0][0] = new BattleshipObj(placeAction.getBattleship());
+                    }
+                    else if(placeAction.getBattleship().getSize() == 4){
+                        if(currentFleet[0][1].getSize() == 1){
+                            Log.i("placing ship size: 0", "4");
+                            currentFleet[0][1] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                        else{
+                            Log.i("placing ship size: ", "4");
+                            currentFleet[0][2] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                    }
+                    else if(placeAction.getBattleship().getSize() == 3){
+                        if(currentFleet[0][3].getSize() == 1){
+                            currentFleet[0][3] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                        else{
+                            currentFleet[0][4] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                    }
+                    else if(placeAction.getBattleship().getSize() == 2) {
+                        currentFleet[0][5] = new BattleshipObj(placeAction.getBattleship());
+                    }
+                    state.setPlayersFleet(currentFleet[0], currentFleet[1]);
+                    return true;
+
+                }
+                else if(placeAction.getPlayerNum() == 1){
+                    if(placeAction.getBattleship().getSize() == 5) {
+                        currentFleet[1][0] = new BattleshipObj(placeAction.getBattleship());
+                    }
+                    else if(placeAction.getBattleship().getSize() == 4){
+                        if(currentFleet[1][1].getSize() == 1){
+                            currentFleet[1][1] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                        else{
+                            currentFleet[1][2] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                    }
+                    else if(placeAction.getBattleship().getSize() == 3){
+                        if(currentFleet[1][3].getSize() == 1){
+                            currentFleet[1][3] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                        else{
+                            currentFleet[1][4] = new BattleshipObj(placeAction.getBattleship());
+                        }
+                    }
+                    else if(placeAction.getBattleship().getSize() == 2) {
+                        currentFleet[1][5] = new BattleshipObj(placeAction.getBattleship());
+                    }
+                    state.setPlayersFleet(currentFleet[0], currentFleet[1]);
+                    return true;
+                }
+
+            }
             //}
             //add else statement for placeShip Action
 

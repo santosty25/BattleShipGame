@@ -192,10 +192,10 @@ public class BattleShipGameState extends GameState {
 
         int i;
         //Log.i("Test", "before Players fleet for loop");
-        for (i = 0;  i < playerID.length; i++) {
+        for (i = 0;  i < 6; i++) {
                 //Log.i("Test", i + " " + j);
                 if(copy.playersFleet[playerNum][i] == null){
-                    Log.i("IS NULL", "NULL");
+                    Log.i("SHIP IS NULL", "NULL index " + i);
                 }
                 else {
                     this.playersFleet[playerNum][i] = new BattleshipObj(copy.playersFleet[playerNum][i]);
@@ -246,12 +246,14 @@ public class BattleShipGameState extends GameState {
      * @param toPlace
      * @return true or false depnding on whether the player can place a ship on the board
      */
-    public boolean placeShip(BattleshipObj ship, Coordinates[] toPlace) {
+    public boolean placeShip(BattleshipObj ship, Coordinates[] toPlace, int playerNum) {
         int i;
         for (i = 0; i < toPlace.length; i++) {
             if (toPlace[i].getX() <= 10 && toPlace[i].getY() <= 10 &&
                     toPlace[i].getX() >= 1 && toPlace[i].getY() >= 1) {
                 ship.setLocation(toPlace);
+                this.playersFleet[playerNum][0] = new BattleshipObj(ship);
+
 
                 return true;
             }
@@ -320,13 +322,18 @@ public class BattleShipGameState extends GameState {
      * @param playerOneShips - an array of BattleshipObj that player 1 has
      * @param playerZeroShips - an array of BattleshipObj that player 0 has
      */
-    public void setPlayersFleet(BattleshipObj[] playerOneShips, BattleshipObj[] playerZeroShips){
+    public void setPlayersFleet(BattleshipObj[] playerZeroShips, BattleshipObj[] playerOneShips){
         for(int i = 0; i < playerZeroShips.length; i++){
-            this.playersFleet[0][i] = new BattleshipObj(playerZeroShips[i]);
+            if(playerZeroShips[i] != null) {
+                this.playersFleet[0][i] = new BattleshipObj(playerZeroShips[i]);
+                Log.i("setting player 0 fleet ", "SIZE " + playersFleet[0][i].getSize() + "index" + i);
+            }
         }
         for(int i = 0; i < playerOneShips.length; i++){
-            this.playersFleet[1][i] = new BattleshipObj(playerOneShips[i]);
-        }
+            if(playerOneShips[i]!=null) {
+                this.playersFleet[1][i] = new BattleshipObj(playerOneShips[i]);
+            }
+            }
     }
 
     /**
