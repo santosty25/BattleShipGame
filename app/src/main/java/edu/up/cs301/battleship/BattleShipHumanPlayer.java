@@ -69,6 +69,15 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Checking if all ships have been placed
+                int i, j;
+                for(i = 0; i < 2; i++){
+                    for(j = 0; j < 6; j++){
+                        if(currGS.getPlayersFleet()[i][j].getSize() == 1 ){
+                            return;
+                        }
+                    }
+                }
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
@@ -97,57 +106,43 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             }
         });
 
+        setupView = activity.findViewById(R.id.boardView);
+
+
+        /** On Touch for setupphase*/
+
         if (shipIsSelected == false) {
             gameView.setOnTouchListener(new View.OnTouchListener() {
+                //updatesss
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
 
-                        if (motionEvent.getAction() == motionEvent.ACTION_DOWN) {
-                            //Conditionals for selected ship
-                            if (x >= 1684 && x <= 1741 && y >= 70 && y <= 328) { // top left 4hp
-                                Log.i("Ship touched", "Top left selected");
-                                selectedBattleShip.setSize(4);
-                            } else if (x >= 1814 && x <= 1888 && y >= 108 && y <= 399) { // top right 5hp
-                                Log.i("Ship touched", "Top right selected");
-                                selectedBattleShip.setSize(5);
-                            } else if (x >= 1677 && x <= 1747 && y >= 393 && y <= 665) { // middle left 4 hp
-                                Log.i("Ship touched", "middle left selected");
-                                selectedBattleShip.setSize(4);
-                            } else if (x >= 1828 && x <= 1874 && y >= 460 && y <= 628) { // middle right 3 hp
-                                Log.i("Ship touched", "middle right selected");
-                                selectedBattleShip.setSize(3);
-                            } else if (x >= 1680 && x <= 1725 && y >= 807 && y <= 937) { // bottom left 2hp
-                                Log.i("Ship touched", "bottom left selected");
-                                selectedBattleShip.setSize(2);
-                            } else if (x >= 1830 && x <= 1874 && y >= 747 && y <= 940) { // bottom right 3 hp
-                                Log.i("Ship touched", "bottom right selected");
-                                selectedBattleShip.setSize(3);
-                            } else { //no ship
-                                Log.i("Ship touched", "no ship selected");
-                            }
+                        int newSize = setupView.onTouchEventNew(motionEvent);
+                        selectedBattleShip.setSize(newSize);
+                        if (newSize < 0 || newSize >= 6) {
+                            return false;
                         }
                     if (motionEvent.getAction() == motionEvent.ACTION_UP) {
                         float xUp = motionEvent.getX();
                         float yUp = motionEvent.getY();
                         Coordinates sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
                         if (sendShipTo != null) {
-                            Log.i("Selected ship is", "selected ship is size " + selectedBattleShip.getSize());
+                            Log.i("Selected ship is", "selected ship is size " + newSize);
                         }
 //                        Log.d("placed ship", "at " + xUp + ", " + yUp);
                         if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
                             return true;
                         }
-                        int selectToBoardEnd = 9 - currGS.xyToCoordSetupGame(xUp,yUp).getY() + 1;
+                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
 
-                        if (selectToBoardEnd < selectedBattleShip.getSize()) {
-                            int adjustment = (selectedBattleShip.getSize() - selectToBoardEnd) * 74;
+                        if (selectToBoardEnd < newSize) {
+                            int adjustment = (newSize) * 74;
                             yUp -= adjustment;
                         }
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
-                        for (int i = 0; i < selectedBattleShip.getSize(); i++){
-                            Log.i("Selected size", "" + selectedBattleShip.getSize());
+                        for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                             if (currGS.getBoard(playerNum).getHasShip()) {
                                 Log.i("Invalid Place", "Ship already placed here");
                                 return false;
@@ -170,6 +165,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                                Log.i("Placed Ship", "Placed at" + (eachShipCoord[i].getX() + 1) + ", " + letters[eachShipCoord[i].getY()]);
 //                            }
 //                        }
+                        setupView.invalidate();
                         return true;
                     }
 

@@ -63,7 +63,7 @@ public class BattleShipGameState extends GameState {
 
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
         Coordinates[] locations = new Coordinates[1];
-        locations[0] = new Coordinates(true, true, 0, 0);
+        locations[0] = new Coordinates(true, true, -1, -1);
         int i, j;
         for(i = 0; i < playersFleet.length; i++){
             for(j = 0; j < playersFleet[i].length; j++){
@@ -228,7 +228,21 @@ public class BattleShipGameState extends GameState {
                 return false;
             } else {
                 this.playersBoard[1].setCoordHit(row, col, true);
+                //check if a hit on a coordinate matches the coordinate of one of the player's ships
+                for(int j = 0; j < playersFleet[1].length; j++) {
+                    this.playersFleet[1][j].checkCoordHit(coord);
+                }
                 //this.printFire(row, col, true);
+                for(int i = 0; i < playersFleet[1].length; i++) {
+                    //checks if a player's ship has been sunk and sets it as sunk if true
+                    boolean sunk = this.playersFleet[1][i].checkIfHit();
+                    if(sunk == true) {
+                        this.playersFleet[1][i].setSunk(true);
+                    }
+                    else {
+                        continue;
+                    }
+                }
                 return true;
             }
         }
@@ -238,7 +252,21 @@ public class BattleShipGameState extends GameState {
                 return false;
             } else {
                 this.playersBoard[0].setCoordHit(row, col, true);
+                //check if a hit on a coordinate matches the coordinate of one of the player's ships
+                for(int j = 0; j < playersFleet[0].length; j++) {
+                    this.playersFleet[0][j].checkCoordHit(coord);
+                }
                 //this.printFire(row, col, true);
+                for(int i = 0; i < playersFleet[0].length; i++) {
+                    boolean sunk = this.playersFleet[0][i].checkIfHit();
+                    //checks if a player's ship has been sunk and sets it as sunk if true
+                    if(sunk == true) {
+                        this.playersFleet[0][i].setSunk(true);
+                    }
+                    else {
+                        continue;
+                    }
+                }
                 return true;
             }
         }
@@ -504,32 +532,41 @@ public class BattleShipGameState extends GameState {
     public int checkPlayerFleet() {
         boolean allSunk0 = false;
         boolean allSunk1 = false;
+        int numSunkBoats0 = 0;
+        int numSunkBoats1 = 0;
 
         //check the state of each player's fleet
-        for(int i = 0; i < playersFleet[0].length; i++) {
+        for (int i = 0; i < playersFleet[0].length; i++) {
             allSunk0 = playersFleet[0][i].getSunk();
+            if (allSunk0 == true) {
+                numSunkBoats0++;
+            }
         }
-        for(int j = 0; j < playersFleet[1].length; j++) {
+        for (int j = 0; j < playersFleet[1].length; j++) {
             allSunk1 = playersFleet[1][j].getSunk();
+            if (allSunk1 == true) {
+                numSunkBoats1++;
+            }
         }
 
         //player 1 won
-        if(allSunk0 == true && allSunk1 == false) {
+        if (numSunkBoats0 == 6) {
             return 1;
         }
         //player 0 won
-        else if(allSunk0 == false && allSunk1 == true) {
+        else if (numSunkBoats1 == 6) {
             return 0;
         }
         //game is not over
         return 2;
     }
 
-    /**
-     * checkNumPlayerFleet - Checks the number of ships in a player's fleet
-     * @param playerNum - the player who is checking for the amount of ships in their fleet
-     * @return the number of ships in a player's fleet
-     */
+
+        /**
+         * checkNumPlayerFleet - Checks the number of ships in a player's fleet
+         * @param playerNum - the player who is checking for the amount of ships in their fleet
+         * @return the number of ships in a player's fleet
+         */
     public int checkNumPlayerFleet(int playerNum) {
         boolean allSunk0 = false;
         boolean allSunk1 = false;
