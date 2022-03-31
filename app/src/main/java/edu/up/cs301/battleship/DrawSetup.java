@@ -21,7 +21,11 @@ public class DrawSetup extends SurfaceView {
     private ArrayList<BattleshipObj> battleshipArrayList= new ArrayList<>();
     private Paint orangePaint = new Paint();
     private Context context;
+
+
     protected BattleShipGameState state;
+
+
     public DrawSetup(Context context) {//default constructor,
         super(context);
         initPaints();

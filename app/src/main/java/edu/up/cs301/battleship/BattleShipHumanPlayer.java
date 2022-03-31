@@ -24,7 +24,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private BattleShipHumanPlayer reference = this;
     private BattleShipGameState currGS;
     boolean shipIsSelected = false;
-    BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
+    private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
 
     //mid game surface view
     private DrawMidgame midGameView;
@@ -47,11 +47,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             flash(0xFFFF0000, 100);
             return;
         }
+        Log.i("received info", "receiveInfo: NEW INFO ");
         this.reference = this;
         currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
         if(midGameView != null) {
             midGameView.setState(currGS);
         }
+        //test
     }
 
     @Override
@@ -134,8 +136,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
 //                        Log.d("placed ship", "at " + xUp + ", " + yUp);
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
-
-                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
+                        if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
+                            return true;
+                        }
+                        int selectToBoardEnd = 9 - currGS.xyToCoordSetupGame(xUp,yUp).getY() + 1;
 
                         if (selectToBoardEnd < selectedBattleShip.getSize()) {
                             int adjustment = (selectedBattleShip.getSize() - selectToBoardEnd) * 74;
@@ -153,7 +157,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         selectedBattleShip.setLocation(eachShipCoord);
                         if (selectedBattleShip != null) {
                             Log.i("Place ship action", "Sending action");
-                            game.sendAction(new PlaceShip(reference, selectedBattleShip));
+
+                            game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }
 
 //                        if (eachShipCoord != null) {
@@ -163,7 +168,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                                Log.i("Placed Ship", "Placed at" + (eachShipCoord[i].getX() + 1) + ", " + letters[eachShipCoord[i].getY()]);
 //                            }
 //                        }
-                        //
                         return true;
                     }
 

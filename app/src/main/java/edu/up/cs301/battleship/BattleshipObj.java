@@ -48,7 +48,6 @@ public class BattleshipObj {
         this.size = orig.size;
         this.sunk = orig.sunk;
         int i;
-        //Log.i("in BSOBJ", "BattleshipObj: ");
         this.location = new Coordinates[orig.location.length];
         for (i = 0; i < orig.location.length; i++) {
             this.location[i] = new Coordinates(orig.location[i]);
