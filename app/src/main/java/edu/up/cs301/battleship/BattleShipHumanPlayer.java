@@ -85,6 +85,28 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 currGS.setPhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
+
+                //Sets the coordinates of the midgame view to the same ones of the setupview then
+                // you need to change and adjust the coords in the drawMidGamePhase
+                midGameView.setFivehpLeft(setupView.getFivehpLeft());
+                midGameView.setFivehpTop(setupView.getFivehpTop());
+
+                midGameView.setFourhp1Left(setupView.getFourhp1Left());
+                midGameView.setFourhp1Top(setupView.getFourhp1Top());
+
+                midGameView.setFourhp2Left(setupView.getFourhp2Left());
+                midGameView.setFourhp2Top(setupView.getFourhp2Top());
+
+                midGameView.setThreehp1Left(setupView.getThreehp1Left());
+                midGameView.setThreehp1Top(setupView.getThreehp1Top());
+
+                midGameView.setThreehp2Left(setupView.getThreehp2Left());
+                midGameView.setThreehp2Top(setupView.getThreehp2Top());
+
+                midGameView.setTwohpLeft(setupView.getTwohpLeft());
+                midGameView.setTwohpTop(setupView.getTwohpTop());
+                midGameView.invalidate();
+
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -100,12 +122,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             }
                             midGameView.invalidate();
                         }
+
                         return false;
                     }
                 });
             }
         });
-
         setupView = activity.findViewById(R.id.boardView);
 
 
@@ -165,7 +187,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                                Log.i("Placed Ship", "Placed at" + (eachShipCoord[i].getX() + 1) + ", " + letters[eachShipCoord[i].getY()]);
 //                            }
 //                        }
-                        setupView.invalidate();
+
+
                         return true;
                     }
 
@@ -186,6 +209,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                }
                     //currGS.xyToCoordMidGame(x,y);
                     shipIsSelected = true;
+
                     return true;
                 }
             });
@@ -203,6 +227,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 }
             });
 
+
+
+            setupView.invalidate();
+            midGameView.invalidate();
 
             /** On Touch for setupphase*/
 

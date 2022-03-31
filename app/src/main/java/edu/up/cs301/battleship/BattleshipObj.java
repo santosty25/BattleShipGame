@@ -73,6 +73,9 @@ public class BattleshipObj {
         return true;
     }
 
+    public Coordinates getFirstCoord() {
+        return this.location[0];
+    }
 
     public int getSize() {
         return size;
@@ -98,7 +101,7 @@ public class BattleshipObj {
         int i;
         this.location = new Coordinates[location.length];
         Log.i("Size", "" + this.location.length);
-        for (i = 0; i < location.length; i++){
+        for (i = 0; i < location.length; i++) {
 
             this.location[i] = new Coordinates(location[i]);
         }

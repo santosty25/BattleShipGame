@@ -26,23 +26,23 @@ public class DrawSetup extends SurfaceView {
     private Context context;
 
     Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
-    float fivehpLeft = 1814.0f;
-    float fivehpTop = 108.0f;
+    private float fivehpLeft = 1814.0f;
+    private float fivehpTop = 108.0f;
     Bitmap fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-    float fourhp1Left = 1684.0f;
-    float fourhp1Top = 70.0f;
+    private float fourhp1Left = 1684.0f;
+    private float fourhp1Top = 70.0f;
     Bitmap fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-    float fourhp2Left = 1677.0f;
-    float fourhp2Top = 393.0f;
+    private float fourhp2Left = 1677.0f;
+    private float fourhp2Top = 393.0f;
     Bitmap threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-    float threehp1Left = 1828.0f;
-    float threehp1Top = 500.0f;
+    private float threehp1Left = 1828.0f;
+    private float threehp1Top = 500.0f;
     Bitmap threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-    float threehp2Left = 1830.0f;
-    float threehp2Top = 760.0f;
+    private float threehp2Left = 1830.0f;
+    private float threehp2Top = 760.0f;
     Bitmap twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-    float twohpLeft = 1680.0f;
-    float twohpTop = 807.0f;
+    private float twohpLeft = 1680.0f;
+    private float twohpTop = 807.0f;
 
     private int selectedShipId = 0;
 
@@ -181,8 +181,10 @@ public class DrawSetup extends SurfaceView {
 
         int newSize = 0;
 
+
+        //checks which action is happening
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
+            case MotionEvent.ACTION_DOWN: {  //checks which ship is being selected
                 float x = event.getX();
                 float y = event.getY();
                 if (x >= fivehpLeft && x <= fivehpLeft + 70 && y >= fivehpTop && y <= fivehpTop + 360) { // top right ship 5hp
@@ -207,7 +209,7 @@ public class DrawSetup extends SurfaceView {
                 break;
             }
             case MotionEvent.ACTION_MOVE:
-                switch(selectedShipId) {
+                switch(selectedShipId) {   //updatest the ships drawn coordinates to the cursor/finger
                     case 1: {
                         fivehpLeft = event.getX() - 35.0f;
                         fivehpTop = event.getY();
@@ -241,7 +243,7 @@ public class DrawSetup extends SurfaceView {
                 }
                 invalidate();
                 break;
-            case MotionEvent.ACTION_UP: {
+            case MotionEvent.ACTION_UP: { //places it, gets the ship size and sends it back to the human player method
                 switch(selectedShipId) {
                     case 1: {
                         fivehpLeft = event.getX() - 35.0f;
@@ -288,6 +290,43 @@ public class DrawSetup extends SurfaceView {
         return newSize;
     }
 
+    //getters to transfer coordinates from this phase to midgame Draw phase
+    public float getFivehpLeft() {
+        return this.fivehpLeft;
+    }
+    public float getFivehpTop() {
+        return this.fivehpTop;
+    }
+    public float getFourhp1Left() {
+        return this.fourhp1Left;
+    }
+    public float getFourhp1Top() {
+        return this.fourhp1Top;
+    }
+    public float getFourhp2Left() {
+        return this.fourhp2Left;
+    }
+    public float getFourhp2Top() {
+        return this.fourhp2Top;
+    }
+    public float getThreehp1Left() {
+        return this.threehp1Left;
+    }
+    public float getThreehp1Top() {
+        return this.threehp1Top;
+    }
+    public float getThreehp2Left() {
+        return this.threehp2Left;
+    }
+    public float getThreehp2Top() {
+        return this.threehp2Top;
+    }
+    public float getTwohpLeft() {
+        return this.twohpLeft;
+    }
+    public float getTwohpTop() {
+        return this.twohpTop;
+    }
 }
 
 
