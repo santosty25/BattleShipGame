@@ -1,5 +1,6 @@
 package edu.up.cs301.battleship;
 import android.content.Intent;
+import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -137,6 +138,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 return false;
                             }
                             eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
+                            Log.i("Coordinates ", "" + eachShipCoord[i].getX() +  " " + eachShipCoord[i].getY());
                             yUp += 74;
                         }
                         selectedBattleShip.setLocation(eachShipCoord);
@@ -190,6 +192,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     return true;
                 }
             });
+
+
+            /** On Touch for setupphase*/
 
         }
     }
