@@ -176,7 +176,6 @@ public class BattleShipGameState extends GameState {
      */
     public BattleShipGameState(BattleShipGameState copy, int playerNum) {
         //change so that certain information doeesn't get sent to a specific player
-        //add param for specif player
         this.playerID = new int[2];
 
         for(int k = 0; k < 2; k++){
@@ -447,7 +446,26 @@ public class BattleShipGameState extends GameState {
     @Override
     public String toString() {
         if (playersTurn == this.playersTurn) {
-            return "It is Player " + playerID[this.playersTurn] + "'s turn. They have " + remainingShips + " remaining ships.";
+            String player0Fleet = "";
+            String player1Fleet = "";
+            for(int i = 0; i < playersFleet[0].length; i++) {
+                player0Fleet = player0Fleet + " size: " + this.playersFleet[0][i].getSize()
+                        + "Is Sunk: " + this.playersFleet[0][i].getSunk() + "\n";
+            }
+            for(int j = 0; j < playersFleet[1].length; j++) {
+                player0Fleet = player0Fleet + " size: " + this.playersFleet[1][j].getSize()
+                        + "Is Sunk: " + this.playersFleet[1][j].getSunk() + "\n";
+            }
+            //prints all variables
+            return "It is Player " + playerID[this.playersTurn] + "'s turn. They have " + remainingShips + " remaining ships.\n" +
+                    "Player ID: " + playerID[0] + " and " + playerID[1] + "\n" +
+                    "Phase: " + this.phase + "\n" +
+                    "Timer: " + this.timer + " seconds\n" +
+                    "Player " + this.playerID[0] + " has " + this.remainingShips[0] + " left.\n" +
+                    "Player " + this.playerID[1] + " has " + this.remainingShips[1] + " left.\n" +
+                    "GameBoard: 10x10 \n"
+                    + player0Fleet + "\n"
+                    + player1Fleet;
         }
         return "It is not " + playerID[this.playersTurn] + "'s turn.";
     }
