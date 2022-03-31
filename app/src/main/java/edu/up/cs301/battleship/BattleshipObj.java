@@ -96,7 +96,8 @@ public class BattleshipObj {
 
     public void setLocation(Coordinates[] location) {
         int i;
-        for (i = 0; i < this.location.length; i++) {
+        this.location = new Coordinates[location.length];
+        for (i = 0; i < location.length; i++){
             this.location[i] = new Coordinates(location[i]);
         }
     }

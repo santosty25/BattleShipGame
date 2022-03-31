@@ -167,7 +167,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 }
             else if(action instanceof PlaceShip){
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
-                BattleshipObj[][] currentFleet = state.getPlayersFleet();
+                BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
                 int i, j;
                 for (i = 0;  i < 2; i++) {
                     for (j =0; j < 6; j++){
@@ -202,7 +202,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     else if(placeAction.getBattleship().getSize() == 2) {
                         currentFleet[0][5] = new BattleshipObj(placeAction.getBattleship());
                     }
-                    state.setPlayersFleet(currentFleet[0], currentFleet[1]);
+                    state.setPlayersFleet(currentFleet);
                     return true;
 
                 }
@@ -229,7 +229,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     else if(placeAction.getBattleship().getSize() == 2) {
                         currentFleet[1][5] = new BattleshipObj(placeAction.getBattleship());
                     }
-                    state.setPlayersFleet(currentFleet[0], currentFleet[1]);
+                    state.setPlayersFleet(currentFleet);
                     return true;
                 }
 
