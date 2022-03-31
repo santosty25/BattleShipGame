@@ -216,35 +216,53 @@ public class DrawMidgame extends SurfaceView{
             if (playerFleet[0][i].getSize() == 5) {
                 toPlace = playerFleet[0][i].getFirstCoord();
                 fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                if (toPlace.getX() > 7) {
+                    fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                }
                 fivehpTop = state.middleYOfEnemyBoard(toPlace) - 16;
             }
             else if (playerFleet[0][i].getSize() == 4) {
                 if (i == 1) {
                     toPlace = playerFleet[0][i].getFirstCoord();
-                    fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 16.5f;
+                    fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
+                    if (toPlace.getX() > 7) {
+                        fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
                     fourhp1Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
                 else {
                     toPlace = playerFleet[0][i].getFirstCoord();
-                    fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 16.5f;
+                    fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
+                    if (toPlace.getX() > 7) {
+                        fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
                     fourhp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
             }
             else if (playerFleet[0][i].getSize() == 3) {
                 if (i == 3) {
                     toPlace = playerFleet[0][i].getFirstCoord();
-                    threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17;
+                    threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                    if (toPlace.getX() > 7) {
+                        threehp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
                     threehp1Top= state.middleYOfEnemyBoard(toPlace) - 16;
                 }
                 else {
                     toPlace = playerFleet[0][i].getFirstCoord();
-                    threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17;
+                    threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                    if (toPlace.getX() > 7) {
+                        threehp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
                     threehp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
             }
             else if (playerFleet[0][i].getSize() == 2) {
                 toPlace = playerFleet[0][i].getFirstCoord();
                 twohpLeft = state.middleXOfEnemyBoard(toPlace) - 20;
+                if (toPlace.getX() > 7) {
+                    twohpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                }
                 twohpTop = state.middleYOfEnemyBoard(toPlace) - 16;
             }
 
