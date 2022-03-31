@@ -63,7 +63,7 @@ public class BattleShipGameState extends GameState {
 
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
         Coordinates[] locations = new Coordinates[1];
-        locations[0] = new Coordinates(true, true, 0, 0);
+        locations[0] = new Coordinates(true, true, -1, -1);
         int i, j;
         for(i = 0; i < playersFleet.length; i++){
             for(j = 0; j < playersFleet[i].length; j++){

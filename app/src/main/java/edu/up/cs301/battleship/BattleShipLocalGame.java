@@ -168,7 +168,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             else if(action instanceof PlaceShip){
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
                 BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
-                int i, j;
+                int i, j, k;
+
+
                 for (i = 0;  i < 2; i++) {
                     for (j =0; j < 6; j++){
                         if (state.getPlayersFleet()[i][j] != null) {
@@ -176,6 +178,14 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         }
                     }
                 }
+
+                for(j = 0; j < 6; j++){
+                    BattleshipObj onBoard = new BattleshipObj(currentFleet[placeAction.getPlayerNum()][j]);
+                    for(i = 0; i < onBoard.getSize(); i++){
+
+                    }
+                }
+
                 if(placeAction.getPlayerNum() == 0){
                     if(placeAction.getBattleship().getSize() == 5) {
                         Log.i("placing ship size: 0 ", "" + placeAction.getBattleship().getSize());
