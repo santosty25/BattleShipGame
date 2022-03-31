@@ -102,15 +102,30 @@ public class BattleshipObj {
         }
     }
 
-    public boolean checkIfHit() {
-        boolean sunk;
+    public void checkCoordHit(Coordinates coord) {
+        int givenX = coord.getX();
+        int givenY = coord.getY();
         for (int i = 0; i < location.length; i++) {
-            if (location[i].getHit() == true) {
-                sunk = true;
-            } else {
-                sunk = false;
+            int x = location[i].getX();
+            int y = location[i].getY();
+            if(x == givenX && y == givenY) {
+                location[i].setHit(true);
             }
         }
-        return this.sunk;
+    }
+
+    public boolean checkIfHit() {
+        int pointsHit = 0;
+        for (int i = 0; i < location.length; i++) {
+            if (location[i].getHit() == true) {
+                pointsHit++;
+            } else {
+                continue;
+            }
+        }
+        if(this.size == pointsHit) {
+            return true;
+        }
+        return false;
     }
 }
