@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.util.AttributeSet;
@@ -21,6 +22,25 @@ public class DrawMidgame extends SurfaceView{
     public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
 
     protected BattleShipGameState state;
+
+    Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
+    private float fivehpLeft = 1814.0f;
+    private float fivehpTop = 108.0f;
+    Bitmap fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+    private float fourhp1Left = 1684.0f;
+    private float fourhp1Top = 70.0f;
+    Bitmap fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+    private float fourhp2Left = 1677.0f;
+    private float fourhp2Top = 393.0f;
+    Bitmap threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+    private float threehp1Left = 1828.0f;
+    private float threehp1Top = 500.0f;
+    Bitmap threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+    private float threehp2Left = 1830.0f;
+    private float threehp2Top = 760.0f;
+    Bitmap twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
+    private float twohpLeft = 1680.0f;
+    private float twohpTop = 807.0f;
 
     public DrawMidgame(Context context) {//default constructor,
         super(context);
@@ -60,6 +80,8 @@ public class DrawMidgame extends SurfaceView{
         //drawOval(x,y x2, y2, paint);
 
         //
+
+
         Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.battleshipbackground);
         background = Bitmap.createScaledBitmap(background, getWidth(), getHeight(), false);
 
@@ -88,6 +110,13 @@ public class DrawMidgame extends SurfaceView{
         userSelection =  Bitmap.createScaledBitmap(userSelection, 200, 150, false);
 
 
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+
+
+
+
+
         /**
          * Draws everything to surface view, as of now COOR is just giberish and guess work, will work out
          *a formula later
@@ -104,10 +133,46 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), new Paint());
 
         }
+        fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
+        fivehp = Bitmap.createScaledBitmap(fivehp, 120, 25, false);
+        fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
+
+        fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+        fourhp1 = Bitmap.createScaledBitmap(fourhp1, 98, 25, false);
+        fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
+
+        fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+        fourhp2 = Bitmap.createScaledBitmap(fourhp2, 98, 25, false);
+        fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
+
+        //CREATES 3 hp BS #1
+        threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+        threehp1 = Bitmap.createScaledBitmap(threehp1, 72, 20, false);
+        threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
+
+        //CREATES 3 hp BS #2
+        threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+        threehp2 = Bitmap.createScaledBitmap(threehp2, 72, 20, false);
+        threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
+
+        //CREATES 2 hp BS
+        twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
+        twohp = Bitmap.createScaledBitmap(twohp, 45, 20, false);
+        twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
+
+
+
+
+
         if (state == null) {
             Log.i("State is Null", "onDraw: NULL");
             return;
         }
+
+
+
+
+
         //Draw on enemies board
         GameBoard drawBoard = this.state.getBoard(1);
         for (int row = 0; row < 10; row++) {
@@ -132,6 +197,86 @@ public class DrawMidgame extends SurfaceView{
         /**Draw on your board
          * Need to change the center methods
          * */
+
+
+        BattleshipObj[][] playerFleet = new BattleshipObj[2][6];
+        for (int i = 0;  i < 2; i++) {
+            for (int j =0; j < 6; j++){
+                if (state.getPlayersFleet()[i][j] != null) {
+                    playerFleet[i][j] = new BattleshipObj(state.getPlayersFleet()[i][j]);
+                }
+            }
+        }
+
+
+        //Draws the ships according to that user's board taken from the game state
+        Coordinates toPlace = new Coordinates(false,false,0,0);
+
+        for (int i = 0; i < playerFleet[0].length; i++) {
+            if (playerFleet[0][i].getSize() == 5) {
+                toPlace = playerFleet[0][i].getFirstCoord();
+                fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                if (toPlace.getX() > 7) {
+                    fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                }
+                fivehpTop = state.middleYOfEnemyBoard(toPlace) - 16;
+            }
+            else if (playerFleet[0][i].getSize() == 4) {
+                if (i == 1) {
+                    toPlace = playerFleet[0][i].getFirstCoord();
+                    fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
+                    if (toPlace.getX() > 7) {
+                        fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
+                    fourhp1Top = state.middleYOfEnemyBoard(toPlace) - 16;
+                }
+                else {
+                    toPlace = playerFleet[0][i].getFirstCoord();
+                    fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
+                    if (toPlace.getX() > 7) {
+                        fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
+                    fourhp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
+                }
+            }
+            else if (playerFleet[0][i].getSize() == 3) {
+                if (i == 3) {
+                    toPlace = playerFleet[0][i].getFirstCoord();
+                    threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                    if (toPlace.getX() > 7) {
+                        threehp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
+                    threehp1Top= state.middleYOfEnemyBoard(toPlace) - 16;
+                }
+                else {
+                    toPlace = playerFleet[0][i].getFirstCoord();
+                    threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                    if (toPlace.getX() > 7) {
+                        threehp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                    }
+                    threehp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
+                }
+            }
+            else if (playerFleet[0][i].getSize() == 2) {
+                toPlace = playerFleet[0][i].getFirstCoord();
+                twohpLeft = state.middleXOfEnemyBoard(toPlace) - 20;
+                if (toPlace.getX() > 7) {
+                    twohpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                }
+                twohpTop = state.middleYOfEnemyBoard(toPlace) - 16;
+            }
+
+        }
+        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, new Paint());
+        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, new Paint());
+        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, new Paint());
+        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, new Paint());
+        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, new Paint());
+        canvas.drawBitmap(twohp, twohpLeft, twohpTop, new Paint());
+        this.invalidate();
+
+
+//        drawEnemyBoard = this.state.getBoard(0);
         GameBoard drawEnemyBoard = this.state.getBoard(0);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
@@ -152,6 +297,44 @@ public class DrawMidgame extends SurfaceView{
                 }
             }
         }
+    }
 
+
+    //Setters to get positions of battleships from setup phase
+    public void setFivehpLeft(float newValue) {
+        fivehpLeft = newValue;
+    }
+    public void setFivehpTop(float newValue) {
+        fivehpTop = newValue;
+    }
+    public void setFourhp1Left(float newValue) {
+        fourhp1Left = newValue;
+    }
+    public void setFourhp1Top(float newValue) {
+        fourhp1Top = newValue;
+    }
+    public void setFourhp2Left(float newValue) {
+        fourhp2Left = newValue;
+    }
+    public void setFourhp2Top(float newValue) {
+        fourhp2Top = newValue;
+    }
+    public void setThreehp1Left(float newValue) {
+        threehp1Left = newValue;
+    }
+    public void setThreehp1Top(float newValue) {
+        threehp1Top = newValue;
+    }
+    public void setThreehp2Left(float newValue) {
+        threehp2Left = newValue;
+    }
+    public void setThreehp2Top(float newValue) {
+        threehp2Top = newValue;
+    }
+    public void setTwohpLeft(float newValue) {
+        twohpLeft = newValue;
+    }
+    public void setTwohpTop(float newValue) {
+        twohpTop = newValue;
     }
 }
