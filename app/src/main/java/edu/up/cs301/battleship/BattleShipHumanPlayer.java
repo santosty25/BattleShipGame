@@ -113,7 +113,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
         if (shipIsSelected == false) {
             gameView.setOnTouchListener(new View.OnTouchListener() {
-                //update
+                //updatesss
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                         float x = motionEvent.getX();
