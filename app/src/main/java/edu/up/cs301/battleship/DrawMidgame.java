@@ -134,7 +134,7 @@ public class DrawMidgame extends SurfaceView{
 
         }
         fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
-        fivehp = Bitmap.createScaledBitmap(fivehp, 123, 25, false);
+        fivehp = Bitmap.createScaledBitmap(fivehp, 130, 25, false);
         fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
 
         fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
