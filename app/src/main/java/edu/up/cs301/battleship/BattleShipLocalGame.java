@@ -68,8 +68,8 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
          */
         @Override
         protected String checkIfGameOver() {
-            BattleShipGameState state = (BattleShipGameState) super.state;
-            int winner = state.checkPlayerFleet();
+            BattleShipGameState gameState = (BattleShipGameState) super.state;
+            int winner = gameState.checkPlayerFleet();
             if (winner == 0) {
                 return "Player 0 has won.";
             }
