@@ -121,16 +121,16 @@ public class DrawMidgame extends SurfaceView{
          * Draws everything to surface view, as of now COOR is just giberish and guess work, will work out
          *a formula later
          */
-        canvas.drawBitmap(background, 0.0f, 0.0f, new Paint());
-        canvas.drawBitmap(grid, 550.0f, 25.0f, new Paint());
-        canvas.drawBitmap(playersGrid, 50.0f, 600.0f, new Paint());
-        canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, new Paint());
+        canvas.drawBitmap(background, 0.0f, 0.0f, blackPaint);
+        canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
+        canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
+        canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
 //        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(userSelection, 540.0f, 450.0f, new Paint());
         for(TapValues tap : tapValues){
             Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
-            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), new Paint());
+            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
 
         }
         fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
@@ -185,10 +185,10 @@ public class DrawMidgame extends SurfaceView{
                     float yVal = state.middleYOfCoord(board[row][col]) - (195.0f - yDrift) ;
                     float xVal = state.middleXOfCoord(board[row][col]) - (226.0f - xDrift);
                     if(board[row][col].getHasShip()){
-                        canvas.drawBitmap(redMarker, xVal, yVal, new Paint());
+                        canvas.drawBitmap(redMarker, xVal, yVal,blackPaint);
                     }
                     else {
-                        canvas.drawBitmap(whiteMarker, xVal, yVal, new Paint());
+                        canvas.drawBitmap(whiteMarker, xVal, yVal, blackPaint);
                     }
                     this.invalidate();
                 }
@@ -267,12 +267,12 @@ public class DrawMidgame extends SurfaceView{
             }
 
         }
-        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, new Paint());
-        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, new Paint());
-        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, new Paint());
-        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, new Paint());
-        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, new Paint());
-        canvas.drawBitmap(twohp, twohpLeft, twohpTop, new Paint());
+        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
+        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
+        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
+        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
         this.invalidate();
 
 
@@ -288,10 +288,10 @@ public class DrawMidgame extends SurfaceView{
                     float yVal = state.middleYOfEnemyBoard(board[row][col])  - (75 + yDrift);
                     float xVal = state.middleXOfEnemyBoard(board[row][col]) - (82 + xDrift);
                     if(board[row][col].getHasShip()){
-                        canvas.drawBitmap(enemyRedMarker, xVal, yVal, new Paint());
+                        canvas.drawBitmap(enemyRedMarker, xVal, yVal, blackPaint);
                     }
                     else {
-                        canvas.drawBitmap(enemyWhiteMarker, xVal, yVal, new Paint());
+                        canvas.drawBitmap(enemyWhiteMarker, xVal, yVal, blackPaint);
                     }
                     this.invalidate();
                 }

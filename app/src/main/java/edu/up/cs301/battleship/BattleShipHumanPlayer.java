@@ -146,7 +146,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if (newSize < 0 || newSize >= 6) {
                             return false;
                         }
-                        //Force
                     if (motionEvent.getAction() == motionEvent.ACTION_UP) {
                         float xUp = motionEvent.getX();
                         float yUp = motionEvent.getY();
