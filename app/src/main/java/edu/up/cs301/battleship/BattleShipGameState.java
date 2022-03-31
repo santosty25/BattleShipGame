@@ -3,6 +3,8 @@ package edu.up.cs301.battleship;
 import android.app.GameManager;
 import android.util.Log;
 
+import javax.security.auth.login.LoginException;
+
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 //import androidx.appcompat.widget.AppCompatRadioButton$InspectionCompanion;
@@ -62,10 +64,10 @@ public class BattleShipGameState extends GameState {
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
         Coordinates[] locations = new Coordinates[1];
         locations[0] = new Coordinates(true, true, 0, 0);
-        BattleshipObj testShip = new BattleshipObj(1, locations);
         int i, j;
         for(i = 0; i < playersFleet.length; i++){
             for(j = 0; j < playersFleet[i].length; j++){
+                BattleshipObj testShip = new BattleshipObj(1, locations);
                 playersFleet[i][j] = new BattleshipObj(testShip);
             }
         }
@@ -187,20 +189,25 @@ public class BattleShipGameState extends GameState {
         this.playersTurn = copy.playersTurn;
         this.timer = copy.timer;
         this.phase = copy.phase;
+        Log.i("remaining shpis", "BattleShipGameState: " + copy.remainingShips[0]);
         this.remainingShips = copy.remainingShips;
-        this.playersFleet = new BattleshipObj[playerID.length][6];
+        this.playersFleet = new BattleshipObj[2][6];
 
-        int i;
+        int i, j;
         //Log.i("Test", "before Players fleet for loop");
-        for (i = 0;  i < 6; i++) {
-                //Log.i("Test", i + " " + j);
-                if(copy.playersFleet[playerNum][i] == null){
-                    Log.i("SHIP IS NULL", "NULL index " + i);
+        for (i = 0;  i < 2; i++) {
+            for (j = 0; j < 6; j++){
+                this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
+                if(i == 0) {
+                    Log.i("SHIP INFO", "Length " + this.playersFleet[i][j].getSize());
+                    Coordinates[] arrayTest = this.playersFleet[i][j].getLocation();
+                    int k;
+                    for(k = 0; k < arrayTest.length; k++){
+                        Log.i("coordinates", "" + arrayTest[k].getX() + " " + arrayTest[k].getY());
+                    }
+                    Log.i("====================", " ");
                 }
-                else {
-                    this.playersFleet[playerNum][i] = new BattleshipObj(copy.playersFleet[playerNum][i]);
-                }
-
+            }
         }
         //Log.i("Test", "after Players fleet for loop");
 
@@ -253,8 +260,6 @@ public class BattleShipGameState extends GameState {
                     toPlace[i].getX() >= 1 && toPlace[i].getY() >= 1) {
                 ship.setLocation(toPlace);
                 this.playersFleet[playerNum][0] = new BattleshipObj(ship);
-
-
                 return true;
             }
         }
@@ -319,21 +324,15 @@ public class BattleShipGameState extends GameState {
 
     /**
      * setPlayersFleet - Sets each player's fleet with given ships
-     * @param playerOneShips - an array of BattleshipObj that player 1 has
-     * @param playerZeroShips - an array of BattleshipObj that player 0 has
+     * @param fleets - a 2d array of battleship objects
      */
-    public void setPlayersFleet(BattleshipObj[] playerZeroShips, BattleshipObj[] playerOneShips){
-        for(int i = 0; i < playerZeroShips.length; i++){
-            if(playerZeroShips[i] != null) {
-                this.playersFleet[0][i] = new BattleshipObj(playerZeroShips[i]);
-                Log.i("setting player 0 fleet ", "SIZE " + playersFleet[0][i].getSize() + "index" + i);
+    public void setPlayersFleet(BattleshipObj[][] fleets){
+        int i, j;
+        for(i = 0; i < 2; i++){
+            for(j = 0; j < 6; j++){
+                this.playersFleet[i][j] = new BattleshipObj(fleets[i][j]);
             }
         }
-        for(int i = 0; i < playerOneShips.length; i++){
-            if(playerOneShips[i]!=null) {
-                this.playersFleet[1][i] = new BattleshipObj(playerOneShips[i]);
-            }
-            }
     }
 
     /**

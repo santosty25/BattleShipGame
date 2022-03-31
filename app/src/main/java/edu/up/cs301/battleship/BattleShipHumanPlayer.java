@@ -1,5 +1,6 @@
 package edu.up.cs301.battleship;
 import android.content.Intent;
+import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -135,7 +136,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             Log.i("Selected ship is", "selected ship is size " + selectedBattleShip.getSize());
                         }
 //                        Log.d("placed ship", "at " + xUp + ", " + yUp);
-                        Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                         if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
                             return true;
                         }
@@ -145,13 +145,15 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             int adjustment = (selectedBattleShip.getSize() - selectToBoardEnd) * 74;
                             yUp -= adjustment;
                         }
-
-                        for (int i = 0; i < selectedBattleShip.getSize(); i++) {
+                        Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
+                        for (int i = 0; i < selectedBattleShip.getSize(); i++){
+                            Log.i("Selected size", "" + selectedBattleShip.getSize());
                             if (currGS.getBoard(playerNum).getHasShip()) {
                                 Log.i("Invalid Place", "Ship already placed here");
                                 return false;
                             }
                             eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
+                            Log.i("Coordinates ", "" + eachShipCoord[i].getX() +  " " + eachShipCoord[i].getY());
                             yUp += 74;
                         }
                         selectedBattleShip.setLocation(eachShipCoord);
