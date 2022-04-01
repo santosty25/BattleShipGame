@@ -113,8 +113,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         if (whoseTurn == 0) {
                             for(i = 0; i < shipsOnBoard[1].length; i++){
                                 Log.i("length", "ships " + shipsOnBoard[1].length);
-                                for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){
+                                for(j = 0; j < shipsOnBoard[1][i].getLocation().length; j++){//Reads locations of opponents board
                                     if(shipsOnBoard[1][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[1][i].getLocation()[j].getY() == coord.getY()){
+                                        //Checks if the coordinate sent with the fire action has a ship on it
                                         //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
                                         Coordinates[][] enemyBoard = state.getBoard(1).getCurrentBoard();
                                         enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
@@ -134,8 +135,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         } else { //PLAYER 1's turn
                             for(i = 0; i < shipsOnBoard[0].length; i++){
                                 Log.i("length", "ships " + shipsOnBoard[0].length);
-                                for(j = 0; j < shipsOnBoard[0][i].getLocation().length; j++){
+                                for(j = 0; j < shipsOnBoard[0][i].getLocation().length; j++){ //Reads locations of opponents board
                                     if(shipsOnBoard[0][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[0][i].getLocation()[j].getY() == coord.getY()){
+                                        //Checks if the coordinate sent with the fire action has a ship on it
                                         //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
                                         Log.i("SUCCESSFUL SHOT", "makeMove: ");
                                         Coordinates[][] enemyBoard = state.getBoard(0).getCurrentBoard();
@@ -161,7 +163,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
                 int i, j, k;
 
-
+                //Creates a local copy of both players boards=
                 for (i = 0;  i < 2; i++) {
                     for (j =0; j < 6; j++){
                         if (state.getPlayersFleet()[i][j] != null) {
@@ -169,28 +171,20 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         }
                     }
                 }
-
-                for(j = 0; j < 6; j++){
-                    BattleshipObj onBoard = new BattleshipObj(currentFleet[placeAction.getPlayerNum()][j]);
-                    for(i = 0; i < onBoard.getSize(); i++){
-                        for(k = 0; k < placeAction.getBattleship().getSize(); k++){
-                            if(placeAction.getBattleship().getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
-                                    placeAction.getBattleship().getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
-                                Log.i("SAME COORDS", "makeMove: ");
-                                return false;
-                                //push
-                            }
-                        }
-                    }
+                //Checking if the any ships coordinates match, if they do its an illegal placement
+                if( state.placeShip(currentFleet, placeAction.getBattleship(), placeAction.getPlayerNum()) == false){
+                    return false;
                 }
+
                 Log.i("MAKING MOVE", "makeMove: " +  placeAction.getBattleship().getSize());
                 if(placeAction.getPlayerNum() == 0){
-                    if(placeAction.getBattleship().getSize() == 5) {
+                    if(placeAction.getBattleship().getSize() == 5) { //Ship of size 5 is placed at index 0
                         Log.i("placing ship size: 0 ", "" + placeAction.getBattleship().getSize());
                         currentFleet[0][0] = new BattleshipObj(placeAction.getBattleship());
                     }
                     else if(placeAction.getBattleship().getSize() == 4){
                         if(placeAction.getBattleship().getTwinShip() == 0){
+                            //Because there are two ships of the same length we need to identify which is which
                             Log.i("placing ship size: 0", "4");
                             currentFleet[0][1] = new BattleshipObj(placeAction.getBattleship());
                         }
@@ -214,7 +208,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     return true;
 
                 }
-                else if(placeAction.getPlayerNum() == 1){
+                else if(placeAction.getPlayerNum() == 1){ //Adding a ship to player ones fleet
                     if(placeAction.getBattleship().getSize() == 5) {
                         currentFleet[1][0] = new BattleshipObj(placeAction.getBattleship());
                     }
@@ -242,9 +236,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 }
 
             }
-            //}
-            //add else statement for placeShip Action
-
 
             return false;
         }

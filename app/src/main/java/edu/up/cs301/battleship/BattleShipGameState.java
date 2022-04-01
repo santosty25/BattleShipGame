@@ -274,22 +274,26 @@ public class BattleShipGameState extends GameState {
 
     /**
      * placeShip - Checks to see if the coordinates the player has picked
-     * are in bounds of board and a ship isn't already placed there
-     * @param ship
-     * @param toPlace
+     * doesnt already have another ship on it
+     * @param currentFleet
+     * @param placedShip
+     * @param playerNum
      * @return true or false depnding on whether the player can place a ship on the board
      */
-    public boolean placeShip(BattleshipObj ship, Coordinates[] toPlace, int playerNum) {
-        int i;
-        for (i = 0; i < toPlace.length; i++) {
-            if (toPlace[i].getX() <= 10 && toPlace[i].getY() <= 10 &&
-                    toPlace[i].getX() >= 1 && toPlace[i].getY() >= 1) {
-                ship.setLocation(toPlace);
-                this.playersFleet[playerNum][0] = new BattleshipObj(ship);
-                return true;
+    public boolean placeShip(BattleshipObj[][] currentFleet, BattleshipObj placedShip, int playerNum) {
+        int i, j, k;
+        for(j = 0; j < 6; j++){ //Grabs all 6 ships from the current players fleet
+            BattleshipObj onBoard = new BattleshipObj(currentFleet[playerNum][j]);
+            for(i = 0; i < onBoard.getSize(); i++){ //size of the boats already placed
+                for(k = 0; k < placedShip.getSize(); k++){ //size of boat about to be placed
+                    if(placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
+                            placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
+                        return false; //if any of the two ships coordinates are the same returns false
+                    }
+                }
             }
         }
-        return false;
+        return true;
     }
 
     /**
