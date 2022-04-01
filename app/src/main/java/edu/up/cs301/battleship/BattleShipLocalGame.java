@@ -14,7 +14,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
      * @author Austen Furutani
      * @author Keoni Han
      * @author Steven Lee
-     * @version 3/22/22
+     * @version 3/31/22
      */
     public class BattleShipLocalGame extends LocalGame {
         private BattleShipGameState localState;
@@ -156,11 +156,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         }
                         return true;
                     }
-                    else{
-                        //flash
-                    }
                 }
             else if(action instanceof PlaceShip){
+                //set player's fleet
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
                 BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
                 int i, j, k;

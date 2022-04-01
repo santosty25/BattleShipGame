@@ -1,5 +1,15 @@
 package edu.up.cs301.battleship;
 
+/**
+ * TapValues - A class that represents the values of where the player
+ * has touched on the grid.
+ *
+ * @author Austen Furutani
+ * @author Keoni Han
+ * @author Tyler Santos
+ * @author Steven Lee
+ * @version Spring 2022 - 3/31/22
+ */
 public class TapValues {
     private int x;
     private int y;

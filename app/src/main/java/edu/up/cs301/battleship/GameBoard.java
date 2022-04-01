@@ -9,7 +9,7 @@ import android.util.Log;
  * @author Keoni Han
  * @author Steven Lee
  * @author Tyler Santos
- * @version Spring 2022 - 2/22/22
+ * @version Spring 2022 - 3/31/22
  */
 public class GameBoard extends Coordinates {
     private Coordinates currentBoard[][]; //a Coordinate array representing the board
@@ -73,6 +73,11 @@ public class GameBoard extends Coordinates {
         return this.currentBoard[row][col].getHit();
     }
 
+    /**
+     * getCurrentBoard - Gets the current 2D array of Coordinates for the game board
+     * and state of each coordinate on the board.
+     * @return - the current game board
+     */
     public Coordinates[][] getCurrentBoard() {
         return currentBoard;
     }
