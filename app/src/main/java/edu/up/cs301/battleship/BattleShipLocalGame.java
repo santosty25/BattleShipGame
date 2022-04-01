@@ -71,10 +71,10 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             BattleShipGameState gameState = (BattleShipGameState) super.state;
             int winner = gameState.checkPlayerFleet();
             if (winner == 0) {
-                return "Player 0 has won.";
+                return "Player 0 has won. ";
             }
             else if (winner == 1) {
-                return "Player 1 has won.";
+                return "Player 1 has won. ";
             }
             return null;
         }
@@ -179,12 +179,18 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     }
                 }
 
-//                for(j = 0; j < 6; j++){
-//                    BattleshipObj onBoard = new BattleshipObj(currentFleet[placeAction.getPlayerNum()][j]);
-//                    for(i = 0; i < onBoard.getSize(); i++){
-//
-//                    }
-//                }
+                for(j = 0; j < 6; j++){
+                    BattleshipObj onBoard = new BattleshipObj(currentFleet[placeAction.getPlayerNum()][j]);
+                    for(i = 0; i < onBoard.getSize(); i++){
+                        for(k = 0; k < placeAction.getBattleship().getSize(); k++){
+                            if(placeAction.getBattleship().getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
+                                    placeAction.getBattleship().getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
+                                Log.i("SAME COORDS", "makeMove: ");
+                                return false;
+                            }
+                        }
+                    }
+                }
                 Log.i("MAKING MOVE", "makeMove: " +  placeAction.getBattleship().getSize());
                 if(placeAction.getPlayerNum() == 0){
                     if(placeAction.getBattleship().getSize() == 5) {
@@ -192,7 +198,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         currentFleet[0][0] = new BattleshipObj(placeAction.getBattleship());
                     }
                     else if(placeAction.getBattleship().getSize() == 4){
-                        if(currentFleet[0][1].getSize() == 1){
+                        if(placeAction.getBattleship().getTwinShip() == 0){
                             Log.i("placing ship size: 0", "4");
                             currentFleet[0][1] = new BattleshipObj(placeAction.getBattleship());
                         }
@@ -202,7 +208,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         }
                     }
                     else if(placeAction.getBattleship().getSize() == 3){
-                        if(currentFleet[0][3].getSize() == 1){
+                        if(placeAction.getBattleship().getTwinShip() == 0){
                             currentFleet[0][3] = new BattleshipObj(placeAction.getBattleship());
                         }
                         else{

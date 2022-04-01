@@ -141,7 +141,40 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
 
-                        int newSize = setupView.onTouchEventNew(motionEvent);
+                        int shipId = setupView.onTouchEventNew(motionEvent);
+                    Log.i("SHIP ID", "onTouch: " + shipId);
+                    int newSize = 0;
+                    switch(shipId) {
+                        case 1: {
+                            newSize = 5;
+                            break;
+                        }
+                        case 2: {
+                            newSize = 4;
+                            selectedBattleShip.setTwinShip(0);
+                            break;
+                        }
+                        case 3: {
+                            newSize = 4;
+                            selectedBattleShip.setTwinShip(1);
+                            break;
+                        }
+                        case 4: {
+                            newSize = 3;
+                            selectedBattleShip.setTwinShip(0);
+                            break;
+                        }
+                        case 5: {
+                            newSize = 3;
+                            selectedBattleShip.setTwinShip(1);
+                            break;
+                        }
+                        case 6: {
+                            newSize = 2;
+                            break;
+                        }
+                    }
+
                         selectedBattleShip.setSize(newSize);
                         if (newSize < 0 || newSize >= 6) {
                             return false;

@@ -17,6 +17,7 @@ public class BattleshipObj {
     private int size; //the size of this battleship
     private boolean sunk; //boolean that states whether this battleship has been sunk
     private Coordinates[] location; //the location of this battleship
+    private int twinShip;
 
 
     /**
@@ -28,6 +29,7 @@ public class BattleshipObj {
      */
     public BattleshipObj(int size, Coordinates[] location) {
         this.size = size;
+        this.twinShip = 0;
         this.sunk = false;
         this.location = new Coordinates[this.size];
         //Log.i("in battleship", "BEFORE LOOP");
@@ -47,6 +49,7 @@ public class BattleshipObj {
     public BattleshipObj(BattleshipObj orig) {
         this.size = orig.size;
         this.sunk = orig.sunk;
+        this.twinShip = orig.twinShip;
         int i;
         this.location = new Coordinates[orig.location.length];
         for (i = 0; i < orig.location.length; i++) {
@@ -85,6 +88,10 @@ public class BattleshipObj {
         return sunk;
     }
 
+    public int getTwinShip() {
+        return twinShip;
+    }
+
     public Coordinates[] getLocation() {
         return location;
     }
@@ -95,6 +102,10 @@ public class BattleshipObj {
 
     public void setSunk(boolean sunk) {
         this.sunk = sunk;
+    }
+
+    public void setTwinShip(int twinShip) {
+        this.twinShip = twinShip;
     }
 
     public void setLocation(Coordinates[] location) {

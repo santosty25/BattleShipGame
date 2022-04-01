@@ -1,5 +1,10 @@
 package edu.up.cs301.battleship;
 
+import android.os.Bundle;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -18,7 +23,6 @@ public class BattleShipMainActivity extends GameMainActivity {
     private static final String TAG = "TTTMainActivity";
     public static final int PORT_NUMBER = 6785;
 
-    @Override
     public GameConfig createDefaultConfig() {
         // Define the allowed player types
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
