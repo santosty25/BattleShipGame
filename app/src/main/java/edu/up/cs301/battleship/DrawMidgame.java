@@ -216,12 +216,6 @@ public class DrawMidgame extends SurfaceView{
             if (playerFleet[0][i].getSize() == 5) {
                 toPlace = playerFleet[0][i].getFirstCoord();
                 fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
-                if (toPlace.getX() > 7) {
-                    fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
-                }
-                else if (toPlace.getX() < 4) {
-                    fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
-                }
                 fivehpTop = state.middleYOfEnemyBoard(toPlace) - 16;
             }
             else if (playerFleet[0][i].getSize() == 4) {

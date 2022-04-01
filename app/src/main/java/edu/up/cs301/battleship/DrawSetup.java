@@ -131,17 +131,17 @@ public class DrawSetup extends SurfaceView {
         /**
          *Draws static elements onto screen
          */
-        canvas.drawBitmap(background, 0.0f, 0.0f, new Paint());
-        canvas.drawBitmap(grid, 550.0f, 25.0f, new Paint());
+        canvas.drawBitmap(background, 0.0f, 0.0f, blackPaint);
+        canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
 
         canvas.drawRect(1650.0f, 50.0f, 1900, 1050, orangePaint);
 
-        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, new Paint());
-        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, new Paint());
-        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, new Paint());
-        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, new Paint());
-        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, new Paint());
-        canvas.drawBitmap(twohp, twohpLeft, twohpTop, new Paint());
+        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
+        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
+        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
+        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
 
         if (state == null) {
             Log.i("State is Null", "onDraw: NULL");
@@ -248,46 +248,40 @@ public class DrawSetup extends SurfaceView {
                     case 1: {
                         fivehpLeft = event.getX() - 35.0f;
                         fivehpTop = event.getY();
-                        newSize = 5;
                         break;
                     }
                     case 2: {
                         fourhp1Left = event.getX() - 35.0f;
                         fourhp1Top = event.getY();
-                        newSize = 4;
                         break;
                     }
                     case 3: {
                         fourhp2Left = event.getX() - 35.0f;
                         fourhp2Top = event.getY();
-                        newSize = 4;
                         break;
                     }
                     case 4: {
                         threehp1Left = event.getX() - 35.0f;
                         threehp1Top = event.getY();
-                        newSize = 3;
                         break;
                     }
                     case 5: {
                         threehp2Left = event.getX() - 35.0f;
                         threehp2Top = event.getY();
-                        newSize = 3;
                         break;
                     }
                     case 6: {
                         twohpLeft = event.getX() - 35.0f;
                         twohpTop = event.getY();
-                        newSize = 2;
                         break;
                     }
                 }
-                selectedShipId = 0;
+                //selectedShipId = 0;
                 invalidate();
                 break;
             }
         }
-        return newSize;
+        return selectedShipId;
     }
 
     //getters to transfer coordinates from this phase to midgame Draw phase
