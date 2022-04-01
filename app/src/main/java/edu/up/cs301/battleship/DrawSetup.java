@@ -18,6 +18,15 @@ import java.util.ArrayList;
 
 import edu.up.cs301.game.R;
 
+/**
+ * DrawSetup - A SurfaceView Class that represents what is being drawn during
+ * the setup phase of the game.
+ *
+ * @author Austen Furutani
+ * @author Keoni Han
+ * @author Tyler Santos
+ * @author Steven Lee
+ */
 public class DrawSetup extends SurfaceView {
 
     private Paint blackPaint = new Paint();

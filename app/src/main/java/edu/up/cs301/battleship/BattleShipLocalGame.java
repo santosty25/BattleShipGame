@@ -14,7 +14,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
      * @author Austen Furutani
      * @author Keoni Han
      * @author Steven Lee
-     * @version 3/22/22
+     * @version 3/31/22
      */
     public class BattleShipLocalGame extends LocalGame {
         private BattleShipGameState localState;
@@ -98,17 +98,10 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 enemy = 1;
             }
             GameBoard board = state.getBoard(enemy); //the enemy's board
-            //int remainingShips = state.getRemainingShips(); //the number of remaining ships
             Log.i("Players turn ", "makeMove: " + whoseTurn);
 
             if(action instanceof Fire) {
                 Log.i("fire action", "Instance of fire action ");
-//                if(phase != 1) {
-//                    Log.i("test", " wrong phase " + phase);
-//                    //checks if the phase is in battle phase
-//                    return false;
-//                }
-                //else {
                     //get the coordinate given by the player and calls the fire method in gamestate
                     Coordinates coord = ((Fire) action).getCoord();
                     if (state.canFire(coord)) { //If the coord has NOT already been hit
@@ -161,11 +154,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         }
                         return true;
                     }
-                    else{
-                        //flash
-                    }
                 }
             else if(action instanceof PlaceShip){
+                //set player's fleet
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
                 BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
                 int i, j, k;

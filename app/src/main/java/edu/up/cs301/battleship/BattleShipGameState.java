@@ -17,7 +17,7 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @author Keoni Han
  * @author Steven Lee
  * @author Tyler Santos
- * @version Spring 2022 - 2/22/22
+ * @version Spring 2022 - 3/31/22
  */
 public class BattleShipGameState extends GameState {
     //add static instance variables for phases
@@ -498,27 +498,63 @@ public class BattleShipGameState extends GameState {
         return "It is not " + playerID[this.playersTurn] + "'s turn.";
     }
 
+    /**
+     * getBoard - Gets a specific player's boars.
+     * @param playerNum
+     * @return the player's board
+     */
     public GameBoard getBoard(int playerNum) {
         return this.playersBoard[playerNum];
     }
 
+    /**
+     * getPlayersTurn - Gets whose turn it currently is.
+     * @return - The player whose turn it is
+     */
     public int getPlayersTurn(){
         return this.playersTurn;
     }
 
+    /**
+     * getPlayerID - Gets the playerID.
+     * @return - The playerID of whose turn it is
+     */
     public int getPlayerID() { return this.playerID[playersTurn]; }
 
+    //SAVED FOR BETA RELEASE
+    /**
+     * getTimer - Gets the timer.
+     * @return - The timer
+     */
     public int getTimer() { return this.timer; }
 
+    /**
+     * getPhase - Gets the current phase of the game.
+     * @return - The current phase
+     */
     public int getPhase() { return this.phase; }
 
+    //SAVED FOR BETA RELEASE
+    /**
+     * getRemainingShips - Gets the number of remaining ships for a specific player.
+     * @param playerNum - the player number
+     * @return - The number of remaining ships of a player
+     */
     public int getRemainingShips(int playerNum) { return this.remainingShips[playerNum];}
 
+    /**
+     * setPhase - Sets the phase of the game
+     * @param changePhase - the given phase
+     */
     public void setPhase(int changePhase) {
         Log.i("Phase", "setPhase: " + changePhase);
         this.phase = changePhase;
     }
 
+    /**
+     * setPlayersTurn - Sets the players turn.
+     * @param initTurn - the player whose turn is next
+     */
     public void setPlayersTurn(int initTurn) {
         playersTurn = initTurn;
     }
@@ -561,7 +597,7 @@ public class BattleShipGameState extends GameState {
         return 2;
     }
 
-
+    //SAVED FOR BETA RELEASE
     /**
      * checkNumPlayerFleet - Checks the number of ships in a player's fleet
      * @param playerNum - the player who is checking for the amount of ships in their fleet
@@ -598,6 +634,7 @@ public class BattleShipGameState extends GameState {
         return this.remainingShips[playerNum];
     }
 
+    //SAVED FOR BETA RELEASE
     /**
      * checkIndividualShip - Checks whether a specific ship has been sunk/
      * @param shipSize - the size of the ship that is being checked
@@ -624,10 +661,15 @@ public class BattleShipGameState extends GameState {
         return sunk;
     }
 
+    /**
+     * getPlayersFleet - gets the player's fleet
+     * @return - the player's fleet
+     */
     public BattleshipObj[][] getPlayersFleet() {
         return playersFleet;
     }
 
+    //SAVED FOR BETA RELEASE
     /**
      * checkAllShipsSunk - Checks if each coord on a ship has been hit.
      * @param playerNum

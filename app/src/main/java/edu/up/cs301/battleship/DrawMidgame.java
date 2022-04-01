@@ -16,6 +16,16 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.R;
 import edu.up.cs301.tictactoe.infoMessage.TTTState;
 
+/**
+ * DrawMidgame - A SurfaceView class that represents what is drawn during the
+ * mid game/battle phase.
+ *
+ * @author Keoni Han
+ * @author Austen Furutani
+ * @author Tyler Santos
+ * @author Steven Lee
+ * @version Spring 2022 - 3/31/22
+ */
 public class DrawMidgame extends SurfaceView{
     private Paint blackPaint = new Paint();
     private Context context;
