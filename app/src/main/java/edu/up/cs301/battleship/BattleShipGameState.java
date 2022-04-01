@@ -494,7 +494,7 @@ public class BattleShipGameState extends GameState {
                     "Timer: " + this.timer + " seconds\n" +
                     "Player " + this.playerID[0] + " has " + this.remainingShips[0] + " left.\n" +
                     "Player " + this.playerID[1] + " has " + this.remainingShips[1] + " left.\n" +
-                    "GameBoard: 10x10 \n"
+                    "GameBoard: " + this.playersBoard + " \n"
                     + player0Fleet + "\n"
                     + player1Fleet;
         }
