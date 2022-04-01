@@ -17,7 +17,7 @@ public class BattleshipObj {
     private int size; //the size of this battleship
     private boolean sunk; //boolean that states whether this battleship has been sunk
     private Coordinates[] location; //the location of this battleship
-    private int twinShip;
+    private int twinShip; //for when there are 2 ships of the same size
 
 
     /**
@@ -76,38 +76,77 @@ public class BattleshipObj {
         return true;
     }
 
+    /**
+     * getFirstCoord - Gets the first coordinate of a battle ship.
+     * @return - the first coordinate
+     */
     public Coordinates getFirstCoord() {
         return this.location[0];
     }
 
+    /**
+     * getSize - Gets the size of the battleship.
+     * @return - the size of the battleship
+     */
     public int getSize() {
         return size;
     }
 
+    /**
+     * getSunk - Gets the state of the battleship if it is sunk or not
+     * @return - the boolean stating whether a ship has been sunk or not
+     */
     public boolean getSunk() {
         return sunk;
     }
 
+    /**
+     * getTwinShip - Gets an integer value that represents whether there
+     * is two ships of the same size.
+     * @return 0 - not a twin ship
+     *         1 - is a twin ship
+     */
     public int getTwinShip() {
         return twinShip;
     }
 
+    /**
+     * getLocation - Gets the location of a battleship.
+     * @return - an array of Coordinates
+     */
     public Coordinates[] getLocation() {
         return location;
     }
 
+    /**
+     * setSize - Sets the size of the battleship.
+     * @param size - a given size
+     */
     public void setSize(int size) {
         this.size = size;
     }
 
+    /**
+     * setSunk - Sets the battleship to sunk or not sunk
+     * @param sunk - whether a ship is sunk or not
+     */
     public void setSunk(boolean sunk) {
         this.sunk = sunk;
     }
 
+    /**
+     * setTwinShip - Sets an integer value to determine whether a ship
+     * is a part of twins or not.
+     * @param twinShip - whether a ship is a twin or not
+     */
     public void setTwinShip(int twinShip) {
         this.twinShip = twinShip;
     }
 
+    /**
+     * setLocation - Sets the location of a ship to a given Coordinates array.
+     * @param location - the location where it is to be placed
+     */
     public void setLocation(Coordinates[] location) {
         int i;
         this.location = new Coordinates[location.length];
@@ -118,6 +157,10 @@ public class BattleshipObj {
         }
     }
 
+    /**
+     * checkCoordHit - Checks if a coordinate of the battleship has been hit.
+     * @param coord - a given coordinate
+     */
     public void checkCoordHit(Coordinates coord) {
         int givenX = coord.getX();
         int givenY = coord.getY();
@@ -130,6 +173,11 @@ public class BattleshipObj {
         }
     }
 
+    /**
+     * checkIfHit - Checks if a battleships has been sunk.
+     * @return true if a part of the ship has been sunk
+     *         false if a part of the ship hasn't been sunk
+     */
     public boolean checkIfHit() {
         int pointsHit = 0;
         for (int i = 0; i < location.length; i++) {

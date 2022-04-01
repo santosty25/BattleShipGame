@@ -19,6 +19,17 @@ import edu.up.cs301.game.R;
 import edu.up.cs301.tictactoe.infoMessage.TTTState;
 import edu.up.cs301.tictactoe.views.TTTSurfaceView;
 
+/**
+ * BattleShipHumanPlayer - This class represents a human player
+ * in a game of battleship. this where th GUI is set up and
+ * allows the player to drag a ship on to the board to place a ship
+ * and tap on the grid to fire at coordinates.
+ *
+ * @author Austen Furutani
+ * @author Tyler Santos
+ * @author Keoni Han
+ * @author Steven Lee
+ */
 public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     private GameMainActivity myActivity = null;
@@ -83,7 +94,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
                 midGameView = activity.findViewById(R.id.boardView);
-                currGS.setPhase(1);
+                currGS.setPhase(BattleShipGameState.BATTLE_PHASE);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
 
@@ -193,7 +204,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
         if (shipIsSelected == false) {
             gameView.setOnTouchListener(new View.OnTouchListener() {
-                //updatesss
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                         float x = motionEvent.getX();
@@ -329,7 +339,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     }
 }
 
-
+//BACKUP CODE
 //    @Override
 //    public boolean onTouch(View view, MotionEvent motionEvent) {
 //        if(currGS.getPhase() == 0){

@@ -14,15 +14,25 @@ import edu.up.cs301.game.GameFramework.gameConfiguration.GamePlayerType;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
 import edu.up.cs301.game.R;
-import edu.up.cs301.tictactoe.players.TTTComputerPlayer1;
-import edu.up.cs301.tictactoe.players.TTTComputerPlayer2;
-import edu.up.cs301.tictactoe.players.TTTHumanPlayer1;
-import edu.up.cs301.tictactoe.players.TTTHumanPlayer2;
 
+
+/**
+ * BattleShipMainActivity - Primary activity for a game of Battleship.
+ *
+ * @author Tyler Santos
+ * @author Austen Furutani
+ * @author Keoni Han
+ * @author Steven Lee
+ * @version Spring 2022 - 3/22/22
+ */
 public class BattleShipMainActivity extends GameMainActivity {
+    //Tag for logging
     private static final String TAG = "TTTMainActivity";
     public static final int PORT_NUMBER = 6785;
 
+    /**
+     * a battleship game is for two players. The default is human vs. computer
+     */
     public GameConfig createDefaultConfig() {
         // Define the allowed player types
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
@@ -39,7 +49,7 @@ public class BattleShipMainActivity extends GameMainActivity {
                 return new BattleShipDumbAI(name);
             }
         });
-
+//SAVED FOR BETA RELEASE
 //        // smarter computer player
 //        playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 //            public GamePlayer createPlayer(String name) {
@@ -62,6 +72,16 @@ public class BattleShipMainActivity extends GameMainActivity {
 
     }
 
+    /**
+     * createLocalGame
+     *
+     * Creates a new game that runs on the server tablet,
+     * @param gameState
+     * 				the gameState for this game or null for a new game
+     *
+     * @return a new, game-specific instance of a sub-class of the LocalGame
+     *         class.
+     */
     @Override
     public LocalGame createLocalGame(GameState gameState) {
         return new BattleShipLocalGame();
