@@ -129,8 +129,14 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         float xC = motionEvent.getX();
                         float yC = motionEvent.getY();
                         String letter = "";
+                        boolean inBounds = true;
 
                         // X-Coordinates
+                        if (xC < 710 || xC > 1460) {
+                            xC = 0;
+                            letter = "";
+                            inBounds = false;
+                        }
                         if (xC > 710 && xC < 785) {
                             xC = 1;
                         } else if (xC > 785 && xC < 860) {
@@ -154,31 +160,40 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
 
                         // Y-Coordinates
-                        if (yC > 180 && yC < 255) {
-                            letter = "A";
-                        } else if (yC > 255 && yC < 330) {
-                            letter = "B";
-                        } else if (yC > 330 && yC < 405) {
-                            letter = "C";
-                        } else if (yC > 405 && yC < 480) {
-                            letter = "D";
-                        } else if (yC > 480 && yC < 555) {
-                            letter = "E";
-                        } else if (yC > 555 && yC < 630) {
-                            letter = "F";
-                        } else if (yC > 630 && yC < 705) {
-                            letter = "G";
-                        } else if (yC > 705 && yC < 780) {
-                            letter = "H";
-                        } else if (yC > 780 && yC < 855) {
-                            letter = "I";
-                        } else if (yC > 855 && yC < 930) {
-                            letter = "J";
+                        if (yC < 180 || yC > 930) {
+                            letter = "";
+                            xC = 0;
+                        }
+                        if (inBounds == true) {
+                            if (yC > 180 && yC < 255) {
+                                letter = "A";
+                            } else if (yC > 255 && yC < 330) {
+                                letter = "B";
+                            } else if (yC > 330 && yC < 405) {
+                                letter = "C";
+                            } else if (yC > 405 && yC < 480) {
+                                letter = "D";
+                            } else if (yC > 480 && yC < 555) {
+                                letter = "E";
+                            } else if (yC > 555 && yC < 630) {
+                                letter = "F";
+                            } else if (yC > 630 && yC < 705) {
+                                letter = "G";
+                            } else if (yC > 705 && yC < 780) {
+                                letter = "H";
+                            } else if (yC > 780 && yC < 855) {
+                                letter = "I";
+                            } else if (yC > 855 && yC < 930) {
+                                letter = "J";
+                            }
                         }
 
-
-                        xCoord.setText("X: " + (int) xC);
-                        yCoord.setText("Y: " + letter);
+                        if (!(xC == 0)) {
+                            xCoord.setText("X: " + (int) xC);
+                        } else {
+                            xCoord.setText("X: ");
+                        }
+                            yCoord.setText("Y: " + letter);
 
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
