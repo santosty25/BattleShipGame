@@ -179,12 +179,18 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     }
                 }
 
-//                for(j = 0; j < 6; j++){
-//                    BattleshipObj onBoard = new BattleshipObj(currentFleet[placeAction.getPlayerNum()][j]);
-//                    for(i = 0; i < onBoard.getSize(); i++){
-//
-//                    }
-//                }
+                for(j = 0; j < 6; j++){
+                    BattleshipObj onBoard = new BattleshipObj(currentFleet[placeAction.getPlayerNum()][j]);
+                    for(i = 0; i < onBoard.getSize(); i++){
+                        for(k = 0; k < placeAction.getBattleship().getSize(); k++){
+                            if(placeAction.getBattleship().getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
+                                    placeAction.getBattleship().getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
+                                Log.i("SAME COORDS", "makeMove: ");
+                                return false;
+                            }
+                        }
+                    }
+                }
                 Log.i("MAKING MOVE", "makeMove: " +  placeAction.getBattleship().getSize());
                 if(placeAction.getPlayerNum() == 0){
                     if(placeAction.getBattleship().getSize() == 5) {
