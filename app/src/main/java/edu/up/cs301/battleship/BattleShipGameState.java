@@ -20,7 +20,6 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @version Spring 2022 - 3/31/22
  */
 public class BattleShipGameState extends GameState {
-    //add static instance variables for phases
     public static final int SETUP_PHASE = 0;
     public static final int BATTLE_PHASE = 1;
     public static final int END_PHASE = 2;
