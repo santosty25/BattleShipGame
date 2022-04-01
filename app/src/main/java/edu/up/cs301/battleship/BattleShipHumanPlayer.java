@@ -1,5 +1,6 @@
 package edu.up.cs301.battleship;
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -55,18 +56,25 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     @Override
     public void receiveInfo(GameInfo info) {
-        if(!(info instanceof BattleShipGameState)){
+        if (!(info instanceof BattleShipGameState)) {
             Log.i("FLASHING", "");
             flash(0xFFFF0000, 100);
             return;
+        } else {
+            Log.i("received info", "receiveInfo: NEW INFO ");
+            this.reference = this;
+            currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
+            int playersTurn = currGS.getPlayersTurn();
+            int gamePhase = currGS.getPhase();
+            if (gamePhase == BattleShipGameState.BATTLE_PHASE) {
+                if (playersTurn != playerNum) {
+                    this.flash(Color.RED, 10);
+                }
+            }
+            if (midGameView != null) {
+                midGameView.setState(currGS);
+            }
         }
-        Log.i("received info", "receiveInfo: NEW INFO ");
-        this.reference = this;
-        currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
-        if(midGameView != null) {
-            midGameView.setState(currGS);
-        }
-        //test
     }
 
     @Override

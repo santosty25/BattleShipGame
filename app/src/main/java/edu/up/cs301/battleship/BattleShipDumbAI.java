@@ -42,7 +42,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             Random r = new Random();
             int row;
             int col;
-            //sleep(1);
+            sleep(1);
             row = r.nextInt(10);
             col = r.nextInt(10);
             Coordinates fire = new Coordinates(false, false, row, col);
