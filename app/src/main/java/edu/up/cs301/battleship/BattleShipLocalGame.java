@@ -178,6 +178,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                                     placeAction.getBattleship().getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
                                 Log.i("SAME COORDS", "makeMove: ");
                                 return false;
+                                //push
                             }
                         }
                     }
