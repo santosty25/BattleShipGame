@@ -562,11 +562,11 @@ public class BattleShipGameState extends GameState {
     }
 
 
-        /**
-         * checkNumPlayerFleet - Checks the number of ships in a player's fleet
-         * @param playerNum - the player who is checking for the amount of ships in their fleet
-         * @return the number of ships in a player's fleet
-         */
+    /**
+     * checkNumPlayerFleet - Checks the number of ships in a player's fleet
+     * @param playerNum - the player who is checking for the amount of ships in their fleet
+     * @return the number of ships in a player's fleet
+     */
     public int checkNumPlayerFleet(int playerNum) {
         boolean allSunk0 = false;
         boolean allSunk1 = false;
