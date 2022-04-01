@@ -28,6 +28,8 @@ public class TTTMainActivity extends GameMainActivity {
 	//Tag for logging
 	private static final String TAG = "TTTMainActivity";
 	public static final int PORT_NUMBER = 5213;
+	public String player1;
+	public String player2;
 
 	/**
 	 * a tic-tac-toe game is for two players. The default is human vs. computer
@@ -41,6 +43,7 @@ public class TTTMainActivity extends GameMainActivity {
 		// yellow-on-blue GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
 			public GamePlayer createPlayer(String name) {
+				player1 = name;
 				return new TTTHumanPlayer1(name, R.layout.ttt_human_player1);
 			}
 		});
@@ -48,6 +51,7 @@ public class TTTMainActivity extends GameMainActivity {
 		// red-on-yellow GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
+				player2 = name;
 				return new TTTHumanPlayer1(name, R.layout.ttt_human_player1_flipped);
 			}
 		});
@@ -130,6 +134,14 @@ public class TTTMainActivity extends GameMainActivity {
 		super.loadGame(appName);
 		Logger.log(TAG, "Loading: " + gameName);
 		return (GameState) new TTTState((TTTState) Saving.readFromFile(appName, this.getApplicationContext()));
+	}
+
+	public String getPlayer1() {
+		return player1;
+	}
+
+	public String getPlayer2() {
+		return player2;
 	}
 
 }
