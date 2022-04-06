@@ -283,14 +283,19 @@ public class BattleShipGameState extends GameState {
     public boolean placeShip(BattleshipObj[][] currentFleet, BattleshipObj placedShip, int playerNum) {
         int i, j, k;
         for(j = 0; j < 6; j++){ //Grabs all 6 ships from the current players fleet
-            BattleshipObj onBoard = new BattleshipObj(currentFleet[playerNum][j]);
-            for(i = 0; i < onBoard.getSize(); i++){ //size of the boats already placed
-                for(k = 0; k < placedShip.getSize(); k++){ //size of boat about to be placed
-                    if(placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
-                            placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
-                        return false; //if any of the two ships coordinates are the same returns false
+            if(currentFleet[playerNum][j] != null) {
+                BattleshipObj onBoard = new BattleshipObj(currentFleet[playerNum][j]);
+                for (i = 0; i < onBoard.getSize(); i++) { //size of the boats already placed
+                    for (k = 0; k < placedShip.getSize(); k++) { //size of boat about to be placed
+                        if (placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
+                                placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()) {
+                            return false; //if any of the two ships coordinates are the same returns false
+                        }
                     }
                 }
+            }
+            else {
+                continue;
             }
         }
         return true;
@@ -356,14 +361,13 @@ public class BattleShipGameState extends GameState {
      * setPlayersFleet - Sets each player's fleet with given ships
      * @param fleets - a 2d array of battleship objects
      */
-    public void setPlayersFleet(BattleshipObj[][] fleets){
-        int i, j;
-        for(i = 0; i < 2; i++){
+    public void setPlayersFleet(BattleshipObj[][] fleets, int playerNum){
+        int j;
             for(j = 0; j < 6; j++){
-                this.playersFleet[i][j] = new BattleshipObj(fleets[i][j]);
+                this.playersFleet[playerNum][j] = new BattleshipObj(fleets[playerNum][j]);
             }
         }
-    }
+
 
     /**
      * xyToCoordMidGame - Returns a coordinate object based on where the player taps on the enemies mid game board
