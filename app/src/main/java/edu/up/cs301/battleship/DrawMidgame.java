@@ -3,6 +3,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Picture;
@@ -33,6 +34,7 @@ public class DrawMidgame extends SurfaceView{
     public int playerID;
 
     protected BattleShipGameState state;
+    protected int flashColor = Color.BLACK;
 
     Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
     private float fivehpLeft = 1814.0f;
@@ -80,6 +82,9 @@ public class DrawMidgame extends SurfaceView{
         this.state = new BattleShipGameState(state, state.getPlayersTurn());
     }
 
+    public void setFlashColor(int color) {
+        this.flashColor = color;
+    }
 
     @Override
     public void onDraw(Canvas canvas){
@@ -132,7 +137,14 @@ public class DrawMidgame extends SurfaceView{
          * Draws everything to surface view, as of now COOR is just giberish and guess work, will work out
          *a formula later
          */
-        canvas.drawBitmap(background, 0.0f, 0.0f, blackPaint);
+        if(this.flashColor == Color.BLACK) {
+            canvas.drawBitmap(background, 0.0f, 0.0f, blackPaint);
+        }
+        else {
+            Paint tempPaint = new Paint();
+            tempPaint.setColor(this.flashColor);
+            canvas.drawRect(0.0f, 0.0f, getWidth(), getHeight(), tempPaint);
+        }
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);

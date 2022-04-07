@@ -1,5 +1,7 @@
 package edu.up.cs301.battleship;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
@@ -43,7 +45,30 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     //mid game surface view
     private DrawMidgame midGameView;
     private DrawSetup setupView;
+    /**
+     * helper-class to finish a "flash.
+     *
+     */
+    private class Unflasher implements Runnable {
 
+        private int duration;
+
+        public Unflasher(int duration) {
+            this.duration = duration;
+        }
+        // method to run at the appropriate time: sets background color
+        // back to the original
+        public void run() {
+            try {
+                Thread.sleep(this.duration);
+            }
+            catch (InterruptedException ie) {
+                //do nothing
+            }
+            midGameView.setFlashColor(Color.BLACK);
+            midGameView.invalidate();
+        }
+    }
 
     public BattleShipHumanPlayer(String name) {
         super(name);
@@ -51,14 +76,39 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     @Override
     public View getTopView() {
-        return null;
+        return myActivity.findViewById(R.id.setuptopview);
+    }
+
+    /**
+     * flash - The built in flash relies on a background color change but can't be used because
+     * the game has a background image.
+     * @param color
+     * 			the color to flash
+     * @param duration
+     */
+    @Override
+    protected void flash(int color, int duration) {
+        // get the top view, ignoring if null
+        View top = this.getTopView();
+        if (top == null) return;
+
+        // save the original background color; set the new background
+        // color
+        midGameView.setFlashColor(color);
+        midGameView.invalidate();
+
+        // set up a timer event to set the background color back to
+        // the original.
+        Unflasher handler = new Unflasher(duration);
+        Thread thread = new Thread(handler);
+        thread.start();
     }
 
     @Override
     public void receiveInfo(GameInfo info) {
         if (!(info instanceof BattleShipGameState)) {
             Log.i("FLASHING", "");
-            flash(0xFFFF0000, 100);
+//            flash(0xFFFF0000, 100);
             return;
         } else {
             Log.i("received info", "receiveInfo: NEW INFO ");
@@ -66,6 +116,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
             int playersTurn = currGS.getPlayersTurn();
             int gamePhase = currGS.getPhase();
+//            this.flash(Color.RED, 400);
             if (gamePhase == BattleShipGameState.BATTLE_PHASE) {
                 if (playersTurn != playerNum) {
                     this.flash(Color.RED, 10);
@@ -88,7 +139,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
         Button nextButton = activity.findViewById(R.id.confirm_button);
-
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
 
