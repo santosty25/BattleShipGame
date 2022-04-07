@@ -64,85 +64,13 @@ public class BattleShipGameState extends GameState {
         Coordinates[] locations = new Coordinates[1];
         locations[0] = new Coordinates(true, true, -1, -1);
         int i, j;
-        for(i = 0; i < playersFleet.length; i++){
-            for(j = 0; j < playersFleet[i].length; j++){
+        for(i = 0; i < 2; i++){
+            for(j = 0; j < 6; j++){
                 BattleshipObj testShip = new BattleshipObj(1, locations);
+                testShip.setSunk(false);
                 playersFleet[i][j] = new BattleshipObj(testShip);
             }
         }
-
-        // creates the first 3 length ship
-        Coordinates coord1 = new Coordinates(false, true, 0, 0);
-        Coordinates coord2 = new Coordinates(false, true, 1, 0);
-        Coordinates coord3 = new Coordinates(false, true, 2, 0);
-        Coordinates[] position = new Coordinates[3];
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        BattleshipObj threeOne = new BattleshipObj(3, position);
-
-        // creates the second 3 length ship
-        coord1 = new Coordinates(false, true, 0, 1);
-        coord2 = new Coordinates(false, true, 1, 1);
-        coord3 = new Coordinates(false, true, 2, 1);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        BattleshipObj threeTwo = new BattleshipObj(3, position);
-
-        // creates the first 4 length ship
-        position = new Coordinates[4];
-        coord1 = new Coordinates(false, true, 0, 2);
-        coord2 = new Coordinates(false, true, 1, 2);
-        coord3 = new Coordinates(false, true, 2, 2);
-        Coordinates coord4 = new Coordinates(false, true, 3, 2);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        position[3] = coord4;
-        BattleshipObj fourOne = new BattleshipObj(4, position);
-
-        // creates the second 4 length ship
-        coord1 = new Coordinates(false, true, 0, 3);
-        coord2 = new Coordinates(false, true, 1, 3);
-        coord3 = new Coordinates(false, true, 2, 3);
-        coord4 = new Coordinates(false, true, 3, 3);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        position[3] = coord4;
-        BattleshipObj fourTwo = new BattleshipObj(4, position);
-
-        // creates 2 length ship
-        position = new Coordinates[2];
-        coord1 = new Coordinates(false, true, 0, 4);
-        coord2 = new Coordinates(false, true, 1, 4);
-        position[0] = coord1;
-        position[1] = coord2;
-        BattleshipObj twoOne = new BattleshipObj(2, position);
-
-        // creates 5 length ship
-        position = new Coordinates[5];
-        coord1 = new Coordinates(false, true, 0, 5);
-        coord2 = new Coordinates(false, true, 1, 5);
-        coord3 = new Coordinates(false, true, 2, 5);
-        coord4 = new Coordinates(false, true, 3, 5);
-        Coordinates coord5 = new Coordinates(false, true, 4, 5);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        position[3] = coord4;
-        position[4] = coord5;
-        BattleshipObj fiveOne = new BattleshipObj(5, position);
-
-        // input the ships into player 1's fleet
-        this.playersFleet[1][0] = threeOne;
-        this.playersFleet[1][1] = threeTwo;
-        this.playersFleet[1][2] = fourOne;
-        this.playersFleet[1][3] = fourTwo;
-        this.playersFleet[1][4] = twoOne;
-        this.playersFleet[1][5] = fiveOne;
-
         Log.i("BSGS", "Initial setup");
     }
 
@@ -196,7 +124,7 @@ public class BattleShipGameState extends GameState {
         for (i = 0;  i < 2; i++) {
             for (j = 0; j < 6; j++){
                 this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
-                if(i == 0) {
+                if(i == 1) {
                     Log.i("SHIP INFO", "Length " + this.playersFleet[i][j].getSize());
                     Coordinates[] arrayTest = this.playersFleet[i][j].getLocation();
                     int k;
@@ -569,8 +497,8 @@ public class BattleShipGameState extends GameState {
      *           2 if both players' fleet still remain
      */
     public int checkPlayerFleet() {
-        boolean allSunk0 = false;
-        boolean allSunk1 = false;
+        boolean allSunk0;
+        boolean allSunk1;
         int numSunkBoats0 = 0;
         int numSunkBoats1 = 0;
 

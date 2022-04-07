@@ -32,6 +32,7 @@ public class DrawSetup extends SurfaceView {
     private Paint blackPaint = new Paint();
     private ArrayList<BattleshipObj> battleshipArrayList = new ArrayList<>();
     private Paint orangePaint = new Paint();
+    public int playerID;
     private Context context;
 
     Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
@@ -144,53 +145,62 @@ public class DrawSetup extends SurfaceView {
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
 
         canvas.drawRect(1650.0f, 50.0f, 1900, 1050, orangePaint);
-
+        Coordinates toPlace;
         canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
         canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
         canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
         canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
         canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
         canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
-
         if (state == null) {
             Log.i("State is Null", "onDraw: NULL");
             return;
         }
-
-        /**Draw on your board
-         * Need to change the center methods
-         * */
-        GameBoard drawEnemyBoard = this.state.getBoard(0);
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 10; col++) {
-                Log.i("NOT NULL", "");
-                if (drawEnemyBoard.getCoordHit(row, col)) {
-                    Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
-                    if (drawEnemyBoard.getHasShip()) {
-
-                    }
-                    this.invalidate();
+        BattleshipObj[][] playerFleet= state.getPlayersFleet(); // 5 4 4 3 3 2
+        for (int i = 0; i < playerFleet[playerID].length; i++) {
+            float xValue;
+            float yValue;
+            if(playerFleet[playerID][i].getSize() == 5){
+                toPlace = playerFleet[playerID][i].getFirstCoord();
+                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
+                yValue = state.middleYOfCoord(toPlace) - 25;
+                Log.i("ID", "onDraw: " + selectedShipId);
+                if(selectedShipId != 1){
+                    fivehpLeft = xValue;
+                    fivehpTop = yValue;
                 }
+                canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+                this.invalidate();
             }
+            else if(playerFleet[playerID][i].getSize() == 4){
+                toPlace = playerFleet[playerID][i].getFirstCoord();
+                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
+                yValue = state.middleYOfCoord(toPlace) - 25;
+                if(playerFleet[playerID][i].getTwinShip() == 0){
+                    if(selectedShipId != 2) {
+                        fourhp1Left = xValue;
+                        fourhp1Left = yValue;
+                    }
+                    canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+                }
+
+            }
+
         }
 
 
-        //SHOULD TAKE USER INPUT TO DRAW ONTO BOARD
-        /**
-         * Draws dynamic elements to screen
-         * make arraylist of red/whitemarkers then a for each loop to draw each one toi board
-         */
-//        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
-//        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());
-//        canvas.drawBitmap(userSelection, 540.0f, 450.0f, new Paint());
+        //canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
+        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
+        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
+        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
     }
 
     public int onTouchEventNew(MotionEvent event) {
         BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
 
         int newSize = 0;
-
-
         //checks which action is happening
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {  //checks which ship is being selected
@@ -285,10 +295,10 @@ public class DrawSetup extends SurfaceView {
                         break;
                     }
                 }
-                //selectedShipId = 0;
-                invalidate();
+                this.invalidate();
                 break;
             }
+
         }
         return selectedShipId;
     }
@@ -330,6 +340,8 @@ public class DrawSetup extends SurfaceView {
     public float getTwohpTop() {
         return this.twohpTop;
     }
+
+    public void setPlayerID(int playerID) { this.playerID = playerID;}
 }
 
 

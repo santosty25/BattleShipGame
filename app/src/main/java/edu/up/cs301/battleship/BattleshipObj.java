@@ -97,6 +97,9 @@ public class BattleshipObj {
      * @return - the boolean stating whether a ship has been sunk or not
      */
     public boolean getSunk() {
+        if (this.size == 1){
+            return false;
+        }
         return sunk;
     }
 
