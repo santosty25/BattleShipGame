@@ -142,11 +142,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             @Override
             public void onClick(View view) {
                 //Checking if all ships have been placed
-                int j;
-                    for(j = 0; j < 6; j++){
-                        if(currGS.getPlayersFleet()[playerNum][j].getSize() == 1 ){
+                int i, j;
+                for(i = 0; i < 2; i ++){
+                    for(j = 0; j < 6; j++) {
+                        if (currGS.getPlayersFleet()[i][j].getSize() == 1) {
                             return;
                         }
+                    }
                 }
 
                 activity.setContentView(R.layout.midgame);
@@ -252,15 +254,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 letter = "J";
                             }
                         }
-//
-//                        if (!(xC == 0)) {
-//                            xCoord.setText("X: " + (int) xC);
-//                        } else {
-//                            xCoord.setText("X: ");
-//                        }
-//                            yCoord.setText("Y: " + letter);
-
-
                         Log.d("In midGame", "Coords: " + x + ", " + y);
                         Log.i("Players Turn", "" + currGS.getPlayersTurn());
                         if (currGS.getPlayersTurn() == playerNum) {
