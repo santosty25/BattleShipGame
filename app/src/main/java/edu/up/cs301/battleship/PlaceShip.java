@@ -18,6 +18,7 @@ public class PlaceShip extends GameAction {
 
     private int playerNum; //the player number
     private BattleshipObj battleship; //a given battleship
+    private static final long serialVersionUID = 4528L;
 
     /**
      * PlaceShip - Constructor that initializes instance variables.
