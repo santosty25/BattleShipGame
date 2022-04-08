@@ -44,6 +44,24 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private DrawMidgame midGameView;
     private DrawSetup setupView;
 
+        private int duration;
+
+        public Unflasher(int duration) {
+            this.duration = duration;
+        }
+        // method to run at the appropriate time: sets background color
+        // back to the original
+        public void run() {
+            try {
+                Thread.sleep(this.duration);
+            }
+            catch (InterruptedException ie) {
+                //do nothing
+            }
+            midGameView.setFlashColor(Color.BLACK);
+            midGameView.invalidate();
+        }
+    }
 
     public BattleShipHumanPlayer(String name) {
         super(name);
@@ -94,6 +112,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 for(i = 0; i < 2; i++){
                     for(j = 0; j < 6; j++){
                         if(currGS.getPlayersFleet()[i][j].getSize() == 1 ){
+                int i, j;
+                for(i = 0; i < 2; i ++){
+                    for(j = 0; j < 6; j++) {
+                        if (currGS.getPlayersFleet()[i][j].getSize() == 1) {
                             return;
                         }
                     }
