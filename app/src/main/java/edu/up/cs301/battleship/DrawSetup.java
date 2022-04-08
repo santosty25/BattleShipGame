@@ -34,6 +34,19 @@ public class DrawSetup extends SurfaceView {
     private Paint orangePaint = new Paint();
     private Context context;
 
+    final private float fivehpLeftInitial = 1814.0f;
+    final private float fivehpTopInitial = 108.0f;
+    final private float fourhp1LeftInitial = 1684.0f;
+    final private float fourhp1TopInitial = 70.0f;
+    final private float fourhp2LeftInitial = 1677.0f;
+    final private float fourhp2TopInitial = 393.0f;
+    final private float threehp1LeftInitial = 1828.0f;
+    final private float threehp1TopInitial = 500.0f;
+    final private float threehp2LeftInitial = 1830.0f;
+    final private float threehp2TopInitial = 760.0f;
+    final private float twohpLeftInitial = 1680.0f;
+    final private float twohpTopInitial = 807.0f;
+
     Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
     private float fivehpLeft = 1814.0f;
     private float fivehpTop = 108.0f;
@@ -253,35 +266,121 @@ public class DrawSetup extends SurfaceView {
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP: { //places it, gets the ship size and sends it back to the human player method
+                float upXVal = event.getX();
+                float upYVal = event.getY();
                 switch(selectedShipId) {
                     case 1: {
-                        fivehpLeft = event.getX() - 35.0f;
-                        fivehpTop = event.getY();
+                        if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
+                            fivehpLeft = fivehpLeftInitial;
+                            fivehpTop = fivehpTopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else if (checkInitialPlaceOutOfBounds(5, upXVal, upYVal)) {
+                            fivehpLeft = fivehpLeftInitial;
+                            fivehpTop = fivehpTopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else {
+                            fivehpLeft = event.getX() - 35.0f;
+                            fivehpTop = event.getY();
+                        }
                         break;
                     }
                     case 2: {
-                        fourhp1Left = event.getX() - 35.0f;
-                        fourhp1Top = event.getY();
+                        if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
+                            fourhp1Left = fourhp1LeftInitial;
+                            fourhp1Top = fourhp1TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal)) {
+                            fourhp1Left = fourhp1LeftInitial;
+                            fourhp1Top = fourhp1TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else {
+                            fourhp1Left = event.getX() - 35.0f;
+                            fourhp1Top = event.getY();
+                        }
                         break;
                     }
                     case 3: {
-                        fourhp2Left = event.getX() - 35.0f;
-                        fourhp2Top = event.getY();
+                        if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
+                            fourhp2Left = fourhp2LeftInitial;
+                            fourhp2Top = fourhp2TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal)) {
+                            fourhp2Left = fourhp2LeftInitial;
+                            fourhp2Top = fourhp2TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else {
+                            fourhp2Left = event.getX() - 35.0f;
+                            fourhp2Top = event.getY();
+                        }
                         break;
                     }
                     case 4: {
-                        threehp1Left = event.getX() - 35.0f;
-                        threehp1Top = event.getY();
+                        if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
+                            threehp1Left = threehp1LeftInitial;
+                            threehp1Top = threehp1TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal)) {
+                            threehp1Left = threehp1LeftInitial;
+                            threehp1Top = threehp1TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else {
+                            threehp1Left = event.getX() - 35.0f;
+                            threehp1Top = event.getY();
+                        }
                         break;
                     }
                     case 5: {
-                        threehp2Left = event.getX() - 35.0f;
-                        threehp2Top = event.getY();
+                        if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
+                            threehp2Left = threehp2LeftInitial;
+                            threehp2Top = threehp2TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal)) {
+                            threehp2Left = threehp2LeftInitial;
+                            threehp2Top = threehp2TopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else {
+                            threehp2Left = event.getX() - 35.0f;
+                            threehp2Top = event.getY();
+                        }
                         break;
                     }
                     case 6: {
-                        twohpLeft = event.getX() - 35.0f;
-                        twohpTop = event.getY();
+                        if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
+                            twohpLeft = twohpLeftInitial;
+                            twohpTop = twohpTopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else if (checkInitialPlaceOutOfBounds(2, upXVal, upYVal)) {
+                            twohpLeft = twohpLeftInitial;
+                            twohpTop = twohpTopInitial;
+                            invalidate();
+                            return 0;
+                        }
+                        else {
+                            twohpLeft = event.getX() - 35.0f;
+                            twohpTop = event.getY();
+                        }
                         break;
                     }
                 }
@@ -291,6 +390,19 @@ public class DrawSetup extends SurfaceView {
             }
         }
         return selectedShipId;
+    }
+
+    public static boolean checkInitialPlaceOutOfBounds(int size, float x, float y) {
+        Coordinates placedCoord = BattleShipGameState.xyToCoordSetupGame(x,y);
+        if (placedCoord == null) {
+            return true;
+        }
+        int selectedBoardToEnd = 10 - placedCoord.getY();
+
+        if (selectedBoardToEnd < size) {
+            return true;
+        }
+        return false;
     }
 
     //getters to transfer coordinates from this phase to midgame Draw phase
@@ -330,6 +442,32 @@ public class DrawSetup extends SurfaceView {
     public float getTwohpTop() {
         return this.twohpTop;
     }
+
+    public void resetFivehp() {
+        fivehpLeft = fivehpLeftInitial;
+        fivehpTop = fivehpTopInitial;
+    }
+    public void resetFourhp1() {
+        fourhp1Left = fourhp1LeftInitial;
+        fourhp1Top = fourhp1TopInitial;
+    }
+    public void resetFourhp2() {
+        fourhp2Left = fourhp2LeftInitial;
+        fourhp2Top = fourhp2TopInitial;
+    }
+    public void resetThreehp1() {
+        threehp1Left = threehp1LeftInitial;
+        threehp1Top = threehp1TopInitial;
+    }
+    public void resetThreehp2() {
+        threehp2Left = threehp2LeftInitial;
+        threehp2Top = threehp2TopInitial;
+    }
+    public void resetTwohp() {
+        twohpLeft = twohpLeftInitial;
+        twohpTop = twohpTopInitial;
+    }
+
 }
 
 
