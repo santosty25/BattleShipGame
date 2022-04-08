@@ -42,6 +42,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     boolean shipIsSelected = false;
     private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
 
+    private int lastSelectedShip = 0;
+
     //mid game surface view
     private DrawMidgame midGameView;
     private DrawSetup setupView;
@@ -143,13 +145,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             public void onClick(View view) {
                 //Checking if all ships have been placed
                 int i, j;
-                //for(i = 0; i < 2; i ++){
+                for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
-                        if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
+                        if (currGS.getPlayersFleet()[i][j].getSize() == 1) {
                             return;
                         }
                     }
-                //}
+                }
 
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view

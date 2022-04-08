@@ -151,6 +151,11 @@ public class DrawMidgame extends SurfaceView{
 //        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());
 //        canvas.drawBitmap(userSelection, 540.0f, 450.0f, new Paint());
+        for(TapValues tap : tapValues){
+            Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
+            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
+
+        }
         fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
         fivehp = Bitmap.createScaledBitmap(fivehp, 130, 25, false);
         fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
@@ -175,7 +180,7 @@ public class DrawMidgame extends SurfaceView{
 
         //CREATES 2 hp BS
         twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-        twohp = Bitmap.createScaledBitmap(twohp, 45, 20, false);
+        twohp = Bitmap.createScaledBitmap(twohp, 52, 20, false);
         twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
         for(TapValues tap : tapValues){
             Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
@@ -216,6 +221,7 @@ public class DrawMidgame extends SurfaceView{
                     else {
                         canvas.drawBitmap(whiteMarker, xVal, yVal, blackPaint);
                     }
+                    this.invalidate();
                 }
             }
         }
@@ -245,7 +251,7 @@ public class DrawMidgame extends SurfaceView{
             }
             else if (playerFleet[playerID][i].getSize() == 4) {
                 if (i == 1) {
-                    toPlace = playerFleet[playerID][i].getFirstCoord();
+                    toPlace = playerFleet[0][i].getFirstCoord();
                     fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
                     if (toPlace.getX() > 7) {
                         fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
@@ -256,7 +262,7 @@ public class DrawMidgame extends SurfaceView{
                     fourhp1Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
                 else {
-                    toPlace = playerFleet[playerID][i].getFirstCoord();
+                    toPlace = playerFleet[0][i].getFirstCoord();
                     fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
                     if (toPlace.getX() > 7) {
                         fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
@@ -267,9 +273,9 @@ public class DrawMidgame extends SurfaceView{
                     fourhp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
             }
-            else if (playerFleet[playerID][i].getSize() == 3) {
+            else if (playerFleet[0][i].getSize() == 3) {
                 if (i == 3) {
-                    toPlace = playerFleet[playerID][i].getFirstCoord();
+                    toPlace = playerFleet[0][i].getFirstCoord();
                     threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     if (toPlace.getX() > 7) {
                         threehp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
@@ -280,7 +286,7 @@ public class DrawMidgame extends SurfaceView{
                     threehp1Top= state.middleYOfEnemyBoard(toPlace) - 16;
                 }
                 else {
-                    toPlace = playerFleet[playerID][i].getFirstCoord();
+                    toPlace = playerFleet[0][i].getFirstCoord();
                     threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     if (toPlace.getX() > 7) {
                         threehp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
@@ -291,8 +297,8 @@ public class DrawMidgame extends SurfaceView{
                     threehp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
             }
-            else if (playerFleet[playerID][i].getSize() == 2) {
-                toPlace = playerFleet[playerID][i].getFirstCoord();
+            else if (playerFleet[0][i].getSize() == 2) {
+                toPlace = playerFleet[0][i].getFirstCoord();
                 twohpLeft = state.middleXOfEnemyBoard(toPlace) - 20;
                 if (toPlace.getX() > 7) {
                     twohpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
@@ -310,10 +316,11 @@ public class DrawMidgame extends SurfaceView{
         canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
         canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
         canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
+        this.invalidate();
 
 
 //        drawEnemyBoard = this.state.getBoard(0);
-        GameBoard drawEnemyBoard = this.state.getBoard(playerID);
+        GameBoard drawEnemyBoard = this.state.getBoard(0);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
                 Log.i("NOT NULL", "");
@@ -329,10 +336,10 @@ public class DrawMidgame extends SurfaceView{
                     else {
                         canvas.drawBitmap(enemyWhiteMarker, xVal, yVal, blackPaint);
                     }
+                    this.invalidate();
                 }
             }
         }
-        this.invalidate();
     }
 
 
@@ -373,5 +380,8 @@ public class DrawMidgame extends SurfaceView{
     public void setTwohpTop(float newValue) {
         twohpTop = newValue;
     }
-    public void setPlayerID(int playerID) { this.playerID = playerID; }
+
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
+    }
 }
