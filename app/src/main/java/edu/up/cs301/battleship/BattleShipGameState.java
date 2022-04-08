@@ -107,6 +107,7 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public BattleShipGameState(BattleShipGameState copy, int playerNum) {
         //change so that certain information doeesn't get sent to a specific player
+        Log.i("COPY", "COPY BEING CREATED");
         this.playerID = new int[2];
 
         for(int k = 0; k < 2; k++){
