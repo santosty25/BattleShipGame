@@ -65,7 +65,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         GameBoard board = gameState.getBoard(enemyNum);
         Log.i("COMPUTER PLAYERS TURN", "");
         //Checks if it's the computer player's turn
-        if (gameState.getPlayersTurn() == playerNum) {
+        //if (gameState.getPlayersTurn() == playerNum) {
             //if(gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
             //places ships
 
@@ -99,7 +99,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                     Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
                     game.sendAction(new Fire(this, fire));
                 }
-            }
+            //}
 
             while(this.startAlgor == 1) {
                 if (gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
