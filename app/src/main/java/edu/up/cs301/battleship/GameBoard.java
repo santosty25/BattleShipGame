@@ -1,6 +1,8 @@
 package edu.up.cs301.battleship;
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * board - Contains a 2d array of coordinates, each coordinate has two booleans
  * hit and hasShip from.
@@ -11,8 +13,9 @@ import android.util.Log;
  * @author Tyler Santos
  * @version Spring 2022 - 3/31/22
  */
-public class GameBoard extends Coordinates {
+public class GameBoard extends Coordinates implements Serializable {
     private Coordinates currentBoard[][]; //a Coordinate array representing the board
+    private static final long serialVersionUID = 4528L;
 
     /**
      * GameBoard - Default constructor for the board

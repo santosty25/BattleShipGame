@@ -3,6 +3,8 @@ package edu.up.cs301.battleship;
 import android.app.GameManager;
 import android.util.Log;
 
+import java.io.Serializable;
+
 import javax.security.auth.login.LoginException;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
@@ -19,10 +21,12 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @author Tyler Santos
  * @version Spring 2022 - 3/31/22
  */
-public class BattleShipGameState extends GameState {
+public class BattleShipGameState extends GameState implements Serializable {
     public static final int SETUP_PHASE = 0;
     public static final int BATTLE_PHASE = 1;
     public static final int END_PHASE = 2;
+
+    private static final long serialVersionUID = 4528L;
 
     private int[] playerID; //an array of each player's ID
     private GameBoard[] playersBoard; //the Battleship game board for each player
@@ -64,85 +68,13 @@ public class BattleShipGameState extends GameState {
         Coordinates[] locations = new Coordinates[1];
         locations[0] = new Coordinates(true, true, -1, -1);
         int i, j;
-        for(i = 0; i < playersFleet.length; i++){
-            for(j = 0; j < playersFleet[i].length; j++){
+        for(i = 0; i < 2; i++){
+            for(j = 0; j < 6; j++){
                 BattleshipObj testShip = new BattleshipObj(1, locations);
+                testShip.setSunk(false);
                 playersFleet[i][j] = new BattleshipObj(testShip);
             }
         }
-
-        // creates the first 3 length ship
-        Coordinates coord1 = new Coordinates(false, true, 0, 0);
-        Coordinates coord2 = new Coordinates(false, true, 1, 0);
-        Coordinates coord3 = new Coordinates(false, true, 2, 0);
-        Coordinates[] position = new Coordinates[3];
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        BattleshipObj threeOne = new BattleshipObj(3, position);
-
-        // creates the second 3 length ship
-        coord1 = new Coordinates(false, true, 0, 1);
-        coord2 = new Coordinates(false, true, 1, 1);
-        coord3 = new Coordinates(false, true, 2, 1);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        BattleshipObj threeTwo = new BattleshipObj(3, position);
-
-        // creates the first 4 length ship
-        position = new Coordinates[4];
-        coord1 = new Coordinates(false, true, 0, 2);
-        coord2 = new Coordinates(false, true, 1, 2);
-        coord3 = new Coordinates(false, true, 2, 2);
-        Coordinates coord4 = new Coordinates(false, true, 3, 2);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        position[3] = coord4;
-        BattleshipObj fourOne = new BattleshipObj(4, position);
-
-        // creates the second 4 length ship
-        coord1 = new Coordinates(false, true, 0, 3);
-        coord2 = new Coordinates(false, true, 1, 3);
-        coord3 = new Coordinates(false, true, 2, 3);
-        coord4 = new Coordinates(false, true, 3, 3);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        position[3] = coord4;
-        BattleshipObj fourTwo = new BattleshipObj(4, position);
-
-        // creates 2 length ship
-        position = new Coordinates[2];
-        coord1 = new Coordinates(false, true, 0, 4);
-        coord2 = new Coordinates(false, true, 1, 4);
-        position[0] = coord1;
-        position[1] = coord2;
-        BattleshipObj twoOne = new BattleshipObj(2, position);
-
-        // creates 5 length ship
-        position = new Coordinates[5];
-        coord1 = new Coordinates(false, true, 0, 5);
-        coord2 = new Coordinates(false, true, 1, 5);
-        coord3 = new Coordinates(false, true, 2, 5);
-        coord4 = new Coordinates(false, true, 3, 5);
-        Coordinates coord5 = new Coordinates(false, true, 4, 5);
-        position[0] = coord1;
-        position[1] = coord2;
-        position[2] = coord3;
-        position[3] = coord4;
-        position[4] = coord5;
-        BattleshipObj fiveOne = new BattleshipObj(5, position);
-
-        // input the ships into player 1's fleet
-        this.playersFleet[1][0] = threeOne;
-        this.playersFleet[1][1] = threeTwo;
-        this.playersFleet[1][2] = fourOne;
-        this.playersFleet[1][3] = fourTwo;
-        this.playersFleet[1][4] = twoOne;
-        this.playersFleet[1][5] = fiveOne;
-
         Log.i("BSGS", "Initial setup");
     }
 
@@ -196,7 +128,6 @@ public class BattleShipGameState extends GameState {
         for (i = 0;  i < 2; i++) {
             for (j = 0; j < 6; j++){
                 this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
-                if(i == 0) {
                     Log.i("SHIP INFO", "Length " + this.playersFleet[i][j].getSize());
                     Coordinates[] arrayTest = this.playersFleet[i][j].getLocation();
                     int k;
@@ -204,7 +135,6 @@ public class BattleShipGameState extends GameState {
                         Log.i("coordinates", "" + arrayTest[k].getX() + " " + arrayTest[k].getY());
                     }
                     Log.i("====================", " ");
-                }
             }
         }
         //Log.i("Test", "after Players fleet for loop");
@@ -237,6 +167,7 @@ public class BattleShipGameState extends GameState {
                     boolean sunk = this.playersFleet[1][i].checkIfHit();
                     if(sunk == true) {
                         this.playersFleet[1][i].setSunk(true);
+                        this.updateNumPlayerFleet();
                     }
                     else {
                         continue;
@@ -261,6 +192,7 @@ public class BattleShipGameState extends GameState {
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     if(sunk == true) {
                         this.playersFleet[0][i].setSunk(true);
+                        this.updateNumPlayerFleet();
                     }
                     else {
                         continue;
@@ -283,14 +215,19 @@ public class BattleShipGameState extends GameState {
     public boolean placeShip(BattleshipObj[][] currentFleet, BattleshipObj placedShip, int playerNum) {
         int i, j, k;
         for(j = 0; j < 6; j++){ //Grabs all 6 ships from the current players fleet
-            BattleshipObj onBoard = new BattleshipObj(currentFleet[playerNum][j]);
-            for(i = 0; i < onBoard.getSize(); i++){ //size of the boats already placed
-                for(k = 0; k < placedShip.getSize(); k++){ //size of boat about to be placed
-                    if(placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
-                            placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()){
-                        return false; //if any of the two ships coordinates are the same returns false
+            if(currentFleet[playerNum][j] != null) {
+                BattleshipObj onBoard = new BattleshipObj(currentFleet[playerNum][j]);
+                for (i = 0; i < onBoard.getSize(); i++) { //size of the boats already placed
+                    for (k = 0; k < placedShip.getSize(); k++) { //size of boat about to be placed
+                        if (placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
+                                placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()) {
+                            return false; //if any of the two ships coordinates are the same returns false
+                        }
                     }
                 }
+            }
+            else {
+                continue;
             }
         }
         return true;
@@ -356,14 +293,13 @@ public class BattleShipGameState extends GameState {
      * setPlayersFleet - Sets each player's fleet with given ships
      * @param fleets - a 2d array of battleship objects
      */
-    public void setPlayersFleet(BattleshipObj[][] fleets){
-        int i, j;
-        for(i = 0; i < 2; i++){
+    public void setPlayersFleet(BattleshipObj[][] fleets, int playerNum){
+        int j;
             for(j = 0; j < 6; j++){
-                this.playersFleet[i][j] = new BattleshipObj(fleets[i][j]);
+                this.playersFleet[playerNum][j] = new BattleshipObj(fleets[playerNum][j]);
             }
         }
-    }
+
 
     /**
      * xyToCoordMidGame - Returns a coordinate object based on where the player taps on the enemies mid game board
@@ -569,8 +505,8 @@ public class BattleShipGameState extends GameState {
      *           2 if both players' fleet still remain
      */
     public int checkPlayerFleet() {
-        boolean allSunk0 = false;
-        boolean allSunk1 = false;
+        boolean allSunk0;
+        boolean allSunk1;
         int numSunkBoats0 = 0;
         int numSunkBoats1 = 0;
 
@@ -602,11 +538,9 @@ public class BattleShipGameState extends GameState {
 
     //SAVED FOR BETA RELEASE
     /**
-     * checkNumPlayerFleet - Checks the number of ships in a player's fleet
-     * @param playerNum - the player who is checking for the amount of ships in their fleet
-     * @return the number of ships in a player's fleet
+     * setPlayerFleet - updates the number of ships in a player's fleet
      */
-    public int checkNumPlayerFleet(int playerNum) {
+    public void updateNumPlayerFleet() {
         boolean allSunk0 = false;
         boolean allSunk1 = false;
         int player0fleet = 0;
@@ -627,14 +561,10 @@ public class BattleShipGameState extends GameState {
         }
 
         //checks who is checking the remaining ships
-        if(playerNum == 0) {
-            this.remainingShips[playerNum] = player0fleet;
-        }
-        else {
-            this.remainingShips[playerNum] = player1fleet;
-        }
 
-        return this.remainingShips[playerNum];
+        this.remainingShips[0] = player0fleet;
+        this.remainingShips[0] = player1fleet;
+
     }
 
     //SAVED FOR BETA RELEASE
