@@ -102,22 +102,36 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             //}
 
             while(this.startAlgor == 1) {
+                boolean hit = false;
                 if (gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
                     //check if the previous shot was a successful hit
-                    boolean hit = this.checkIfCoordHit(board, this.previousHit);
+
+
+                    Coordinates[] enemyShipCoords;
+                    BattleshipObj[][] shipsOnBoard = gameState.getPlayersFleet();
+                    //Reads locations of opponents board
+                        for(int i = 0; i < shipsOnBoard[enemyNum].length; i++){
+                            for(int j = 0; j < shipsOnBoard[enemyNum][i].getLocation().length; j++){
+                                if(shipsOnBoard[enemyNum][i].getLocation()[j].getX() ==
+                                        this.previousHit.getX() &&
+                                        shipsOnBoard[enemyNum][i].getLocation()[j].getY()
+                                                == this.previousHit.getY()){
+                                    hit = true;
+                                }
+                            }
+                        }
+
                     if (hit == true) {
                         this.successHits.add(this.previousHit);
                     }
 
                     Coordinates lastFire = new Coordinates(possibleShip.get(0));
-                    if(lastFire.getY() != 0 || lastFire.getY() != 9) {
-                        if (lastFire.getX() != 0 || lastFire.getY() != 9) {
+                    if(lastFire.getX() != 0 || lastFire.getX() != 9 && hit != false) {
                             Coordinates nextFire = new Coordinates(true, false,
-                                    lastFire.getX(), lastFire.getY() + 1);
+                                    lastFire.getX() + 1, lastFire.getY());
                             if(this.checkIfCoordHit(board, nextFire) == true) {
                                 game.sendAction(new Fire(this, nextFire));
                             }
-                        }
                     }
 
                 }
