@@ -222,7 +222,9 @@ public class BattleShipGameState extends GameState implements Serializable {
                     for (k = 0; k < placedShip.getSize(); k++) { //size of boat about to be placed
                         if (placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
                                 placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()) {
-                            return false; //if any of the two ships coordinates are the same returns false
+                            if (!(placedShip.getSize() == onBoard.getSize() && placedShip.getTwinShip() == onBoard.getTwinShip())){ //Checks if both ships are the same
+                                return false; //if any of the two ships coordinates are the same returns false
+                            }
                         }
                     }
                 }
