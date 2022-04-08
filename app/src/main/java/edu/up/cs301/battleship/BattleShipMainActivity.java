@@ -65,7 +65,8 @@ public class BattleShipMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer", 1);
 
         // Set the initial information for the remote player
-        defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
+        defaultConfig.setRemoteData("Remote Player", "", 0);
+        defaultConfig.setRemoteData("Remote Player", "", 1);// red-on-yellow GUI
 
         //done!
         return defaultConfig;

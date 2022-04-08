@@ -1,5 +1,7 @@
 package edu.up.cs301.battleship;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
@@ -43,6 +45,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     //mid game surface view
     private DrawMidgame midGameView;
     private DrawSetup setupView;
+    /**
+     * helper-class to finish a "flash.
+     *
+     */
+    private class Unflasher implements Runnable {
 
         private int duration;
 
@@ -69,14 +76,36 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     @Override
     public View getTopView() {
-        return null;
+        return myActivity.findViewById(R.id.setuptopview);
+    }
+
+    /**
+     * flash - The built in flash relies on a background color change but can't be used because
+     * the game has a background image.
+     * @param color
+     * 			the color to flash
+     * @param duration
+     */
+    @Override
+    protected void flash(int color, int duration) {
+        //no flashing until the via is ready
+        if (midGameView == null) return;
+
+        // save the original background color; set the new background
+        // color
+        midGameView.setFlashColor(color);
+        midGameView.invalidate();
+
+        // set up a timer event to set the background color back to
+        // the original.
+        Unflasher handler = new Unflasher(duration);
+        Thread thread = new Thread(handler);
+        thread.start();
     }
 
     @Override
     public void receiveInfo(GameInfo info) {
         if (!(info instanceof BattleShipGameState)) {
-            Log.i("FLASHING", "");
-            flash(0xFFFF0000, 100);
             return;
         } else {
             Log.i("received info", "receiveInfo: NEW INFO ");
@@ -89,18 +118,23 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     this.flash(Color.RED, 10);
                 }
             }
+            if (setupView != null){
+                setupView.setState(currGS);
+            }
             if (midGameView != null) {
                 midGameView.setState(currGS);
+                midGameView.invalidate();
             }
         }
     }
 
     @Override
     public void setAsGui(GameMainActivity activity) {
+
+
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
         Button nextButton = activity.findViewById(R.id.confirm_button);
-
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
 
@@ -109,21 +143,20 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             public void onClick(View view) {
                 //Checking if all ships have been placed
                 int i, j;
-                for(i = 0; i < 2; i++){
-                    for(j = 0; j < 6; j++){
-                        if(currGS.getPlayersFleet()[i][j].getSize() == 1 ){
-                int i, j;
-                for(i = 0; i < 2; i ++){
+                //for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
-                        if (currGS.getPlayersFleet()[i][j].getSize() == 1) {
+                        if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
                             return;
                         }
                     }
-                }
+                //}
+
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
                 midGameView = activity.findViewById(R.id.boardView);
+                midGameView.setPlayerID(playerNum);
+                midGameView.invalidate();
                 currGS.setPhase(BattleShipGameState.BATTLE_PHASE);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
@@ -149,15 +182,19 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView.setTwohpTop(setupView.getTwohpTop());
                 midGameView.invalidate();
 
+
                 TextView xCoord = activity.findViewById(R.id.textView);
                 TextView yCoord = activity.findViewById(R.id.textView2);
 
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
-
+                        midGameView.invalidate();
                         float xC = motionEvent.getX();
                         float yC = motionEvent.getY();
+                        float x = xC;
+                        float y = yC;
+
                         String letter = "";
                         boolean inBounds = true;
 
@@ -217,16 +254,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 letter = "J";
                             }
                         }
-
-                        if (!(xC == 0)) {
-                            xCoord.setText("X: " + (int) xC);
-                        } else {
-                            xCoord.setText("X: ");
-                        }
-                            yCoord.setText("Y: " + letter);
-
-                        float x = motionEvent.getX();
-                        float y = motionEvent.getY();
                         Log.d("In midGame", "Coords: " + x + ", " + y);
                         Log.i("Players Turn", "" + currGS.getPlayersTurn());
                         if (currGS.getPlayersTurn() == playerNum) {
@@ -243,6 +270,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             }
         });
         setupView = activity.findViewById(R.id.boardView);
+        setupView.setPlayerID(playerNum);
 
 
         /** On Touch for setupphase*/
@@ -295,7 +323,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     if (motionEvent.getAction() == motionEvent.ACTION_UP) {
                         float xUp = motionEvent.getX();
                         float yUp = motionEvent.getY();
-                        Coordinates sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
+                        Coordinates sendShipTo = null;
+                        if (currGS == null) {
+                            return false;
+                        }
+                        sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
                         if (sendShipTo != null) {
                             Log.i("Selected ship is", "selected ship is size " + newSize);
                         }
@@ -326,34 +358,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }
 
-//                        if (eachShipCoord != null) {
-//                            selectedBattleShip.setLocation(eachShipCoord);
-//                            char letters[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
-//                            for (int i = 0; i < selectedBattleShip.getSize(); i++) {
-//                                Log.i("Placed Ship", "Placed at" + (eachShipCoord[i].getX() + 1) + ", " + letters[eachShipCoord[i].getY()]);
-//                            }
-//                        }
-
-
                         return true;
                     }
-
-//                Coordinates placedTap = currGS.xyToCoordMidGame(x, y);
-//
-//                if (placedTap != null) {
-//                    Log.i("Touch", "onTouch: placing ship ");
-//                    Coordinates placedArray[] = null;
-//                    int currentY = placedTap.getY();
-//                    for (int i = 0; i < selectedBattleShip.getSize(); i++) {
-//                        placedArray[i] = new Coordinates(false, true, placedTap.getX(), currentY + 1);
-//                        currentY +=1;
-//                    }
-//                    if (placedArray != null) {
-//                        selectedBattleShip.setLocation(placedArray);
-//                        game.sendAction(new PlaceShip(reference, selectedBattleShip));
-//                    }
-//                }
-                    //currGS.xyToCoordMidGame(x,y);
                     shipIsSelected = true;
 
                     return true;
@@ -383,38 +389,3 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         }
     }
 }
-
-//BACKUP CODE
-//    @Override
-//    public boolean onTouch(View view, MotionEvent motionEvent) {
-//        if(currGS.getPhase() == 0){
-//            float x = motionEvent.getX();
-//            float y = motionEvent.getY();
-//            Log.d("Coords Test", "Coords: " + x + ", " + y);
-//            currGS.xyToCoordMidGame(x,y);
-//            return false;
-//        }
-//        else{
-//            float x = motionEvent.getX();
-//            float y = motionEvent.getY();
-//            Log.d("In midGame", "Coords: " + x + ", " + y);
-//            Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
-//            if(currGS.getPlayersTurn() == playerNum) {
-//                if (sendFireto != null) {
-//                    Log.i("Touch", "onTouch: sending fire ");
-//                    game.sendAction(new Fire(reference, sendFireto));
-//                }
-//            }
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public void onClick(View view) {
-//        this.myActivity .setContentView(R.layout.midgame);
-//        //midgame phase surface view
-//        SurfaceView gameView = this.myActivity .findViewById(R.id.boardView);
-//        currGS.setPhase(1);
-//        gameView.setOnTouchListener(this);
-//    }
-//}
