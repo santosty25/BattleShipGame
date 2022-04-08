@@ -384,4 +384,8 @@ public class DrawMidgame extends SurfaceView{
     public void setTwohpTop(float newValue) {
         twohpTop = newValue;
     }
+
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
+    }
 }
