@@ -330,7 +330,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     if (motionEvent.getAction() == motionEvent.ACTION_UP) {
                         float xUp = motionEvent.getX();
                         float yUp = motionEvent.getY();
-                        Coordinates sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
+                        Coordinates sendShipTo = null;
+                        if (currGS != null) {
+                            sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
+                        }
                         if (sendShipTo != null) {
                             Log.i("Selected ship is", "selected ship is size " + newSize);
                         }
