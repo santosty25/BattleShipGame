@@ -128,7 +128,6 @@ public class BattleShipGameState extends GameState implements Serializable {
         for (i = 0;  i < 2; i++) {
             for (j = 0; j < 6; j++){
                 this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
-                if(i == 1) {
                     Log.i("SHIP INFO", "Length " + this.playersFleet[i][j].getSize());
                     Coordinates[] arrayTest = this.playersFleet[i][j].getLocation();
                     int k;
@@ -136,7 +135,6 @@ public class BattleShipGameState extends GameState implements Serializable {
                         Log.i("coordinates", "" + arrayTest[k].getX() + " " + arrayTest[k].getY());
                     }
                     Log.i("====================", " ");
-                }
             }
         }
         //Log.i("Test", "after Players fleet for loop");
