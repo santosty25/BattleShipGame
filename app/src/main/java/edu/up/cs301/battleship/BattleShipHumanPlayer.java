@@ -143,13 +143,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             public void onClick(View view) {
                 //Checking if all ships have been placed
                 int i, j;
-                for(i = 0; i < 2; i ++){
+                //for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
-                        if (currGS.getPlayersFleet()[i][j].getSize() == 1) {
+                        if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
                             return;
                         }
                     }
-                }
+                //}
 
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
