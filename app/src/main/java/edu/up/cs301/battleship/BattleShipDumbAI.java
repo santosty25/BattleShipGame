@@ -44,14 +44,14 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         if (gameState.getPlayersTurn() == playerNum) {
             //if(gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
                 //places ships
-                if(this.placeShips==1) {
+
                     this.setShips(5);
                     this.setShips(4);
                     this.setShips(4);
                     this.setShips(3);
                     this.setShips(3);
                     this.setShips(2);
-                }
+
                 ++this.placeShips;
                 //fires at coordinates randomly
                 Log.i("COMPUTER PLAYERS TURN", "");

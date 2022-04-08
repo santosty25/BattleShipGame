@@ -2,6 +2,8 @@ package edu.up.cs301.battleship;
 
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * coordinates - A representation of the coordinates on a Battleship board.
  *
@@ -11,11 +13,13 @@ import android.util.Log;
  * @author Tyler Santos
  * @version Spring 2022 - 2/22/22
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     private boolean hit; //boolean that states whether a ship on this coordinate has been hit
     private boolean hasShip; //boolean that states whether a ship is on this coordinate
     private int x; //the x value of the coordinate
     private int y; //the y value of the coordinate
+
+    private static final long serialVersionUID = 4528L;
 
 
     /**

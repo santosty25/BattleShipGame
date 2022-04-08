@@ -3,6 +3,8 @@ package edu.up.cs301.battleship;
 import android.app.GameManager;
 import android.util.Log;
 
+import java.io.Serializable;
+
 import javax.security.auth.login.LoginException;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
@@ -19,10 +21,12 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @author Tyler Santos
  * @version Spring 2022 - 3/31/22
  */
-public class BattleShipGameState extends GameState {
+public class BattleShipGameState extends GameState implements Serializable {
     public static final int SETUP_PHASE = 0;
     public static final int BATTLE_PHASE = 1;
     public static final int END_PHASE = 2;
+
+    private static final long serialVersionUID = 4528L;
 
     private int[] playerID; //an array of each player's ID
     private GameBoard[] playersBoard; //the Battleship game board for each player
@@ -165,6 +169,7 @@ public class BattleShipGameState extends GameState {
                     boolean sunk = this.playersFleet[1][i].checkIfHit();
                     if(sunk == true) {
                         this.playersFleet[1][i].setSunk(true);
+                        this.updateNumPlayerFleet();
                     }
                     else {
                         continue;
@@ -189,6 +194,7 @@ public class BattleShipGameState extends GameState {
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     if(sunk == true) {
                         this.playersFleet[0][i].setSunk(true);
+                        this.updateNumPlayerFleet();
                     }
                     else {
                         continue;
@@ -534,11 +540,9 @@ public class BattleShipGameState extends GameState {
 
     //SAVED FOR BETA RELEASE
     /**
-     * checkNumPlayerFleet - Checks the number of ships in a player's fleet
-     * @param playerNum - the player who is checking for the amount of ships in their fleet
-     * @return the number of ships in a player's fleet
+     * setPlayerFleet - updates the number of ships in a player's fleet
      */
-    public int checkNumPlayerFleet(int playerNum) {
+    public void updateNumPlayerFleet() {
         boolean allSunk0 = false;
         boolean allSunk1 = false;
         int player0fleet = 0;
@@ -559,14 +563,10 @@ public class BattleShipGameState extends GameState {
         }
 
         //checks who is checking the remaining ships
-        if(playerNum == 0) {
-            this.remainingShips[playerNum] = player0fleet;
-        }
-        else {
-            this.remainingShips[playerNum] = player1fleet;
-        }
 
-        return this.remainingShips[playerNum];
+        this.remainingShips[0] = player0fleet;
+        this.remainingShips[0] = player1fleet;
+
     }
 
     //SAVED FOR BETA RELEASE

@@ -156,37 +156,54 @@ public class DrawSetup extends SurfaceView {
             Log.i("State is Null", "onDraw: NULL");
             return;
         }
-        BattleshipObj[][] playerFleet= state.getPlayersFleet(); // 5 4 4 3 3 2
-        for (int i = 0; i < playerFleet[playerID].length; i++) {
-            float xValue;
-            float yValue;
-            if(playerFleet[playerID][i].getSize() == 5){
-                toPlace = playerFleet[playerID][i].getFirstCoord();
-                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
-                yValue = state.middleYOfCoord(toPlace) - 25;
-                Log.i("ID", "onDraw: " + selectedShipId);
-                if(selectedShipId != 1){
-                    fivehpLeft = xValue;
-                    fivehpTop = yValue;
-                }
-                canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-                this.invalidate();
-            }
-            else if(playerFleet[playerID][i].getSize() == 4){
-                toPlace = playerFleet[playerID][i].getFirstCoord();
-                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
-                yValue = state.middleYOfCoord(toPlace) - 25;
-                if(playerFleet[playerID][i].getTwinShip() == 0){
-                    if(selectedShipId != 2) {
-                        fourhp1Left = xValue;
-                        fourhp1Left = yValue;
+        /**Draw on your board
+         * Need to change the center methods
+         * */
+        GameBoard drawEnemyBoard = this.state.getBoard(0);
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                Log.i("NOT NULL", "");
+                if (drawEnemyBoard.getCoordHit(row, col)) {
+                    Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
+                    if (drawEnemyBoard.getHasShip()) {
+
                     }
-                    canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+                    this.invalidate();
                 }
-
             }
-
         }
+
+//        BattleshipObj[][] playerFleet= state.getPlayersFleet(); // 5 4 4 3 3 2
+//        for (int i = 0; i < playerFleet[playerID].length; i++) {
+//            float xValue;
+//            float yValue;
+//            if(playerFleet[playerID][i].getSize() == 5){
+//                toPlace = playerFleet[playerID][i].getFirstCoord();
+//                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
+//                yValue = state.middleYOfCoord(toPlace) - 25;
+//                Log.i("ID", "onDraw: " + selectedShipId);
+//                if(selectedShipId != 1){
+//                    fivehpLeft = xValue;
+//                    fivehpTop = yValue;
+//                }
+//                canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+//                this.invalidate();
+//            }
+//            else if(playerFleet[playerID][i].getSize() == 4){
+//                toPlace = playerFleet[playerID][i].getFirstCoord();
+//                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
+//                yValue = state.middleYOfCoord(toPlace) - 25;
+//                if(playerFleet[playerID][i].getTwinShip() == 0){
+//                    if(selectedShipId != 2) {
+//                        fourhp1Left = xValue;
+//                        fourhp1Left = yValue;
+//                    }
+//                    canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+//                }
+//
+//            }
+//
+//        }
 
 
         //canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);

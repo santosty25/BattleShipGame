@@ -3,6 +3,8 @@ package edu.up.cs301.battleship;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import java.io.Serializable;
+
 /**
  * BattleshipObj
  * Creates a battleship object, storing its location, its size, and if its been sunk
@@ -13,12 +15,13 @@ import android.util.Log;
  * @author Tyler Santos
  * @version Spring 2022 - 2/22/22
  */
-public class BattleshipObj {
+public class BattleshipObj implements Serializable {
     private int size; //the size of this battleship
     private boolean sunk; //boolean that states whether this battleship has been sunk
     private Coordinates[] location; //the location of this battleship
     private int twinShip; //for when there are 2 ships of the same size
 
+    private static final long serialVersionUID = 4528L;
 
     /**
      * BattleshipObj - Basic constructor that initializes the instance variables with

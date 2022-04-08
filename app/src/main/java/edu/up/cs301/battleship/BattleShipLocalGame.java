@@ -71,9 +71,11 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             BattleShipGameState gameState = (BattleShipGameState) super.state;
             int winner = gameState.checkPlayerFleet();
             if (winner == 0) {
+                gameState.setPhase(BattleShipGameState.END_PHASE);
                 return "Player 0 has won. ";
             }
             else if (winner == 1) {
+                gameState.setPhase(BattleShipGameState.END_PHASE);
                 return "Player 1 has won. ";
             }
             return null;

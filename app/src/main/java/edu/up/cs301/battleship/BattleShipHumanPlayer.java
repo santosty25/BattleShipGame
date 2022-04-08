@@ -88,9 +88,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
      */
     @Override
     protected void flash(int color, int duration) {
-        // get the top view, ignoring if null
-        View top = this.getTopView();
-        if (top == null) return;
+        //no flashing until the via is ready
+        if (midGameView == null) return;
 
         // save the original background color; set the new background
         // color
@@ -107,8 +106,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     @Override
     public void receiveInfo(GameInfo info) {
         if (!(info instanceof BattleShipGameState)) {
-            Log.i("FLASHING", "");
-//            flash(0xFFFF0000, 100);
             return;
         } else {
             Log.i("received info", "receiveInfo: NEW INFO ");
@@ -116,7 +113,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
             int playersTurn = currGS.getPlayersTurn();
             int gamePhase = currGS.getPhase();
-//            this.flash(Color.RED, 400);
             if (gamePhase == BattleShipGameState.BATTLE_PHASE) {
                 if (playersTurn != playerNum) {
                     this.flash(Color.RED, 10);
