@@ -336,7 +336,7 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public static Coordinates xyToCoordSetupGame(float touchX, float touchY) {
         //Top left corner of board/grid
-        float boardStartX = 713;
+        float boardStartX = 715.8f;
         float boardStartY = 185;
         float cellWidth = 74;
         char boardRows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
@@ -358,11 +358,11 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param selected - coordinates of a selected grid on the board
      * @return float value of x that corresponds to the middle of that selected grid
      */
-    public float middleXOfCoord(Coordinates selected) {
-        float squareWidth = 74;
+    public static float middleXOfCoord(Coordinates selected) {
+        float squareWidth = 74.0356f;
         float pixelX = selected.getX();
         float middleX = ((pixelX * squareWidth) + squareWidth) - 37;
-        middleX += 713;
+        middleX += 710.9375;
         return middleX;
     }
 
@@ -372,11 +372,11 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param selected - coordinates of a selected grid on the board
      * @return float value of y that corresponds to the middle of that selected grid
      */
-    public float middleYOfCoord(Coordinates selected) {
-        float squareHeight = 74;
+    public static float middleYOfCoord(Coordinates selected) {
+        float squareHeight = 74.0356f;
         float pixelY = selected.getY();
         float middleY = ((pixelY * squareHeight) + squareHeight) - 37;
-        middleY += 185;
+        middleY += 185.01709;
         return middleY;
     }
 

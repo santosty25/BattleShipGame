@@ -295,6 +295,7 @@ public class DrawSetup extends SurfaceView {
             case MotionEvent.ACTION_UP: { //places it, gets the ship size and sends it back to the human player method
                 float upXVal = event.getX();
                 float upYVal = event.getY();
+                Coordinates selectedCoord;
                 switch(selectedShipId) {
                     case 1: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
@@ -310,8 +311,22 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else {
-                            fivehpLeft = event.getX() - 35.0f;
-                            fivehpTop = event.getY();
+                            selectedCoord = BattleShipGameState.xyToCoordSetupGame(upXVal, upYVal);
+                            if (selectedCoord.getX() == 0 || selectedCoord.getX() == 1) {
+                                fivehpLeft = BattleShipGameState.middleXOfCoord(selectedCoord) - 30;
+                                fivehpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else if (selectedCoord.getX() <= 4) {
+                                fivehpLeft = BattleShipGameState.middleXOfCoord(selectedCoord) - 25;
+                                fivehpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else {
+                                fivehpLeft = BattleShipGameState.middleXOfCoord(selectedCoord) - 20;
+                                fivehpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            invalidate();
+//                            fivehpLeft = event.getX() - 35.0f;
+//                            fivehpTop = event.getY();
                         }
                         break;
                     }
@@ -329,8 +344,23 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else {
-                            fourhp1Left = event.getX() - 35.0f;
-                            fourhp1Top = event.getY();
+                            selectedCoord = BattleShipGameState.xyToCoordSetupGame(upXVal, upYVal);
+                            if (selectedCoord.getX() == 0 || selectedCoord.getX() == 1) {
+                                fourhp1Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 30;
+                                fourhp1Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else if (selectedCoord.getX() <= 4) {
+                                fourhp1Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 25;
+                                fourhp1Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else {
+                                fourhp1Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 20;
+                                fourhp1Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+
+                            invalidate();
+//                            fourhp1Left = event.getX() - 35.0f;
+//                            fourhp1Top = event.getY();
                         }
                         break;
                     }
@@ -348,8 +378,22 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else {
-                            fourhp2Left = event.getX() - 35.0f;
-                            fourhp2Top = event.getY();
+                            selectedCoord = BattleShipGameState.xyToCoordSetupGame(upXVal, upYVal);
+                            if (selectedCoord.getX() == 0 || selectedCoord.getX() == 1) {
+                                fourhp2Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 30;
+                                fourhp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else if (selectedCoord.getX() <= 4) {
+                                fourhp2Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 25;
+                                fourhp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else {
+                                fourhp2Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 20;
+                                fourhp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            invalidate();
+//                            fourhp2Left = event.getX() - 35.0f;
+//                            fourhp2Top = event.getY();
                         }
                         break;
                     }
@@ -367,8 +411,23 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else {
-                            threehp1Left = event.getX() - 35.0f;
-                            threehp1Top = event.getY();
+                            selectedCoord = BattleShipGameState.xyToCoordSetupGame(upXVal, upYVal);
+                            if (selectedCoord.getX() == 0 || selectedCoord.getX() == 1) {
+                                threehp1Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 30;
+                                threehp1Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else if (selectedCoord.getX() <= 4) {
+                                threehp1Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 25;
+                                threehp1Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else {
+                                threehp1Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 20;
+                                threehp1Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+
+                            invalidate();
+//                            threehp1Left = event.getX() - 35.0f;
+//                            threehp1Top = event.getY();
                         }
                         break;
                     }
@@ -386,8 +445,23 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else {
-                            threehp2Left = event.getX() - 35.0f;
-                            threehp2Top = event.getY();
+                            selectedCoord = BattleShipGameState.xyToCoordSetupGame(upXVal, upYVal);
+                            if (selectedCoord.getX() == 0 || selectedCoord.getX() == 1) {
+                                threehp2Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 30;
+                                threehp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else if (selectedCoord.getX() <= 4) {
+                                threehp2Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 25;
+                                threehp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else {
+                                threehp2Left = BattleShipGameState.middleXOfCoord(selectedCoord) - 20;
+                                threehp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+
+                            invalidate();
+//                            threehp2Left = event.getX() - 35.0f;
+//                            threehp2Top = event.getY();
                         }
                         break;
                     }
@@ -405,8 +479,22 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else {
-                            twohpLeft = event.getX() - 35.0f;
-                            twohpTop = event.getY();
+                            selectedCoord = BattleShipGameState.xyToCoordSetupGame(upXVal, upYVal);
+                            if (selectedCoord.getX() == 0 || selectedCoord.getX() == 1) {
+                                twohpLeft = BattleShipGameState.middleXOfCoord(selectedCoord) - 30;
+                                twohpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else if (selectedCoord.getX() <= 4) {
+                                twohpLeft = BattleShipGameState.middleXOfCoord(selectedCoord) - 25;
+                                twohpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            else {
+                                twohpLeft = BattleShipGameState.middleXOfCoord(selectedCoord) - 20;
+                                twohpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
+                            }
+                            invalidate();
+//                            twohpLeft = event.getX() - 35.0f;
+//                            twohpTop = event.getY();
                         }
                         break;
                     }
@@ -496,6 +584,8 @@ public class DrawSetup extends SurfaceView {
         twohpLeft = twohpLeftInitial;
         twohpTop = twohpTopInitial;
     }
+
+
 
 }
 
