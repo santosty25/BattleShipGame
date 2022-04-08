@@ -33,7 +33,7 @@ import edu.up.cs301.tictactoe.views.TTTSurfaceView;
  * @author Keoni Han
  * @author Steven Lee
  */
-public class BattleShipHumanPlayer extends GameHumanPlayer{
+public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     private GameMainActivity myActivity = null;
     private boolean switchPhase = false;
@@ -145,12 +145,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer{
             public void onClick(View view) {
                 //Checking if all ships have been placed
                 int i, j;
-                //for(i = 0; i < 2; i ++){
+                for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
-                        if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
+                        if (currGS.getPlayersFleet()[i][j].getSize() == 1) {
                             return;
                         }
-                 //   }
+                    }
                 }
 
                 activity.setContentView(R.layout.midgame);
@@ -290,36 +290,30 @@ public class BattleShipHumanPlayer extends GameHumanPlayer{
                     switch(shipId) {
                         case 1: {
                             newSize = 5;
-                            lastSelectedShip = 1;
                             break;
                         }
                         case 2: {
                             newSize = 4;
                             selectedBattleShip.setTwinShip(0);
-                            lastSelectedShip = 2;
                             break;
                         }
                         case 3: {
                             newSize = 4;
                             selectedBattleShip.setTwinShip(1);
-                            lastSelectedShip = 3;
                             break;
                         }
                         case 4: {
                             newSize = 3;
                             selectedBattleShip.setTwinShip(0);
-                            lastSelectedShip = 4;
                             break;
                         }
                         case 5: {
                             newSize = 3;
                             selectedBattleShip.setTwinShip(1);
-                            lastSelectedShip = 5;
                             break;
                         }
                         case 6: {
                             newSize = 2;
-                            lastSelectedShip = 6;
                             break;
                         }
                     }
@@ -337,7 +331,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer{
                         }
                         sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
                         if (sendShipTo != null) {
-                            Log.i("Selected ship is", "selected ship is size " + lastSelectedShip);
+                            Log.i("Selected ship is", "selected ship is size " + newSize);
                         }
 //                        Log.d("placed ship", "at " + xUp + ", " + yUp);
                         if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
@@ -362,6 +356,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer{
                         selectedBattleShip.setLocation(eachShipCoord);
                         if (selectedBattleShip != null) {
                             Log.i("Place ship action", "Sending action");
+
                             game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }
 

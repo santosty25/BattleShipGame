@@ -336,7 +336,7 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @return coordinate object based on board
      *
      */
-    public Coordinates xyToCoordSetupGame(float touchX, float touchY) {
+    public static Coordinates xyToCoordSetupGame(float touchX, float touchY) {
         //Top left corner of board/grid
         float boardStartX = 713;
         float boardStartY = 185;
