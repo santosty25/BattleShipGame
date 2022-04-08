@@ -16,6 +16,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 public class Fire extends GameAction {
 
     private Coordinates coord; //the coordinates where a player has fired
+    private static final long serialVersionUID = 4528L;
 
     /**
      * Fire - constructor that initializes instance variables.
