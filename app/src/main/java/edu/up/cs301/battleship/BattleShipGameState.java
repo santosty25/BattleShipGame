@@ -340,7 +340,7 @@ public class BattleShipGameState extends GameState implements Serializable {
         //Top left corner of board/grid
         float boardStartX = 715.8f;
         float boardStartY = 185;
-        float cellWidth = 74;
+        float cellWidth = 75.5f;
         char boardRows[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
         int newX = (int)((touchX - boardStartX) / cellWidth);
         int newY = (int)((touchY - boardStartY) / cellWidth);

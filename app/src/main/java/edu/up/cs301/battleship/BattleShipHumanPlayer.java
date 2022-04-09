@@ -318,7 +318,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
                     }
 
-                    Log.i("Test Coordinates", "" + motionEvent.getX() + ", " + motionEvent.getY());
+                    Log.i("Test Coordinates", "FIND ME HERE" + motionEvent.getX() + ", " + motionEvent.getY());
 
                         selectedBattleShip.setSize(newSize);
                         if (newSize < 0 || newSize >= 6) {
