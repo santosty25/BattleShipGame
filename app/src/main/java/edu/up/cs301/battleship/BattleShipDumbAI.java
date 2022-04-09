@@ -41,17 +41,17 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         Log.i("COMPUTER PLAYERS TURN", "");
 
         //Checks if it's the computer player's turn
-        if (gameState.getPlayersTurn() == playerNum) {
+        //if (gameState.getPlayersTurn() == playerNum) {
             //if(gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
                 //places ships
-                if(this.placeShips==1) {
+
                     this.setShips(5);
                     this.setShips(4);
                     this.setShips(4);
                     this.setShips(3);
                     this.setShips(3);
                     this.setShips(2);
-                }
+
                 ++this.placeShips;
                 //fires at coordinates randomly
                 Log.i("COMPUTER PLAYERS TURN", "");
@@ -68,7 +68,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             //else if(gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
 
             //}
-        }
+        //}
 
         //SAVE FOR BETA RELEASE
         //Let's dumb ai place ships randomly

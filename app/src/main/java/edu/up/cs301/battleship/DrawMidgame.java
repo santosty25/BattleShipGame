@@ -6,13 +6,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.R;
+import edu.up.cs301.tictactoe.infoMessage.TTTState;
 
 /**
  * DrawMidgame - A SurfaceView class that represents what is drawn during the
@@ -28,6 +31,7 @@ public class DrawMidgame extends SurfaceView{
     private Paint blackPaint = new Paint();
     private Context context;
     public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
+    public int playerID;
 
     protected BattleShipGameState state;
     protected int flashColor = Color.BLACK;
@@ -83,8 +87,6 @@ public class DrawMidgame extends SurfaceView{
     public void setFlashColor(int color) {
         this.flashColor = color;
     }
-
-
 
     @Override
     public void onDraw(Canvas canvas){
@@ -434,5 +436,9 @@ public class DrawMidgame extends SurfaceView{
     }
     public void setTwohpTop(float newValue) {
         twohpTop = newValue;
+    }
+
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
     }
 }
