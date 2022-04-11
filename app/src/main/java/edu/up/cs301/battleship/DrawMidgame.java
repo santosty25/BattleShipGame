@@ -57,6 +57,15 @@ public class DrawMidgame extends SurfaceView{
     Bitmap xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
 
 
+    private boolean rotFiveHp;
+    private boolean rotFourHp1;
+    private boolean rotFourHp2;
+    private boolean rotThreeHp1;
+    private boolean rotThreeHp2;
+    private boolean rotTwoHP;
+
+
+
     public DrawMidgame(Context context) {//default constructor,
         super(context);
         initPaints();
@@ -91,14 +100,6 @@ public class DrawMidgame extends SurfaceView{
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
-//        TouchListener listener = new TouchListener(this, this.context);
-//        this.setOnTouchListener(listener);
-
-        //FLOAT - like a double but half the number of bits
-        //drawOval(x,y x2, y2, paint);
-
-        //
-
 
         Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.battleshipbackground);
         background = Bitmap.createScaledBitmap(background, getWidth(), getHeight(), false);
@@ -436,9 +437,5 @@ public class DrawMidgame extends SurfaceView{
     }
     public void setTwohpTop(float newValue) {
         twohpTop = newValue;
-    }
-
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
     }
 }

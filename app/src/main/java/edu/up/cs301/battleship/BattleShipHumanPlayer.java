@@ -283,6 +283,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
+                        int i;
 
                         int shipId = setupView.onTouchEventNew(motionEvent);
                     Log.i("SHIP ID", "onTouch: " + shipId);
@@ -335,7 +336,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if (sendShipTo != null) {
                             Log.i("Selected ship is", "selected ship is size " + newSize);
                         }
-//                        Log.d("placed ship", "at " + xUp + ", " + yUp);
                         if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
                             return true;
                         }
@@ -346,7 +346,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             yUp -= adjustment;
                         }
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
-                        for (int i = 0; i < selectedBattleShip.getSize(); i++) {
+                        for (i = 0; i < selectedBattleShip.getSize(); i++) {
                             if (currGS.getBoard(playerNum).getHasShip()) {
                                 Log.i("Invalid Place", "Ship already placed here");
                                 return false;
@@ -355,7 +355,23 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             Log.i("Coordinates ", "" + eachShipCoord[i].getX() +  " " + eachShipCoord[i].getY());
                             yUp += 74;
                         }
+                        Boolean sameLoc = true;
+                        if(lastSelectedShip == shipId && shipId != 0){
+                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
+                            for(i = 0; i < eachShipCoord.length; i ++){
+                                if (!(eachShipCoord[i].getX() == temp.getLocation()[i].getX() && eachShipCoord[i].getY() == temp.getLocation()[i].getY())){
+                                    sameLoc = false;
+                                }
+                            }
+                        }
+                        else{
+                            lastSelectedShip = shipId;
+                        }
+                        if(sameLoc){
+                            setupView.swapRotFiveHp();
+                        }
                         selectedBattleShip.setLocation(eachShipCoord);
+
                         if (selectedBattleShip != null) {
                             Log.i("Place ship action", "Sending action");
 
