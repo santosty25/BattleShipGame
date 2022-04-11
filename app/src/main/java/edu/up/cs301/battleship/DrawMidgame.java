@@ -54,6 +54,8 @@ public class DrawMidgame extends SurfaceView{
     Bitmap twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
     private float twohpLeft = 1680.0f;
     private float twohpTop = 807.0f;
+    Bitmap xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
+
 
     private boolean rotFiveHp;
     private boolean rotFourHp1;
@@ -181,15 +183,12 @@ public class DrawMidgame extends SurfaceView{
 
         //CREATES 2 hp BS
         twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-        twohp = Bitmap.createScaledBitmap(twohp, 52, 20, false);
+        twohp = Bitmap.createScaledBitmap(twohp, 45, 20, false);
         twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
-        for(TapValues tap : tapValues){
-            Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
-            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
 
-
-        }
-
+        //CREATES RED HIT MARKER
+        xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
+        xSink = Bitmap.createScaledBitmap(xSink, 100, 100, false);
 
 
         if (state == null) {
@@ -202,11 +201,7 @@ public class DrawMidgame extends SurfaceView{
 
 
         //Draw on enemies board
-        int enemyID = 1;
-        if(playerID == 1){
-            enemyID = 0;
-        }
-        GameBoard drawBoard = this.state.getBoard(enemyID);
+        GameBoard drawBoard = this.state.getBoard(1);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
                 Log.i("NOT NULL", "");
@@ -244,13 +239,13 @@ public class DrawMidgame extends SurfaceView{
         //Draws the ships according to that user's board taken from the game state
         Coordinates toPlace = new Coordinates(false,false,0,0);
 
-        for (int i = 0; i < playerFleet[playerID].length; i++) {
-            if (playerFleet[playerID][i].getSize() == 5) {
-                toPlace = playerFleet[playerID][i].getFirstCoord();
+        for (int i = 0; i < playerFleet[0].length; i++) {
+            if (playerFleet[0][i].getSize() == 5) {
+                toPlace = playerFleet[0][i].getFirstCoord();
                 fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                 fivehpTop = state.middleYOfEnemyBoard(toPlace) - 16;
             }
-            else if (playerFleet[playerID][i].getSize() == 4) {
+            else if (playerFleet[0][i].getSize() == 4) {
                 if (i == 1) {
                     toPlace = playerFleet[0][i].getFirstCoord();
                     fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 19.5f;
@@ -317,8 +312,70 @@ public class DrawMidgame extends SurfaceView{
         canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
         canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
         canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
+
+//        // 5HP ship
+//        canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
+//        // 4HP ship
+//        canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
+//        // 4HP ship
+//        canvas.drawBitmap(xSink, 1825.0f, 480.0f, blackPaint);
+//        // 3HP ship
+//        canvas.drawBitmap(xSink, 1825.0f, 630.0f, blackPaint);
+//        // 3HP ship
+//        canvas.drawBitmap(xSink, 1825.0f, 760.0f, blackPaint);
+//        // 2HP ship
+//        canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
+
         this.invalidate();
 
+
+
+        // draw red x over sunk ships
+        int check = 0;
+        boolean firstSunk = false;
+
+        // 2HP ship
+        check = state.checkIndividualShip(2, 1);
+        if (check == 1) {
+            canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
+            this.invalidate();
+        }
+
+        // 3HP ships
+        check = state.checkIndividualShip(3, 1);
+        if (check == 1) {
+            canvas.drawBitmap(xSink, 1825.0f, 630.0f, blackPaint);
+            firstSunk = true;
+            this.invalidate();
+        }
+        check = state.checkIndividualShip(3, 1);
+            if (check == 2 && firstSunk) {
+                canvas.drawBitmap(xSink, 1825.0f, 760.0f, blackPaint);
+                firstSunk = false;
+                this.invalidate();
+            }
+
+
+        // 4HP ships
+        check = state.checkIndividualShip(4, 1);
+            if (check == 1) {
+                canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
+                firstSunk = true;
+                this.invalidate();
+            }
+        check = state.checkIndividualShip(4, 1);
+            if (check == 2 && firstSunk) {
+                canvas.drawBitmap(xSink, 1825.0f, 480.0f, blackPaint);
+                firstSunk = false;
+                this.invalidate();
+            }
+
+        // 5HP ship
+        check = state.checkIndividualShip(5, 0);
+            if (check == 1) {
+                canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
+                this.invalidate();
+            }
 
 //        drawEnemyBoard = this.state.getBoard(0);
         GameBoard drawEnemyBoard = this.state.getBoard(0);
@@ -341,10 +398,6 @@ public class DrawMidgame extends SurfaceView{
                 }
             }
         }
-    }
-
-    public void setPlayerID(int value) {
-        this.playerID = value;
     }
 
 
