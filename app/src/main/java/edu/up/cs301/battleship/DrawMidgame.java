@@ -400,6 +400,9 @@ public class DrawMidgame extends SurfaceView{
         }
     }
 
+    public void setPlayerID(int num) {
+        this.playerID = num;
+    }
 
     //Setters to get positions of battleships from setup phase
     public void setFivehpLeft(float newValue) {
