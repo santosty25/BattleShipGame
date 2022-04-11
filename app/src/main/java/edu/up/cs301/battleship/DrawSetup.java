@@ -69,6 +69,12 @@ public class DrawSetup extends SurfaceView {
 
     private int selectedShipId = 0;
 
+    private boolean rotFiveHp = true;
+    private boolean rotFourHp1 = true;
+    private boolean rotFourHp2 = true;
+    private boolean rotThreeHp1 = true;
+    private boolean rotThreeHp2= true;
+    private boolean rotTwoHP = true;
 
     protected BattleShipGameState state;
 
@@ -95,8 +101,6 @@ public class DrawSetup extends SurfaceView {
         this.blackPaint.setStyle(Paint.Style.FILL);
         this.orangePaint.setColor(0xFFFF6700);
         this.orangePaint.setStyle(Paint.Style.FILL);
-
-
     }
 
     public void setState(BattleShipGameState state) {
@@ -116,7 +120,9 @@ public class DrawSetup extends SurfaceView {
          */
         fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
         fivehp = Bitmap.createScaledBitmap(fivehp, 360, 70, false);
-        fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
+        if(rotFiveHp) {
+            fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
+        }
 
         fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp1 = Bitmap.createScaledBitmap(fourhp1, 288, 70, false);
@@ -301,6 +307,7 @@ public class DrawSetup extends SurfaceView {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
                             fivehpLeft = fivehpLeftInitial;
                             fivehpTop = fivehpTopInitial;
+                            rotFiveHp = true;
                             invalidate();
                             return 0;
                         }
@@ -359,8 +366,6 @@ public class DrawSetup extends SurfaceView {
                             }
 
                             invalidate();
-//                            fourhp1Left = event.getX() - 35.0f;
-//                            fourhp1Top = event.getY();
                         }
                         break;
                     }
@@ -583,6 +588,10 @@ public class DrawSetup extends SurfaceView {
     public void resetTwohp() {
         twohpLeft = twohpLeftInitial;
         twohpTop = twohpTopInitial;
+    }
+
+    public void swapRotFiveHp(){
+        this.rotFiveHp = !this.rotFiveHp;
     }
 
 
