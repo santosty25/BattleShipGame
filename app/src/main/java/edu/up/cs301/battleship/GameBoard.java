@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 public class GameBoard extends Coordinates implements Serializable {
     private Coordinates currentBoard[][]; //a Coordinate array representing the board
-    private static final long serialVersionUID = 4528L;
+    private static final long serialVersionUID = 452872340L;
 
     /**
      * GameBoard - Default constructor for the board

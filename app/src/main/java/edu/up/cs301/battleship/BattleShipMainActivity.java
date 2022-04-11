@@ -49,13 +49,13 @@ public class BattleShipMainActivity extends GameMainActivity {
                 return new BattleShipDumbAI(name);
             }
         });
-//SAVED FOR BETA RELEASE
-//        // smarter computer player
-//        playerTypes.add(new GamePlayerType("Computer Player (smart)") {
-//            public GamePlayer createPlayer(String name) {
-//                return new TTTComputerPlayer2(name);
-//            }
-//        });
+
+        // smarter computer player
+        playerTypes.add(new GamePlayerType("Computer Player (smart)") {
+            public GamePlayer createPlayer(String name) {
+                return new BattleShipSmartAI(name);
+            }
+        });
 
         // Create a game configuration class for Tic-tac-toe
         GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Battleship", PORT_NUMBER);
