@@ -90,7 +90,7 @@ public class DrawMidgame extends SurfaceView{
     }
 
     public void setState(BattleShipGameState state) {
-        this.state = new BattleShipGameState(state, state.getPlayersTurn());
+        this.state = new BattleShipGameState(state);
     }
 
     public void setFlashColor(int color) {

@@ -112,7 +112,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         } else {
             Log.i("received info", "receiveInfo: NEW INFO ");
             this.reference = this;
-            currGS = new BattleShipGameState((BattleShipGameState) info, playerNum);
+            currGS = new BattleShipGameState((BattleShipGameState) info);
             int playersTurn = currGS.getPlayersTurn();
             int gamePhase = currGS.getPhase();
             if (gamePhase == BattleShipGameState.BATTLE_PHASE) {
@@ -145,13 +145,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             public void onClick(View view) {
                 //Checking if all ships have been placed
                 int i, j;
-                for(i = 0; i < 2; i ++){
+                //for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
                         if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
                             return;
                         }
                     }
-                }
+                //}
 
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
@@ -196,66 +196,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         float yC = motionEvent.getY();
                         float x = xC;
                         float y = yC;
-
-                        String letter = "";
-                        boolean inBounds = true;
-
-                        // X-Coordinates
-                        if (xC < 710 || xC > 1460) {
-                            xC = 0;
-                            letter = "";
-                            inBounds = false;
-                        }
-                        if (xC > 710 && xC < 785) {
-                            xC = 1;
-                        } else if (xC > 785 && xC < 860) {
-                            xC = 2;
-                        } else if (xC > 860 && xC < 935) {
-                            xC = 3;
-                        } else if (xC > 935 && xC < 1010) {
-                            xC = 4;
-                        } else if (xC > 1010 && xC < 1085) {
-                            xC = 5;
-                        } else if (xC > 1085 && xC < 1160) {
-                            xC = 6;
-                        } else if (xC > 1160 && xC < 1235) {
-                            xC = 7;
-                        } else if (xC > 1235 && xC < 1310) {
-                            xC = 8;
-                        } else if (xC > 1310 && xC < 1385) {
-                            xC = 9;
-                        } else if (xC > 1385 && xC < 1460) {
-                            xC = 10;
-                        }
-
-                        // Y-Coordinates
-                        if (yC < 180 || yC > 930) {
-                            letter = "";
-                            xC = 0;
-                        }
-                        if (inBounds == true) {
-                            if (yC > 180 && yC < 255) {
-                                letter = "A";
-                            } else if (yC > 255 && yC < 330) {
-                                letter = "B";
-                            } else if (yC > 330 && yC < 405) {
-                                letter = "C";
-                            } else if (yC > 405 && yC < 480) {
-                                letter = "D";
-                            } else if (yC > 480 && yC < 555) {
-                                letter = "E";
-                            } else if (yC > 555 && yC < 630) {
-                                letter = "F";
-                            } else if (yC > 630 && yC < 705) {
-                                letter = "G";
-                            } else if (yC > 705 && yC < 780) {
-                                letter = "H";
-                            } else if (yC > 780 && yC < 855) {
-                                letter = "I";
-                            } else if (yC > 855 && yC < 930) {
-                                letter = "J";
-                            }
-                        }
                         Log.d("In midGame", "Coords: " + x + ", " + y);
                         Log.i("Players Turn", "" + currGS.getPlayersTurn());
                         if (currGS.getPlayersTurn() == playerNum) {
@@ -356,17 +296,17 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             yUp += 74;
                         }
                         Boolean sameLoc = true;
-                        if(lastSelectedShip == shipId && shipId != 0){
-                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
-                            for(i = 0; i < eachShipCoord.length; i ++){
-                                if (!(eachShipCoord[i].getX() == temp.getLocation()[i].getX() && eachShipCoord[i].getY() == temp.getLocation()[i].getY())){
-                                    sameLoc = false;
-                                }
-                            }
-                        }
-                        else{
-                            lastSelectedShip = shipId;
-                        }
+//                        if(lastSelectedShip == shipId && shipId != 0){
+//                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
+//                            for(i = 0; i < eachShipCoord.length; i ++){
+//                                if (!(eachShipCoord[i].getX() == temp.getLocation()[i].getX() && eachShipCoord[i].getY() == temp.getLocation()[i].getY())){
+//                                    sameLoc = false;
+//                                }
+//                            }
+//                        }
+//                        else{
+//                            lastSelectedShip = shipId;
+//                        }
                         if(sameLoc){
                             setupView.swapRotFiveHp();
                         }

@@ -33,7 +33,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
          */
         public BattleShipLocalGame(BattleShipGameState battleshipState){
             super();
-            super.state = new BattleShipGameState(battleshipState, battleshipState.getPlayersTurn());
+            super.state = new BattleShipGameState(battleshipState);
         }
 
         /**
@@ -46,7 +46,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
         @Override
         protected void sendUpdatedStateTo(GamePlayer p) {
             // make a copy of the state, and send it to the player
-            BattleShipGameState copy = new BattleShipGameState((BattleShipGameState)state, ((BattleShipGameState) state).getPlayersTurn());
+            BattleShipGameState copy = new BattleShipGameState((BattleShipGameState)state);
             p.sendInfo(copy);
         }
 
@@ -160,7 +160,11 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     }
                 }
             else if(action instanceof PlaceShip){
+                Log.i("START OF PLACE SHIP ACTION", "");
+
+
                 //set player's fleet
+
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
                 BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
                 int i, j, k;
@@ -177,8 +181,8 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 if( state.placeShip(currentFleet, placeAction.getBattleship(), placeAction.getPlayerNum()) == false){
                     return false;
                 }
+                Log.i("MAKING MOVE", "makeMove: " +  placeAction.getBattleship().getSize());
 
-            Log.i("MAKING MOVE", "makeMove: " +  placeAction.getBattleship().getSize());
 
             if(placeAction.getPlayerNum() == 0){
                 if(placeAction.getBattleship().getSize() == 5) { //Ship of size 5 is placed at index 0
@@ -188,11 +192,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 else if(placeAction.getBattleship().getSize() == 4){
                     if(placeAction.getBattleship().getTwinShip() == 0){
                         //Because there are two ships of the same length we need to identify which is which
-                        Log.i("placing ship size: 0", "4");
                         currentFleet[0][1] = new BattleshipObj(placeAction.getBattleship());
                     }
                     else{
-                        Log.i("placing ship size: ", "4");
                         currentFleet[0][2] = new BattleshipObj(placeAction.getBattleship());
                     }
                 }
@@ -236,7 +238,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
-                //state.placeShip(currentFleet, placeAction.getBattleship(), placeAction.getPlayerNum());
                 return true;
             }
 

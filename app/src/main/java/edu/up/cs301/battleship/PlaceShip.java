@@ -16,7 +16,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  * @author Steven Lee
  * @version Spring 2022 - 3/31/22
  */
-public class PlaceShip extends GameAction implements Serializable  {
+public class PlaceShip extends GameAction implements Serializable {
 
     private int playerNum; //the player number
     private BattleshipObj battleship; //a given battleship
