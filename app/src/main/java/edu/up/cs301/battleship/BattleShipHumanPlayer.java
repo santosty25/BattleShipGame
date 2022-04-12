@@ -296,17 +296,17 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             yUp += 74;
                         }
                         Boolean sameLoc = true;
-                        if(lastSelectedShip == shipId && shipId != 0){
-                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
-                            for(i = 0; i < eachShipCoord.length; i ++){
-                                if (!(eachShipCoord[i].getX() == temp.getLocation()[i].getX() && eachShipCoord[i].getY() == temp.getLocation()[i].getY())){
-                                    sameLoc = false;
-                                }
-                            }
-                        }
-                        else{
-                            lastSelectedShip = shipId;
-                        }
+//                        if(lastSelectedShip == shipId && shipId != 0){
+//                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
+//                            for(i = 0; i < eachShipCoord.length; i ++){
+//                                if (!(eachShipCoord[i].getX() == temp.getLocation()[i].getX() && eachShipCoord[i].getY() == temp.getLocation()[i].getY())){
+//                                    sameLoc = false;
+//                                }
+//                            }
+//                        }
+//                        else{
+//                            lastSelectedShip = shipId;
+//                        }
                         if(sameLoc){
                             setupView.swapRotFiveHp();
                         }
