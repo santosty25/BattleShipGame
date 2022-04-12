@@ -90,6 +90,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
          */
         @Override
         protected boolean makeMove(GameAction action) {
+            Log.i("IN ACTION", "makeMove: ");
             BattleShipGameState state = (BattleShipGameState) super.state; //the gameState
             int phase = state.getPhase(); //the phase
             int player = state.getPlayerID(); //the playerID
@@ -130,7 +131,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                             //DRAW WHITE
                             Log.i("MISSED SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                             state.setPlayersTurn(1);
-                            Log.i("Players turn UPDATED ", "setPlayersTurn: " + state.getPlayersTurn());
                             return true;
 
 
@@ -150,19 +150,15 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                             }
                         }
                     }
-
                             //DRAW WHITE
                             Log.i("MISSED SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                             state.setPlayersTurn(0);
-                            Log.i("Players turn UPDATED ", "setPlayersTurn: " + state.getPlayersTurn());
                         }
                         return true;
                     }
                 }
             else if(action instanceof PlaceShip){
                 Log.i("START OF PLACE SHIP", "");
-
-
                 //set player's fleet
 
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
@@ -210,6 +206,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     currentFleet[0][5] = new BattleshipObj(placeAction.getBattleship());
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+                state.setPlayersTurn(1);
                 sendAllUpdatedState();
                 return true;
 
@@ -239,6 +236,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+                state.setPlayersTurn(0);
                 sendAllUpdatedState();
                 return true;
             }

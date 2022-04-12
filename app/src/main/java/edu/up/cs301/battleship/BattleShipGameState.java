@@ -120,7 +120,6 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playersTurn = copy.playersTurn;
         this.timer = copy.timer;
         this.phase = copy.phase;
-        Log.i("remaining shpis", "BattleShipGameState: " + copy.remainingShips[0]);
         this.remainingShips = copy.remainingShips;
         this.playersFleet = new BattleshipObj[2][6];
 

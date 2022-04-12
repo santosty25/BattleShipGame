@@ -307,17 +307,15 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                        else{
 //                            lastSelectedShip = shipId;
 //                        }
-                        if(sameLoc){
-                            setupView.swapRotFiveHp();
-                        }
+//                        if(sameLoc){
+//                            setupView.swapRotFiveHp();
+//                        }
                         selectedBattleShip.setLocation(eachShipCoord);
 
                         if (selectedBattleShip != null) {
                             Log.i("Place ship action", "Sending action");
-
                             game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }
-
                         return true;
                     }
                     shipIsSelected = true;
