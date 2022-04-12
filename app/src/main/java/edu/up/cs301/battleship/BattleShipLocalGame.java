@@ -210,8 +210,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     currentFleet[0][5] = new BattleshipObj(placeAction.getBattleship());
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
-                state.setPlayersTurn(1);
-                state.setPlayersTurn(0);
+                sendAllUpdatedState();
                 return true;
 
             }
@@ -240,8 +239,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
-                state.setPlayersTurn(0);
-                state.setPlayersTurn(1);
+                sendAllUpdatedState();
                 return true;
             }
 
