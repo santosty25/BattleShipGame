@@ -32,6 +32,7 @@ public class BattleShipMainActivity extends GameMainActivity {
     private static final String TAG = "TTTMainActivity";
     public static final int PORT_NUMBER = 6785;
     public static MediaPlayer splash;
+    public static MediaPlayer place;
     public static MediaPlayer explosion;
 
 
@@ -41,6 +42,7 @@ public class BattleShipMainActivity extends GameMainActivity {
     public GameConfig createDefaultConfig() {
         splash = MediaPlayer.create(this, R.raw.splash);
         explosion  = MediaPlayer.create(this, R.raw.explosion);
+        place = MediaPlayer.create(this, R.raw.pop);
         // Define the allowed player types
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
