@@ -2,6 +2,8 @@ package edu.up.cs301.battleship;
 
 import android.util.Log;
 
+import java.io.Serializable;
+
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
@@ -13,7 +15,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  * @author Keoni Han
  * @author Steven Lee
  */
-public class Fire extends GameAction {
+public class Fire extends GameAction implements Serializable {
 
     private Coordinates coord; //the coordinates where a player has fired
     private static final long serialVersionUID = 040420021l;
