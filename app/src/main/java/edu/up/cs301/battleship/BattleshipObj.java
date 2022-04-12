@@ -21,7 +21,7 @@ public class BattleshipObj implements Serializable {
     private Coordinates[] location; //the location of this battleship
     private int twinShip; //for when there are 2 ships of the same size
 
-    private static final long serialVersionUID = 4528L;
+    private static final long serialVersionUID = 040420025l;
 
     /**
      * BattleshipObj - Basic constructor that initializes the instance variables with

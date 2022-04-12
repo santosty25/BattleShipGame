@@ -26,7 +26,7 @@ public class BattleShipGameState extends GameState implements Serializable {
     public static final int BATTLE_PHASE = 1;
     public static final int END_PHASE = 2;
 
-    private static final long serialVersionUID = 4528L;
+    private static final long serialVersionUID = 040420026l;
 
     private int[] playerID; //an array of each player's ID
     private GameBoard[] playersBoard; //the Battleship game board for each player
