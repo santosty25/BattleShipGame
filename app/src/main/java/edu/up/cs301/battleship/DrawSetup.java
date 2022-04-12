@@ -287,8 +287,7 @@ public class DrawSetup extends SurfaceView {
                 switch(selectedShipId) {
                     case 1: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
-                            fivehpLeft = fivehpLeftInitial;
-                            fivehpTop = fivehpTopInitial;
+                            resetFivehp();
                             rotFiveHp = true;
                             invalidate();
                             return 0;
@@ -321,8 +320,7 @@ public class DrawSetup extends SurfaceView {
                     }
                     case 2: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
-                            fourhp1Left = fourhp1LeftInitial;
-                            fourhp1Top = fourhp1TopInitial;
+                            resetFourhp1();
                             invalidate();
                             return 0;
                         }
@@ -353,8 +351,7 @@ public class DrawSetup extends SurfaceView {
                     }
                     case 3: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
-                            fourhp2Left = fourhp2LeftInitial;
-                            fourhp2Top = fourhp2TopInitial;
+                            resetFourhp2();
                             invalidate();
                             return 0;
                         }
@@ -386,8 +383,7 @@ public class DrawSetup extends SurfaceView {
                     }
                     case 4: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
-                            threehp1Left = threehp1LeftInitial;
-                            threehp1Top = threehp1TopInitial;
+                            resetThreehp1();
                             invalidate();
                             return 0;
                         }
@@ -420,8 +416,7 @@ public class DrawSetup extends SurfaceView {
                     }
                     case 5: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
-                            threehp2Left = threehp2LeftInitial;
-                            threehp2Top = threehp2TopInitial;
+                            resetThreehp2();
                             invalidate();
                             return 0;
                         }
@@ -454,8 +449,7 @@ public class DrawSetup extends SurfaceView {
                     }
                     case 6: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
-                            twohpLeft = twohpLeftInitial;
-                            twohpTop = twohpTopInitial;
+                            resetTwohp();
                             invalidate();
                             return 0;
                         }
