@@ -26,7 +26,7 @@ public class BattleShipGameState extends GameState implements Serializable {
     public static final int BATTLE_PHASE = 1;
     public static final int END_PHASE = 2;
 
-    private static final long serialVersionUID = 452872340L;
+    private static final long serialVersionUID = 040420026l;
 
     private int[] playerID; //an array of each player's ID
     private GameBoard[] playersBoard; //the Battleship game board for each player
@@ -162,6 +162,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                 for(int j = 0; j < playersFleet[1].length; j++) {
                     this.playersFleet[1][j].checkCoordHit(coord);
                 }
+                //this.printFire(row, col, true);
                 for(int i = 0; i < playersFleet[1].length; i++) {
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     boolean sunk = this.playersFleet[1][i].checkIfHit();

@@ -19,7 +19,7 @@ public class Coordinates implements Serializable {
     private int x; //the x value of the coordinate
     private int y; //the y value of the coordinate
 
-    private static final long serialVersionUID = 452872340L;
+    private static final long serialVersionUID = 040420023l;
 
 
     /**

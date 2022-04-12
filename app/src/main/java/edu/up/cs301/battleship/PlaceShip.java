@@ -2,8 +2,6 @@ package edu.up.cs301.battleship;
 
 import android.util.Log;
 
-import java.io.Serializable;
-
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
@@ -16,11 +14,11 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  * @author Steven Lee
  * @version Spring 2022 - 3/31/22
  */
-public class PlaceShip extends GameAction implements Serializable {
+public class PlaceShip extends GameAction implements Serializable  {
 
     private int playerNum; //the player number
     private BattleshipObj battleship; //a given battleship
-    private static final long serialVersionUID = 452872340L;
+    private static final long serialVersionUID = 040420022l;
 
     /**
      * PlaceShip - Constructor that initializes instance variables.
