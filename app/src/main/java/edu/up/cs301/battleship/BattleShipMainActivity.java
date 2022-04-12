@@ -1,9 +1,11 @@
 package edu.up.cs301.battleship;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,8 @@ public class BattleShipMainActivity extends GameMainActivity {
     //Tag for logging
     private static final String TAG = "TTTMainActivity";
     public static final int PORT_NUMBER = 6785;
+//    public MediaPlayer splash = MediaPlayer.create(this, R.raw.splash);
+//    public MediaPlayer explosion = MediaPlayer.create(this, R.raw.explosion);
 
     /**
      * a battleship game is for two players. The default is human vs. computer
