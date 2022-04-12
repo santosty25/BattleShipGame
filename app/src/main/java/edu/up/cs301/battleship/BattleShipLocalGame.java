@@ -160,7 +160,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     }
                 }
             else if(action instanceof PlaceShip){
-                Log.i("START OF PLACE SHIP ACTION", "");
+                Log.i("START OF PLACE SHIP", "");
 
 
                 //set player's fleet
@@ -210,6 +210,8 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     currentFleet[0][5] = new BattleshipObj(placeAction.getBattleship());
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+                state.setPlayersTurn(1);
+                state.setPlayersTurn(0);
                 return true;
 
             }
@@ -238,6 +240,8 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
                 }
                 state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+                state.setPlayersTurn(0);
+                state.setPlayersTurn(1);
                 return true;
             }
 
