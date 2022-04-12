@@ -51,7 +51,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         if (!(info instanceof BattleShipGameState)) {
             return;
         }
-        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info, playerNum);
+        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
         if (playerNum == 0) {
             enemyNum = 1;
         } else {

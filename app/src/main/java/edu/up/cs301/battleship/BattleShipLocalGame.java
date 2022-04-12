@@ -33,7 +33,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
          */
         public BattleShipLocalGame(BattleShipGameState battleshipState){
             super();
-            super.state = new BattleShipGameState(battleshipState, battleshipState.getPlayersTurn());
+            super.state = new BattleShipGameState(battleshipState);
         }
 
         /**
@@ -46,7 +46,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
         @Override
         protected void sendUpdatedStateTo(GamePlayer p) {
             // make a copy of the state, and send it to the player
-            BattleShipGameState copy = new BattleShipGameState((BattleShipGameState)state, ((BattleShipGameState) state).getPlayersTurn());
+            BattleShipGameState copy = new BattleShipGameState((BattleShipGameState)state);
             p.sendInfo(copy);
         }
 
