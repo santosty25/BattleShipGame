@@ -242,25 +242,7 @@ public class DrawSetup extends SurfaceView {
             case MotionEvent.ACTION_DOWN: {  //checks which ship is being selected
                 float x = event.getX();
                 float y = event.getY();
-                if (x >= fivehpLeft && x <= fivehpLeft + 70 && y >= fivehpTop && y <= fivehpTop + 360) { // top right ship 5hp
-                    selectedShipId = 1;
-                }
-                else if (x >= fourhp1Left && x <= fourhp1Left + 70 && y >= fourhp1Top && y <= fourhp1Top + 288) { //
-                    selectedShipId = 2;
-                }
-                else if (x >= fourhp2Left && x <= fourhp2Left + 70 && y >= fourhp2Top && y <= fourhp2Top + 288) {
-                    selectedShipId = 3;
-                }
-                else if (x >= threehp1Left && x <= threehp1Left + 60 && y >= threehp1Top && y <= threehp1Top + 216) {
-                    selectedShipId = 4;
-                }
-                else if (x >= threehp2Left && x <= threehp2Left + 60 && y >= threehp2Top && y <= threehp2Top + 216) {
-                    selectedShipId = 5;
-                }
-                else if (x >= twohpLeft && x <= twohpLeft + 60 && y >= twohpTop && y <= twohpTop + 144) {
-                    selectedShipId = 6;
-                }
-
+                selectedShipId = containsWhichShip(x,y);
                 break;
             }
             case MotionEvent.ACTION_MOVE:
@@ -523,6 +505,28 @@ public class DrawSetup extends SurfaceView {
             return true;
         }
         return false;
+    }
+
+    public int containsWhichShip(float x, float y) {
+        if (x >= fivehpLeft && x <= fivehpLeft + 70 && y >= fivehpTop && y <= fivehpTop + 360) { // top right ship 5hp
+            return 1;
+        }
+        else if (x >= fourhp1Left && x <= fourhp1Left + 70 && y >= fourhp1Top && y <= fourhp1Top + 288) { //
+            return 2;
+        }
+        else if (x >= fourhp2Left && x <= fourhp2Left + 70 && y >= fourhp2Top && y <= fourhp2Top + 288) {
+            return 3;
+        }
+        else if (x >= threehp1Left && x <= threehp1Left + 60 && y >= threehp1Top && y <= threehp1Top + 216) {
+            return 4;
+        }
+        else if (x >= threehp2Left && x <= threehp2Left + 60 && y >= threehp2Top && y <= threehp2Top + 216) {
+            return 5;
+        }
+        else if (x >= twohpLeft && x <= twohpLeft + 60 && y >= twohpTop && y <= twohpTop + 144) {
+            return 6;
+        }
+        return 0;
     }
 
     //getters to transfer coordinates from this phase to midgame Draw phase
