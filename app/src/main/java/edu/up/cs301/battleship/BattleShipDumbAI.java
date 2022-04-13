@@ -57,7 +57,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         col = r.nextInt(10);
         Coordinates fire = new Coordinates(false, false, row, col);
         Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
-        game.sendAction(new Fire(this, fire));
+        game.sendAction(new Fire(this, fire, playerNum));
     }
 
     /**

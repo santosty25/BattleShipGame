@@ -114,7 +114,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             this.previousHit = new Coordinates(false, false, row, col);
             Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
             Log.i("FIRE ACTION", "Sending Fire at " + row + " " + col);
-            game.sendAction(new Fire(this, this.previousHit));
+            game.sendAction(new Fire(this, this.previousHit, playerNum));
 
         }
 
@@ -159,7 +159,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && dir < 0) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
                 if (dir == 1) {
@@ -177,7 +177,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && dir == 1) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
                 if (dir == 2) {
@@ -198,7 +198,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && dir == 2) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
                 if (dir == 3) {
@@ -216,7 +216,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && dir == 3) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
 

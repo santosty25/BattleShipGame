@@ -105,6 +105,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         thread.start();
     }
 
+    /**
+     * Recveives game info, updating the gamestate
+     * and game views
+     * @param info
+     */
     @Override
     public void receiveInfo(GameInfo info) {
         if (!(info instanceof BattleShipGameState)) {
@@ -130,6 +135,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         }
     }
 
+    /**
+     * Initiallizes the GUI for the game,
+     * and touch listeners
+     * @param activity
+     */
     @Override
     public void setAsGui(GameMainActivity activity) {
 
@@ -139,11 +149,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         Button nextButton = activity.findViewById(R.id.confirm_button);
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
-
+        //Continue button
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Checking if all ships have been placed
+                //Checking if all ships have been placed before going to midgame phase
                 int i, j;
                 //for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
@@ -159,7 +169,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView = activity.findViewById(R.id.boardView);
                 midGameView.setPlayerID(playerNum);
                 midGameView.invalidate();
-                changePhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
 
@@ -194,22 +203,19 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 TextView xCoord = activity.findViewById(R.id.textView);
                 TextView yCoord = activity.findViewById(R.id.textView2);
 
+
+                /** touch listener for Midgame*/
                 gameView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
                         midGameView.invalidate();
                         BattleShipGameState localGS = getGS();
-                        float xC = motionEvent.getX();
-                        float yC = motionEvent.getY();
-                        float x = xC;
-                        float y = yC;
-                        Log.d("In midGame", "Coords: " + x + ", " + y);
-                        Log.i("Players Turn", "" + localGS.getPlayersTurn());
-                        if (localGS.getPlayersTurn() == playerNum) {
+                        float x = motionEvent.getX();
+                        float y = motionEvent.getY();
+                        if (localGS.getPlayersTurn() == playerNum) { //creates a coordinate object based on touch location
                             Coordinates sendFireto = localGS.xyToCoordMidGame(x, y);
-                            if (sendFireto != null) {
-                                Log.i("Touch", "onTouch: sending fire ");
-                                game.sendAction(new Fire(reference, sendFireto));
+                            if (sendFireto != null) { //sends a fire action
+                                game.sendAction(new Fire(reference, sendFireto, playerNum));
                             }
                             midGameView.invalidate();
                         }
@@ -228,11 +234,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             gameView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-
                         int i;
-
                         int shipId = setupView.onTouchEventNew(motionEvent);
-                    Log.i("SHIP ID", "onTouch: " + shipId);
+                        //Uses the ship id to determine which ship has been tapped
                     int newSize = 0;
                     switch(shipId) {
                         case 1: {
@@ -265,8 +269,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
                     }
 
-                    Log.i("Test Coordinates", "FIND ME HERE" + motionEvent.getX() + ", " + motionEvent.getY());
-
                         selectedBattleShip.setSize(newSize);
                         if (newSize < 0 || newSize >= 6) {
                             return false;
@@ -274,15 +276,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     if (motionEvent.getAction() == motionEvent.ACTION_UP) {
                         float xUp = motionEvent.getX();
                         float yUp = motionEvent.getY();
-                        Coordinates sendShipTo = null;
-                        if (currGS == null) {
+                        if (currGS == null) {//ensure the gamestate has been initialized
                             return false;
                         }
-                        sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
-                        if (sendShipTo != null) {
-                            Log.i("Selected ship is", "selected ship is size " + newSize);
-                        }
-                        if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
+                        if(currGS.xyToCoordSetupGame(xUp,yUp) == null){ //checks if coordinate value is valiid
                             return true;
                         }
 //                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
@@ -297,8 +294,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 Log.i("Invalid Place", "Ship already placed here");
                                 return false;
                             }
-                            eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp);
-                            Log.i("Coordinates ", "" + eachShipCoord[i].getX() +  " " + eachShipCoord[i].getY());
+                            eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp,yUp); //assigns index i of ship location array to be coordinate
                             yUp += 74;
                         }
                         Boolean sameLoc = true;
@@ -318,8 +314,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                        }
                         selectedBattleShip.setLocation(eachShipCoord);
 
-                        if (selectedBattleShip != null) {
-                            Log.i("Place ship action", "Sending action");
+                        if (selectedBattleShip != null) {//sends a placeship action
                             game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }
                         return true;
@@ -354,48 +349,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     }
 
 
-
-    public void placeShip(BattleshipObj newShip){
-        int i, j;
-        BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
-        for (i = 0;  i < 2; i++) {
-            for (j =0; j < 6; j++){
-                if (currGS.getPlayersFleet()[i][j] != null) {
-                    currentFleet[i][j] = new BattleshipObj(currGS.getPlayersFleet()[i][j]);
-                }
-            }
-        }
-        if(newShip.getSize() == 5) { //Ship of size 5 is placed at index 0
-            Log.i("placing ship size: 0 ", "" + newShip.getSize());
-            currentFleet[0][0] = new BattleshipObj(newShip);
-        }
-        else if(newShip.getSize() == 4){
-            if(newShip.getTwinShip() == 0){
-                //Because there are two ships of the same length we need to identify which is which
-                currentFleet[0][1] = new BattleshipObj(newShip);
-            }
-            else{
-                currentFleet[0][2] = new BattleshipObj(newShip);
-            }
-        }
-        else if(newShip.getSize() == 3){
-            if(newShip.getTwinShip() == 0){
-                currentFleet[0][3] = new BattleshipObj(newShip);
-            }
-            else{
-                currentFleet[0][4] = new BattleshipObj(newShip);
-            }
-        }
-        else if(newShip.getSize() == 2) {
-            currentFleet[0][5] = new BattleshipObj(newShip);
-        }
-        currGS.setPlayersFleet(currentFleet, playerNum);
-    }
-
-
-    public void changePhase(int phase){
-        this.currGS.setPhase(phase);
-    }
     public BattleShipGameState getGS(){
         return this.currGS;
     }
