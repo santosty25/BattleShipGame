@@ -5,8 +5,6 @@ import android.util.Log;
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
-import edu.up.cs301.game.R;
-
 
     /**
      * BattleShipLocalGame - A local game glass for a game of Battleship. This class handles
@@ -126,6 +124,7 @@ import edu.up.cs301.game.R;
                                         Coordinates[][] enemyBoard = state.getBoard(1).getCurrentBoard();
                                         enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
                                         Log.i("SUCCESSFUL SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
+                                        BattleShipMainActivity.explosion.start();
                                         state.setPlayersTurn(0);
                                         return true;
                                     }
@@ -134,6 +133,7 @@ import edu.up.cs301.game.R;
                             //DRAW WHITE
                             Log.i("MISSED SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                             state.setPlayersTurn(1);
+                            BattleShipMainActivity.splash.start();
                             return true;
 
 
@@ -149,30 +149,28 @@ import edu.up.cs301.game.R;
                                 enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
                                 Log.i("SUCCESSFUL SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
                                 state.setPlayersTurn(1);
+                                BattleShipMainActivity.explosion.start();
                                 return true;
                             }
                         }
                     }
                             //DRAW WHITE
                             Log.i("MISSED SHOT", "At x: " + coord.getX() + " Y: " +  coord.getY());
-                            //splash.start();
+                            BattleShipMainActivity.splash.start();
                             state.setPlayersTurn(0);
                         }
                         return true;
                     }
                 }
             else if(action instanceof PlaceShip){
+                BattleShipMainActivity.place.start();
 
                 Log.i("START OF PLACE SHIP", "");
                 //set player's fleet
-
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
                 BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
+                BattleshipObj newShip = new BattleshipObj(placeAction.getBattleship());
                 int i, j;
-                if(phase == 0){
-                    state.setPlayersTurn(placeAction.getPlayerNum());
-                    sendAllUpdatedState();
-                }
 
                 //Creates a local copy of both players boards=
                 for (i = 0;  i < 2; i++) {
@@ -182,40 +180,69 @@ import edu.up.cs301.game.R;
                         }
                     }
                 }
-                //Checking if the any ships coordinates match, if they do its an illegal placement
-                if( state.placeShip(currentFleet, placeAction.getBattleship(), placeAction.getPlayerNum()) == false){
-                    return false;
-                }
 
-                Log.i("MAKING MOVE", "makeMove: " +  placeAction.getBattleship().getSize());
-                int playerNum = placeAction.getPlayerNum();
-                if(placeAction.getBattleship().getSize() == 5) { //Ship of size 5 is placed at index 0
-                    Log.i("placing ship size: 0 ", "" + placeAction.getBattleship().getSize());
-                    currentFleet[playerNum][0] = new BattleshipObj(placeAction.getBattleship());
-                }
-                else if(placeAction.getBattleship().getSize() == 4){
-                    if(placeAction.getBattleship().getTwinShip() == 0){
-                        //Because there are two ships of the same length we need to identify which is which
-                        currentFleet[playerNum][1] = new BattleshipObj(placeAction.getBattleship());
+                //Checking if the any ships coordinates match, if they do its an illegal placement
+                if( state.placeShip(currentFleet, newShip, placeAction.getPlayerNum()) == false){
+                    Coordinates[] newLocation = new Coordinates[newShip.getSize()];
+                    for(i = 0; i < newShip.getSize(); i++){
+                        Coordinates outOfBounds =  new Coordinates();
+                        outOfBounds.setX(-1);
+                        outOfBounds.setX(-1);
+                        newLocation[i] = outOfBounds;
                     }
-                    else{
-                        currentFleet[playerNum][2] = new BattleshipObj(placeAction.getBattleship());
-                    }
+                    newShip.setLocation(newLocation);
                 }
-                else if(placeAction.getBattleship().getSize() == 3){
-                    if(placeAction.getBattleship().getTwinShip() == 0){
-                        currentFleet[playerNum][3] = new BattleshipObj(placeAction.getBattleship());
+                if(placeAction.getPlayerNum() == 0) {
+                    Log.i("MAKING MOVE", "makeMove: " + newShip.getSize());
+                    if (newShip.getSize() == 5) { //Ship of size 5 is placed at index 0
+                        Log.i("placing ship size: 0 ", "" + newShip.getSize());
+                        currentFleet[0][0] = new BattleshipObj(newShip);
+                    } else if (newShip.getSize() == 4) {
+                        if (newShip.getTwinShip() == 0) {
+                            //Because there are two ships of the same length we need to identify which is which
+                            currentFleet[0][1] = new BattleshipObj(newShip);
+                        } else {
+                            currentFleet[0][2] = new BattleshipObj(newShip);
+                        }
+                    } else if (newShip.getSize() == 3) {
+                        if (newShip.getTwinShip() == 0) {
+                            currentFleet[0][3] = new BattleshipObj(newShip);
+                        } else {
+                            currentFleet[0][4] = new BattleshipObj(newShip);
+                        }
+                    } else if (newShip.getSize() == 2) {
+                        currentFleet[0][5] = new BattleshipObj(newShip);
                     }
-                    else{
-                        currentFleet[playerNum][4] = new BattleshipObj(placeAction.getBattleship());
+                    state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+                    return true;
+                }
+                else if(placeAction.getPlayerNum() == 1){
+                    Log.i("MAKING MOVE", "makeMove: " + newShip.getSize());
+                    if (newShip.getSize() == 5) { //Ship of size 5 is placed at index 0
+                        Log.i("placing ship size: 0 ", "" + newShip.getSize());
+                        currentFleet[1][0] = new BattleshipObj(newShip);
+                    } else if (newShip.getSize() == 4) {
+                        if (newShip.getTwinShip() == 0) {
+                            //Because there are two ships of the same length we need to identify which is which
+                            currentFleet[1][1] = new BattleshipObj(newShip);
+                        } else {
+                            currentFleet[1][2] = new BattleshipObj(newShip);
+                        }
+                    } else if (newShip.getSize() == 3) {
+                        if (newShip.getTwinShip() == 0) {
+                            currentFleet[1][3] = new BattleshipObj(newShip);
+                        } else {
+                            currentFleet[1][4] = new BattleshipObj(newShip);
+                        }
+                    } else if (newShip.getSize() == 2) {
+                        currentFleet[1][5] = new BattleshipObj(newShip);
                     }
+                    state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+                    return true;
                 }
-                else if(placeAction.getBattleship().getSize() == 2) {
-                    currentFleet[playerNum][5] = new BattleshipObj(placeAction.getBattleship());
-                }
-                state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
-                return true;
             }
+
+
             return false;
         }
     }

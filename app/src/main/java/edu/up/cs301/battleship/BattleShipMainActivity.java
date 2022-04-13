@@ -31,13 +31,18 @@ public class BattleShipMainActivity extends GameMainActivity {
     //Tag for logging
     private static final String TAG = "TTTMainActivity";
     public static final int PORT_NUMBER = 6785;
-//    public MediaPlayer splash = MediaPlayer.create(this, R.raw.splash);
-//    public MediaPlayer explosion = MediaPlayer.create(this, R.raw.explosion);
+    public static MediaPlayer splash;
+    public static MediaPlayer place;
+    public static MediaPlayer explosion;
+
 
     /**
      * a battleship game is for two players. The default is human vs. computer
      */
     public GameConfig createDefaultConfig() {
+        splash = MediaPlayer.create(this, R.raw.splash);
+        explosion  = MediaPlayer.create(this, R.raw.explosion);
+        place = MediaPlayer.create(this, R.raw.pop);
         // Define the allowed player types
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 

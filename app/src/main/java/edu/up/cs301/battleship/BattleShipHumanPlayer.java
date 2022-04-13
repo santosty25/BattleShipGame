@@ -38,7 +38,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private GameMainActivity myActivity = null;
     private boolean switchPhase = false;
     private BattleShipHumanPlayer reference = this;
-    private BattleShipGameState currGS;
+    protected BattleShipGameState currGS;
     boolean shipIsSelected = false;
     private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
 
