@@ -278,12 +278,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
                             return true;
                         }
-                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
-
-                        if (selectToBoardEnd < newSize) {
-                            int adjustment = (newSize) * 74;
-                            yUp -= adjustment;
-                        }
+//                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
+//
+//                        if (selectToBoardEnd < newSize) {
+//                            int adjustment = (newSize) * 74;
+//                            yUp -= adjustment;
+//                        }
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                         for (i = 0; i < selectedBattleShip.getSize(); i++) {
                             if (currGS.getBoard(playerNum).getHasShip()) {

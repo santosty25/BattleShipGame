@@ -259,7 +259,7 @@ public class DrawMidgame extends SurfaceView{
                         fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                     }
                     else if (toPlace.getX() < 4) {
-                        fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                        fourhp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     }
                     fourhp1Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
@@ -270,7 +270,7 @@ public class DrawMidgame extends SurfaceView{
                         fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                     }
                     else if (toPlace.getX() < 4) {
-                        fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                        fourhp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     }
                     fourhp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
@@ -283,7 +283,7 @@ public class DrawMidgame extends SurfaceView{
                         threehp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                     }
                     else if (toPlace.getX() < 4) {
-                        fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                        threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     }
                     threehp1Top= state.middleYOfEnemyBoard(toPlace) - 16;
                 }
@@ -294,7 +294,7 @@ public class DrawMidgame extends SurfaceView{
                         threehp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                     }
                     else if (toPlace.getX() < 4) {
-                        fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                        threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     }
                     threehp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
                 }
@@ -306,7 +306,7 @@ public class DrawMidgame extends SurfaceView{
                     twohpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                 }
                 else if (toPlace.getX() < 4) {
-                    fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
+                    twohpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                 }
                 twohpTop = state.middleYOfEnemyBoard(toPlace) - 16;
             }
