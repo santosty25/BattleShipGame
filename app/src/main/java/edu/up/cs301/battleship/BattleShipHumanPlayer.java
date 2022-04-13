@@ -112,7 +112,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         } else {
             Log.i("received info", "receiveInfo: NEW INFO ");
             this.reference = this;
-            currGS = new BattleShipGameState((BattleShipGameState) info);
+            this.currGS = new BattleShipGameState((BattleShipGameState) info);
             int playersTurn = currGS.getPlayersTurn();
             int gamePhase = currGS.getPhase();
             if (gamePhase == BattleShipGameState.BATTLE_PHASE) {
