@@ -56,7 +56,7 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playersTurn = num;
         //Log.i("BSG", "Made player turn");
         this.timer = 30;
-        this.phase = SETUP_PHASE;
+        this.phase = 0;
         //Log.i("BSG", "Made timer");
         this.remainingShips = new int[2];
         for (int k = 0; k < remainingShips.length; k++) {

@@ -105,6 +105,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             Log.i("Players turn ", "makeMove: " + whoseTurn);
 
             if(action instanceof Fire) {
+                if(phase != 1){
+                    return false;
+                }
                 Log.i("fire action", "Instance of fire action ");
                     //get the coordinate given by the player and calls the fire method in gamestate
                     Coordinates coord = ((Fire) action).getCoord();
@@ -163,6 +166,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                     }
                 }
             else if(action instanceof PlaceShip){
+                if(phase != 0){
+                    return false;
+                }
                 BattleShipMainActivity.place.start();
 
                 Log.i("START OF PLACE SHIP", "");

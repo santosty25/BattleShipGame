@@ -159,7 +159,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView = activity.findViewById(R.id.boardView);
                 midGameView.setPlayerID(playerNum);
                 midGameView.invalidate();
-                currGS.setPhase(BattleShipGameState.BATTLE_PHASE);
+                changePhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
 
@@ -192,14 +192,15 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
                         midGameView.invalidate();
+                        BattleShipGameState localGS = getGS();
                         float xC = motionEvent.getX();
                         float yC = motionEvent.getY();
                         float x = xC;
                         float y = yC;
                         Log.d("In midGame", "Coords: " + x + ", " + y);
-                        Log.i("Players Turn", "" + currGS.getPlayersTurn());
-                        if (currGS.getPlayersTurn() == playerNum) {
-                            Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
+                        Log.i("Players Turn", "" + localGS.getPlayersTurn());
+                        if (localGS.getPlayersTurn() == playerNum) {
+                            Coordinates sendFireto = localGS.xyToCoordMidGame(x, y);
                             if (sendFireto != null) {
                                 Log.i("Touch", "onTouch: sending fire ");
                                 game.sendAction(new Fire(reference, sendFireto));
@@ -383,5 +384,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             currentFleet[0][5] = new BattleshipObj(newShip);
         }
         currGS.setPlayersFleet(currentFleet, playerNum);
+    }
+
+
+    public void changePhase(int phase){
+        this.currGS.setPhase(phase);
+    }
+    public BattleShipGameState getGS(){
+        return this.currGS;
     }
 }
