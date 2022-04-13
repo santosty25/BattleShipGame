@@ -38,7 +38,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private GameMainActivity myActivity = null;
     private boolean switchPhase = false;
     private BattleShipHumanPlayer reference = this;
-    private BattleShipGameState currGS;
+    protected BattleShipGameState currGS;
     boolean shipIsSelected = false;
     private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
 
@@ -112,7 +112,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         } else {
             Log.i("received info", "receiveInfo: NEW INFO ");
             this.reference = this;
-            currGS = new BattleShipGameState((BattleShipGameState) info);
+            this.currGS = new BattleShipGameState((BattleShipGameState) info);
             int playersTurn = currGS.getPlayersTurn();
             int gamePhase = currGS.getPhase();
             if (gamePhase == BattleShipGameState.BATTLE_PHASE) {
