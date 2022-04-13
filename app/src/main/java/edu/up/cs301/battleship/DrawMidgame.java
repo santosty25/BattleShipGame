@@ -57,12 +57,12 @@ public class DrawMidgame extends SurfaceView{
     Bitmap xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
 
 
-    private boolean rotFiveHp;
-    private boolean rotFourHp1;
-    private boolean rotFourHp2;
-    private boolean rotThreeHp1;
-    private boolean rotThreeHp2;
-    private boolean rotTwoHP;
+    private boolean rotFiveHp = true;
+    private boolean rotFourHp1 = true;
+    private boolean rotFourHp2 = true;
+    private boolean rotThreeHp1 = true;
+    private boolean rotThreeHp2 = true;
+    private boolean rotTwoHP = true;
 
 
 
@@ -160,30 +160,48 @@ public class DrawMidgame extends SurfaceView{
         }
         fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
         fivehp = Bitmap.createScaledBitmap(fivehp, 130, 25, false);
-        fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
+        if(rotFiveHp) {
+            fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
+        }
+//        fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
 
         fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp1 = Bitmap.createScaledBitmap(fourhp1, 98, 25, false);
-        fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
+        if(rotFourHp1) {
+            fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
+        }
+        //fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
 
         fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp2 = Bitmap.createScaledBitmap(fourhp2, 98, 25, false);
-        fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
+        if(rotFourHp2) {
+            fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
+        }
+        //fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
 
         //CREATES 3 hp BS #1
         threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
         threehp1 = Bitmap.createScaledBitmap(threehp1, 72, 20, false);
-        threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
+        if(rotThreeHp1) {
+            threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
+        }
+        // threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
 
         //CREATES 3 hp BS #2
         threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
         threehp2 = Bitmap.createScaledBitmap(threehp2, 72, 20, false);
-        threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
+        if(rotThreeHp2) {
+            threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
+        }
+        // threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
 
         //CREATES 2 hp BS
         twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
         twohp = Bitmap.createScaledBitmap(twohp, 45, 20, false);
-        twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
+        if(rotTwoHP) {
+            twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
+        }
+        // twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
 
         //CREATES RED HIT MARKER
         xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
@@ -312,12 +330,59 @@ public class DrawMidgame extends SurfaceView{
             }
 
         }
-        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
-        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
-        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
-        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
-        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
+
+        if (rotFiveHp) {
+            canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop - 7, blackPaint);
+        }
+
+        if (rotFourHp1) {
+            canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top - 7, blackPaint);
+        }
+
+        if (rotFourHp2) {
+            canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top - 7, blackPaint);
+        }
+
+        if (rotThreeHp1) {
+            canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
+        }
+        else {
+
+            canvas.drawBitmap(threehp1, threehp1Left, threehp1Top - 7, blackPaint);
+        }
+
+        if (rotThreeHp2) {
+            canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(threehp2, threehp2Left, threehp2Top - 7, blackPaint);
+        }
+
+        if (rotTwoHP) {
+            canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(twohp, twohpLeft, twohpTop - 7, blackPaint);
+        }
+
+
+
+
+//        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+//        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+//        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
+//        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
+//        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
+//        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
 
 //        // 5HP ship
 //        canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
@@ -447,4 +512,14 @@ public class DrawMidgame extends SurfaceView{
     public void setTwohpTop(float newValue) {
         twohpTop = newValue;
     }
+
+    public void setRotFiveHp(boolean newVal) {rotFiveHp = newVal;}
+    public void setRotFourHp1(boolean newVal) {rotFourHp1 = newVal;}
+    public void setRotFourHp2(boolean newVal) {rotFourHp2 = newVal;}
+    public void setRotThreeHp1(boolean newVal) {rotThreeHp1 = newVal;}
+    public void setRotThreeHp2(boolean newVal) {rotThreeHp2 = newVal;}
+    public void setRotTwoHP(boolean newVal) {rotTwoHP = newVal;}
+
+
+
 }

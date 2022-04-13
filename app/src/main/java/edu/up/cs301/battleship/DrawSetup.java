@@ -685,6 +685,13 @@ public class DrawSetup extends SurfaceView {
         this.rotFiveHp = !this.rotFiveHp;
     }
 
+    public boolean getRotFiveHp() {return rotFiveHp;}
+    public boolean getRotFourHp1() {return rotFourHp1;}
+    public boolean getRotFourHp2() {return rotFourHp2;}
+    public boolean getRotThreeHp1() {return rotThreeHp1;}
+    public boolean getRotThreeHp2() {return rotThreeHp2;}
+    public boolean getRotTwoHP() {return rotTwoHP;}
+
 
 
 }
