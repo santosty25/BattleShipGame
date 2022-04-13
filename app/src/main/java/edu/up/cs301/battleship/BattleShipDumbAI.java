@@ -19,6 +19,7 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
  */
 public class BattleShipDumbAI extends GameComputerPlayer {
 
+
     private BattleshipObj battleship;
     private int placeShips = 1;
     private int test = 0;
@@ -36,6 +37,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         if (!(info instanceof BattleShipGameState)) {
             return;
         }
+        sleep(6);
 
         BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
         Log.i("COMPUTER PLAYERS TURN", "");
