@@ -68,6 +68,8 @@ public class DrawSetup extends SurfaceView {
     private float twohpTop = 807.0f;
 
     private int selectedShipId = 0;
+    private float downX = 0.0f;
+    private float downY = 0.0f;
 
     private boolean rotFiveHp = true;
     private boolean rotFourHp1 = true;
@@ -126,26 +128,41 @@ public class DrawSetup extends SurfaceView {
 
         fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp1 = Bitmap.createScaledBitmap(fourhp1, 288, 70, false);
-        fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
+        if(rotFourHp1) {
+            fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
+        }
+//        fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
 
         fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp2 = Bitmap.createScaledBitmap(fourhp2, 288, 70, false);
-        fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
+//        fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
+        if(rotFourHp2) {
+            fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
+        }
 
         //CREATES 3 hp BS #1
         threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
         threehp1 = Bitmap.createScaledBitmap(threehp1, 216, 60, false);
-        threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
+//        threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
+        if(rotThreeHp1) {
+            threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
+        }
 
         //CREATES 3 hp BS #2
         threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
         threehp2 = Bitmap.createScaledBitmap(threehp2, 216, 60, false);
-        threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
+//        threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
+        if(rotThreeHp2) {
+            threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
+        }
 
         //CREATES 2 hp BS
         twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
         twohp = Bitmap.createScaledBitmap(twohp, 144, 60, false);
-        twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
+//        twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
+        if(rotTwoHP) {
+            twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
+        }
 
 
         //Set background
@@ -240,13 +257,13 @@ public class DrawSetup extends SurfaceView {
         //checks which action is happening
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {  //checks which ship is being selected
-                float x = event.getX();
-                float y = event.getY();
-                selectedShipId = containsWhichShip(x,y);
+                downX = event.getX();
+                downY = event.getY();
+                selectedShipId = containsWhichShip(event.getX(),event.getY());
                 break;
             }
             case MotionEvent.ACTION_MOVE:
-                switch(selectedShipId) {   //updatest the ships drawn coordinates to the cursor/finger
+                switch(selectedShipId) {   //updates the ships drawn coordinates to the cursor/finger
                     case 1: {
                         fivehpLeft = event.getX() - 35.0f;
                         fivehpTop = event.getY();
@@ -284,17 +301,55 @@ public class DrawSetup extends SurfaceView {
                 float upXVal = event.getX();
                 float upYVal = event.getY();
                 Coordinates selectedCoord;
+
+                //Rotates ships if tapped on once
+                if (event.getX() == downX && event.getY() == downY) {
+                    switch (selectedShipId) {
+                        case 1:{
+                            rotFiveHp = !rotFiveHp;
+                            invalidate();
+                            break;
+                        }
+                        case 2: {
+                            rotFourHp1 = !rotFourHp1;
+                            invalidate();
+                            break;
+                        }
+                        case 3: {
+                            rotFourHp2 = !rotFourHp2;
+                            invalidate();
+                            break;
+                        }
+                        case 4: {
+                            rotThreeHp1 = !rotThreeHp1;
+                            invalidate();
+                            break;
+                        }
+                        case 5: {
+                            rotThreeHp2 = !rotThreeHp2;
+                            invalidate();
+                            break;
+                        }
+                        case 6: {
+                            rotTwoHP = !rotTwoHP;
+                            invalidate();
+                            break;
+                        }
+                    }
+                }
+
+                //Checks to see if placement is out of bounds
                 switch(selectedShipId) {
                     case 1: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
                             resetFivehp();
-                            rotFiveHp = true;
                             invalidate();
                             return 0;
                         }
-                        else if (checkInitialPlaceOutOfBounds(5, upXVal, upYVal)) {
+                        else if (checkInitialPlaceOutOfBounds(5, upXVal, upYVal, rotFiveHp)) {
                             fivehpLeft = fivehpLeftInitial;
                             fivehpTop = fivehpTopInitial;
+                            rotFiveHp = true;
                             invalidate();
                             return 0;
                         }
@@ -324,9 +379,10 @@ public class DrawSetup extends SurfaceView {
                             invalidate();
                             return 0;
                         }
-                        else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal)) {
+                        else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp1)) {
                             fourhp1Left = fourhp1LeftInitial;
                             fourhp1Top = fourhp1TopInitial;
+                            rotFourHp1 = true;
                             invalidate();
                             return 0;
                         }
@@ -355,9 +411,10 @@ public class DrawSetup extends SurfaceView {
                             invalidate();
                             return 0;
                         }
-                        else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal)) {
+                        else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp2)) {
                             fourhp2Left = fourhp2LeftInitial;
                             fourhp2Top = fourhp2TopInitial;
+                            rotFourHp2 = true;
                             invalidate();
                             return 0;
                         }
@@ -387,9 +444,10 @@ public class DrawSetup extends SurfaceView {
                             invalidate();
                             return 0;
                         }
-                        else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal)) {
+                        else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp1)) {
                             threehp1Left = threehp1LeftInitial;
                             threehp1Top = threehp1TopInitial;
+                            rotThreeHp1 = true;
                             invalidate();
                             return 0;
                         }
@@ -409,8 +467,6 @@ public class DrawSetup extends SurfaceView {
                             }
 
                             invalidate();
-//                            threehp1Left = event.getX() - 35.0f;
-//                            threehp1Top = event.getY();
                         }
                         break;
                     }
@@ -420,9 +476,10 @@ public class DrawSetup extends SurfaceView {
                             invalidate();
                             return 0;
                         }
-                        else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal)) {
+                        else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp2)) {
                             threehp2Left = threehp2LeftInitial;
                             threehp2Top = threehp2TopInitial;
+                            rotThreeHp2 = true;
                             invalidate();
                             return 0;
                         }
@@ -453,9 +510,10 @@ public class DrawSetup extends SurfaceView {
                             invalidate();
                             return 0;
                         }
-                        else if (checkInitialPlaceOutOfBounds(2, upXVal, upYVal)) {
+                        else if (checkInitialPlaceOutOfBounds(2, upXVal, upYVal, rotTwoHP)) {
                             twohpLeft = twohpLeftInitial;
                             twohpTop = twohpTopInitial;
+                            rotTwoHP = true;
                             invalidate();
                             return 0;
                         }
@@ -488,12 +546,19 @@ public class DrawSetup extends SurfaceView {
         return selectedShipId;
     }
 
-    public static boolean checkInitialPlaceOutOfBounds(int size, float x, float y) {
+    public static boolean checkInitialPlaceOutOfBounds(int size, float x, float y, boolean rotated) {
         Coordinates placedCoord = BattleShipGameState.xyToCoordSetupGame(x,y);
+        int selectedBoardToEnd;
         if (placedCoord == null) {
             return true;
         }
-        int selectedBoardToEnd = 10 - placedCoord.getY();
+        if (rotated == true) {
+            selectedBoardToEnd = 10 - placedCoord.getY();
+        }
+        else {
+            selectedBoardToEnd = 10 - placedCoord.getX();
+        }
+
 
         if (selectedBoardToEnd < size) {
             return true;
