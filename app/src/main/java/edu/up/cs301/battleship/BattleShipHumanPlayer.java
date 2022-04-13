@@ -169,7 +169,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView = activity.findViewById(R.id.boardView);
                 midGameView.setPlayerID(playerNum);
                 midGameView.invalidate();
-                changePhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
 
