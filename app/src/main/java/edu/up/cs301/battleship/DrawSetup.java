@@ -68,9 +68,12 @@ public class DrawSetup extends SurfaceView {
     private float twohpTop = 807.0f;
 
     private int selectedShipId = 0;
+    private int selectedShipIdfinal = 0;
     private float downX = 0.0f;
     private float downY = 0.0f;
 
+    // True means vertical
+    // False means horizontal
     private boolean rotFiveHp = true;
     private boolean rotFourHp1 = true;
     private boolean rotFourHp2 = true;
@@ -182,12 +185,49 @@ public class DrawSetup extends SurfaceView {
 
         canvas.drawRect(1650.0f, 50.0f, 1900, 1050, orangePaint);
         Coordinates toPlace;
-        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
-        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
-        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
-        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
-        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
+        if (rotFiveHp) {
+            canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop - 15, blackPaint);
+        }
+
+        if (rotFourHp1) {
+            canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top - 15, blackPaint);
+        }
+
+        if (rotFourHp2) {
+            canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top - 15, blackPaint);
+        }
+
+        if (rotThreeHp1) {
+            canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
+        }
+        else {
+
+            canvas.drawBitmap(threehp1, threehp1Left, threehp1Top - 15, blackPaint);
+        }
+
+        if (rotThreeHp2) {
+            canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(threehp2, threehp2Left, threehp2Top - 15, blackPaint);
+        }
+
+        if (rotTwoHP) {
+            canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
+        }
+        else {
+            canvas.drawBitmap(twohp, twohpLeft, twohpTop - 15, blackPaint);
+        }
+
         if (state == null) {
             Log.i("State is Null", "onDraw: NULL");
             return;
@@ -240,14 +280,6 @@ public class DrawSetup extends SurfaceView {
 //            }
 //
 //        }
-
-
-        //canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
-        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
-        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
-        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
-        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
     }
 
     public int onTouchEventNew(MotionEvent event) {
@@ -260,6 +292,7 @@ public class DrawSetup extends SurfaceView {
                 downX = event.getX();
                 downY = event.getY();
                 selectedShipId = containsWhichShip(event.getX(),event.getY());
+                selectedShipIdfinal = containsWhichShip(event.getX(),event.getY());
                 break;
             }
             case MotionEvent.ACTION_MOVE:
@@ -347,8 +380,7 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else if (checkInitialPlaceOutOfBounds(5, upXVal, upYVal, rotFiveHp)) {
-                            fivehpLeft = fivehpLeftInitial;
-                            fivehpTop = fivehpTopInitial;
+                            resetFivehp();
                             rotFiveHp = true;
                             invalidate();
                             return 0;
@@ -380,8 +412,7 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp1)) {
-                            fourhp1Left = fourhp1LeftInitial;
-                            fourhp1Top = fourhp1TopInitial;
+                            resetFourhp1();
                             rotFourHp1 = true;
                             invalidate();
                             return 0;
@@ -412,8 +443,7 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp2)) {
-                            fourhp2Left = fourhp2LeftInitial;
-                            fourhp2Top = fourhp2TopInitial;
+                            resetFourhp2();
                             rotFourHp2 = true;
                             invalidate();
                             return 0;
@@ -445,8 +475,7 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp1)) {
-                            threehp1Left = threehp1LeftInitial;
-                            threehp1Top = threehp1TopInitial;
+                            resetThreehp1();
                             rotThreeHp1 = true;
                             invalidate();
                             return 0;
@@ -477,8 +506,7 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp2)) {
-                            threehp2Left = threehp2LeftInitial;
-                            threehp2Top = threehp2TopInitial;
+                            resetThreehp2();
                             rotThreeHp2 = true;
                             invalidate();
                             return 0;
@@ -511,8 +539,7 @@ public class DrawSetup extends SurfaceView {
                             return 0;
                         }
                         else if (checkInitialPlaceOutOfBounds(2, upXVal, upYVal, rotTwoHP)) {
-                            twohpLeft = twohpLeftInitial;
-                            twohpTop = twohpTopInitial;
+                            resetTwohp();
                             rotTwoHP = true;
                             invalidate();
                             return 0;
@@ -539,11 +566,12 @@ public class DrawSetup extends SurfaceView {
                     }
                 }
                 this.invalidate();
+                selectedShipId = 0;
                 break;
             }
 
         }
-        return selectedShipId;
+        return selectedShipIdfinal;
     }
 
     public static boolean checkInitialPlaceOutOfBounds(int size, float x, float y, boolean rotated) {
@@ -656,6 +684,13 @@ public class DrawSetup extends SurfaceView {
     public void swapRotFiveHp(){
         this.rotFiveHp = !this.rotFiveHp;
     }
+
+    public boolean getRotFiveHp() {return rotFiveHp;}
+    public boolean getRotFourHp1() {return rotFourHp1;}
+    public boolean getRotFourHp2() {return rotFourHp2;}
+    public boolean getRotThreeHp1() {return rotThreeHp1;}
+    public boolean getRotThreeHp2() {return rotThreeHp2;}
+    public boolean getRotTwoHP() {return rotTwoHP;}
 
 
 

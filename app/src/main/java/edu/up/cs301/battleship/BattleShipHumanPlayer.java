@@ -167,21 +167,27 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 // you need to change and adjust the coords in the drawMidGamePhase
                 midGameView.setFivehpLeft(setupView.getFivehpLeft());
                 midGameView.setFivehpTop(setupView.getFivehpTop());
+                midGameView.setRotFiveHp(setupView.getRotFiveHp());
 
                 midGameView.setFourhp1Left(setupView.getFourhp1Left());
                 midGameView.setFourhp1Top(setupView.getFourhp1Top());
+                midGameView.setRotFourHp1(setupView.getRotFourHp1());
 
                 midGameView.setFourhp2Left(setupView.getFourhp2Left());
                 midGameView.setFourhp2Top(setupView.getFourhp2Top());
+                midGameView.setRotFourHp2(setupView.getRotFourHp2());
 
                 midGameView.setThreehp1Left(setupView.getThreehp1Left());
                 midGameView.setThreehp1Top(setupView.getThreehp1Top());
+                midGameView.setRotThreeHp1(setupView.getRotThreeHp1());
 
                 midGameView.setThreehp2Left(setupView.getThreehp2Left());
                 midGameView.setThreehp2Top(setupView.getThreehp2Top());
+                midGameView.setRotThreeHp2(setupView.getRotThreeHp2());
 
                 midGameView.setTwohpLeft(setupView.getTwohpLeft());
                 midGameView.setTwohpTop(setupView.getTwohpTop());
+                midGameView.setRotTwoHP(setupView.getRotTwoHP());
                 midGameView.invalidate();
 
 
@@ -279,12 +285,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if(currGS.xyToCoordSetupGame(xUp,yUp) == null){
                             return true;
                         }
-                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
-
-                        if (selectToBoardEnd < newSize) {
-                            int adjustment = (newSize) * 74;
-                            yUp -= adjustment;
-                        }
+//                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
+//
+//                        if (selectToBoardEnd < newSize) {
+//                            int adjustment = (newSize) * 74;
+//                            yUp -= adjustment;
+//                        }
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                         for (i = 0; i < selectedBattleShip.getSize(); i++) {
                             if (currGS.getBoard(playerNum).getHasShip()) {

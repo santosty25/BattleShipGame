@@ -2,6 +2,8 @@ package edu.up.cs301.battleship;
 
 import android.util.Log;
 
+import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -59,170 +61,170 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         GameBoard board = gameState.getBoard(enemyNum);
         Log.i("COMPUTER PLAYERS TURN", "");
-        this.setShips(5);
-        this.setShips(4);
-        this.setShips(4);
-        this.setShips(3);
-        this.setShips(3);
-        this.setShips(2);
-
+        if (this.placeShips == 1) {
+            this.setShips(5);
+            this.setShips(4);
+            this.setShips(4);
+            this.setShips(3);
+            this.setShips(3);
+            this.setShips(2);
+        }
         ++this.placeShips;
         //fires at coordinates randomly
         Log.i("COMPUTER PLAYERS TURN", "");
-            if (gameState.getRemainingShips(enemyNum) < this.assumRemainShips) {
-                this.reset();
+        if (gameState.getRemainingShips(enemyNum) < this.assumRemainShips) {
+            this.reset();
+        }
+        if (this.startAlgor == false) {
+            //check if the previous shot was a successful hit
+            boolean hit = false;
+            BattleshipObj[][] shipsOnBoard = gameState.getPlayersFleet();
+            GameBoard playerBoard = gameState.getBoard(enemyNum);
+            if (previousHit != null) {
+                int x = previousHit.getX();
+                int y = previousHit.getY();
+                Coordinates[][] coords = playerBoard.getCurrentBoard();
+                if (coords[x][y].getHasShip() == true) {
+                    hit = true;
+                }
             }
-            if (this.startAlgor == false) {
-                //check if the previous shot was a successful hit
-                boolean hit = false;
-                BattleshipObj[][] shipsOnBoard = gameState.getPlayersFleet();
-                //Reads locations of opponents board
-                if (previousHit != null) {
-                    for (int i = 0; i < shipsOnBoard[enemyNum].length; i++) {
-                        for (int j = 0; j < shipsOnBoard[enemyNum][i].getLocation().length; j++) {
-                            if (shipsOnBoard[enemyNum][i].getLocation()[j].getX() ==
-                                    this.previousHit.getX() &&
-                                    shipsOnBoard[enemyNum][i].getLocation()[j].getY()
-                                            == this.previousHit.getY()) {
-                                hit = true;
-                            }
+            //Reads locations of opponents board
+            if (previousHit != null) {
+                for (int i = 0; i < shipsOnBoard[enemyNum].length; i++) {
+                    for (int j = 0; j < shipsOnBoard[enemyNum][i].getLocation().length; j++) {
+                        if (shipsOnBoard[enemyNum][i].getLocation()[j].getX() ==
+                                this.previousHit.getX() &&
+                                shipsOnBoard[enemyNum][i].getLocation()[j].getY()
+                                        == this.previousHit.getY()) {
+                            hit = true;
                         }
                     }
                 }
-                if (hit == true) {
-                    this.startAlgor = true;
-                    this.possibleShip.add(previousHit);
-                }
             }
-            if (this.startAlgor == false) {
-                Random r = new Random();
-                //sleep(1);
-                int row = r.nextInt(10);
-                int col = r.nextInt(10);
-                Coordinates fire = new Coordinates(false, false, row, col);
-                this.previousHit = new Coordinates(fire);
-                Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
-                Log.i("FIRE ACTION", "Sending Fire at " + row + " " + col);
-                game.sendAction(new Fire(this, fire));
-
-            }
-
-            if (this.startAlgor == true) {
-                boolean hit = false;
-                BattleshipObj[][] shipsOnBoard = gameState.getPlayersFleet();
-                if (gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
-                    //check if the previous shot was a successful hit
-                    //Reads locations of opponents board
-                    for (int i = 0; i < shipsOnBoard[enemyNum].length; i++) {
-                        for (int j = 0; j < shipsOnBoard[enemyNum][i].getLocation().length; j++) {
-                            if (shipsOnBoard[enemyNum][i].getLocation()[j].getX() ==
-                                    this.previousHit.getX() &&
-                                    shipsOnBoard[enemyNum][i].getLocation()[j].getY()
-                                            == this.previousHit.getY()) {
-                                hit = true;
-                            }
-                        }
-                    }
-
-                    if (hit == true) {
-                        this.successHits.add(this.previousHit);
-                    } else {
-                        this.dir++;
-                    }
-
-                    Coordinates lastFire = new Coordinates(possibleShip.get(0));
-                    int next = 1;
-                    if (lastFire.getX() != 0 || lastFire.getX() != 9 && hit == true) {
-                        boolean hitCoord;
-                        if (dir == 0) {
-                            this.previousHit = new Coordinates(true, false,
-                                    lastFire.getX() + next, lastFire.getY());
-                            hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            while (hit == true) {
-                                ++next;
-                                if (lastFire.getX() + next == 0) {
-                                    this.dir++;
-                                    break;
-                                }
-                                this.previousHit = new Coordinates(true, false,
-                                        lastFire.getX() - next, lastFire.getY());
-                                hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            }
-                            if (hitCoord == false && dir < 0) {
-                                game.sendAction(new Fire(this, this.previousHit));
-                            }
-                        }
-                        if (dir == 1) {
-                            this.previousHit = new Coordinates(true, false,
-                                    lastFire.getX() + next, lastFire.getY());
-                            hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            while (hit == true) {
-                                ++next;
-                                if (lastFire.getX() + next > 9) {
-                                    this.dir++;
-                                    break;
-                                }
-                                this.previousHit = new Coordinates(true, false,
-                                        lastFire.getX() + next, lastFire.getY());
-                                hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            }
-                            if (hitCoord == false && dir == 1) {
-                                game.sendAction(new Fire(this, this.previousHit));
-                            }
-                        }
-
-                    } else if (lastFire.getX() == 0 || lastFire.getX() == 9 && hit == true) {
-                        this.dir++;
-                    }
-                    if (lastFire.getY() != 0 || lastFire.getY() != 9 && hit == true) {
-                        boolean hitCoord;
-                        if (dir == 2) {
-                            for (int i = 1; i < this.successHits.size(); i++) {
-                                this.possibleShip.add(successHits.get(i));
-                            }
-                            this.previousHit = new Coordinates(true, false,
-                                    lastFire.getX(), lastFire.getY() - next);
-                            hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            while (hit == true) {
-                                ++next;
-                                if (lastFire.getY() + next < 0) {
-                                    this.dir++;
-                                    break;
-                                }
-                                this.previousHit = new Coordinates(true, false,
-                                        lastFire.getX(), lastFire.getY() - next);
-                                hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            }
-                            if (hitCoord == false && dir == 2) {
-                                game.sendAction(new Fire(this, this.previousHit));
-                            }
-                        }
-                        if (dir == 3) {
-                            this.previousHit = new Coordinates(true, false,
-                                    lastFire.getX(), lastFire.getY() + next);
-                            hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            while (hit == true) {
-                                ++next;
-                                if (lastFire.getY() + next > 9) {
-                                    this.dir++;
-                                    break;
-                                }
-                                this.previousHit = new Coordinates(true, false,
-                                        lastFire.getX(), lastFire.getY() + next);
-                                hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                            }
-                            if (hitCoord == false && dir == 3) {
-                                game.sendAction(new Fire(this, this.previousHit));
-                            }
-                        }
-                    } else if (lastFire.getY() == 0 || lastFire.getY() == 9 && hit == true) {
-                        this.dir++;
-                    }
-
-                }
-
+            if (hit == true) {
+                this.startAlgor = true;
+                this.possibleShip.add(previousHit);
             }
         }
+        if (this.startAlgor == false) {
+            Random r = new Random();
+            sleep(1);
+            int row = r.nextInt(10);
+            int col = r.nextInt(10);
+            this.previousHit = new Coordinates(false, false, row, col);
+            Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
+            Log.i("FIRE ACTION", "Sending Fire at " + row + " " + col);
+            game.sendAction(new Fire(this, this.previousHit));
+
+        }
+
+        if (this.startAlgor == true) {
+            boolean hit = false;
+            BattleshipObj[][] shipsOnBoard = gameState.getPlayersFleet();
+            if (gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
+                //check if the previous shot was a successful hit
+                //Reads locations of opponents board
+                for (int i = 0; i < shipsOnBoard[enemyNum].length; i++) {
+                    for (int j = 0; j < shipsOnBoard[enemyNum][i].getLocation().length; j++) {
+                        if (shipsOnBoard[enemyNum][i].getLocation()[j].getX() ==
+                                this.previousHit.getX() &&
+                                shipsOnBoard[enemyNum][i].getLocation()[j].getY()
+                                        == this.previousHit.getY()) {
+                            hit = true;
+                        }
+                    }
+                }
+
+                if (hit == true) {
+                    this.successHits.add(this.previousHit);
+                } else {
+                    this.dir++;
+                }
+
+                Coordinates lastFire = new Coordinates(possibleShip.get(0));
+                int next = 1;
+                boolean hitCoord;
+                if (dir == 0) {
+                    this.previousHit = new Coordinates(true, false,
+                            lastFire.getX() + next, lastFire.getY());
+                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    while (hit == true) {
+                        ++next;
+                        if (lastFire.getX() + next == 0) {
+                            this.dir++;
+                            break;
+                        }
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX() - next, lastFire.getY());
+                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    }
+                    if (hitCoord == false && dir < 0) {
+                        game.sendAction(new Fire(this, this.previousHit));
+                    }
+                }
+                if (dir == 1) {
+                    this.previousHit = new Coordinates(true, false,
+                            lastFire.getX() + next, lastFire.getY());
+                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    while (hit == true) {
+                        ++next;
+                        if (lastFire.getX() + next > 9) {
+                            this.dir++;
+                            break;
+                        }
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX() + next, lastFire.getY());
+                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    }
+                    if (hitCoord == false && dir == 1) {
+                        game.sendAction(new Fire(this, this.previousHit));
+                    }
+                }
+                if (dir == 2) {
+                    for (int i = 1; i < this.successHits.size(); i++) {
+                        this.possibleShip.add(successHits.get(i));
+                    }
+                    this.previousHit = new Coordinates(true, false,
+                            lastFire.getX(), lastFire.getY() - next);
+                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    while (hit == true) {
+                        ++next;
+                        if (lastFire.getY() + next < 0) {
+                            this.dir++;
+                            break;
+                        }
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX(), lastFire.getY() - next);
+                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    }
+                    if (hitCoord == false && dir == 2) {
+                        game.sendAction(new Fire(this, this.previousHit));
+                    }
+                }
+                if (dir == 3) {
+                    this.previousHit = new Coordinates(true, false,
+                            lastFire.getX(), lastFire.getY() + next);
+                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    while (hit == true) {
+                        ++next;
+                        if (lastFire.getY() + next > 9) {
+                            this.dir++;
+                            break;
+                        }
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX(), lastFire.getY() + next);
+                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
+                    }
+                    if (hitCoord == false && dir == 3) {
+                        game.sendAction(new Fire(this, this.previousHit));
+                    }
+                }
+
+            }
+
+        }
+
+    }
 
 
     public void reset() {
@@ -233,6 +235,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             this.startAlgor = false;
         }
     }
+
     /**
      * checkIfCoordHit - Checks if the previous fire was a successful hit.
      *
