@@ -29,8 +29,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     protected BattleShipGameState currGS;
     boolean shipIsSelected = false;
     private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
-    public static boolean selectedIsRotated = true;
-
     //mid game surface view
     private DrawMidgame midGameView;
     private DrawSetup setupView;
