@@ -127,6 +127,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             if (action instanceof Fire) {
                 fire((Fire) action, state);
                 sendAllUpdatedState();
+                return true;
             } else if (action instanceof PlaceShip) {
                 //Checks if its the setup phase
                 if (phase != 0) {
@@ -191,7 +192,14 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 } else if (newShip.getSize() == 2) {
                     currentFleet[playerNum][5] = new BattleshipObj(newShip);
                 }
-                state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
+            int enemy;
+            if (playerNum == 0) { //Determines the player and enemy number
+                enemy = 1;
+            } else {
+                enemy = 0;
+            }
+            state.setPlayersTurn(enemy);
+            state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
             sendAllUpdatedState();
             return true;
         }
@@ -215,6 +223,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             } else {
                 enemy = 0;
             }
+            if(playerNum != state.getPlayersTurn()){
+                return false;
+            }
             if (state.canFire(coord)) { //If the coord has NOT already been hit
                 state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
                 int i, j;
@@ -236,7 +247,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 //DRAW WHITE the player missed
                 state.setPlayersTurn(enemy);
                 BattleShipMainActivity.splash.start();
-                sendAllUpdatedState();
                 return true;
             }
             return false;

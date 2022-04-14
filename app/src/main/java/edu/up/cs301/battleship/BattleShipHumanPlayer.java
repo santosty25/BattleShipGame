@@ -33,8 +33,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private DrawMidgame midGameView;
     private DrawSetup setupView;
     /**
-     * helper-class to finish a "flash.
-     *
+     * helper-class to finish a flash
      */
     private class Unflasher implements Runnable {
 

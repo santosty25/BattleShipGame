@@ -400,8 +400,6 @@ public class DrawSetup extends SurfaceView {
                                 fivehpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
                             }
                             invalidate();
-//                            fivehpLeft = event.getX() - 35.0f;
-//                            fivehpTop = event.getY();
                         }
                         break;
                     }
