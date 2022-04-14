@@ -119,27 +119,27 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
                 if(this.player0Ready == true || this.player1Ready == true) {
                     state.setPhase(BattleShipGameState.BATTLE_PHASE);
-                    sendAllUpdatedState();
                 }
             }
 
             if (action instanceof Fire) {
+                Log.i("PHASE", "makeMove: " + state.getPhase());
+//                if(state.getPhase() != 1){
+//                    return false;
+//                }
                 fire((Fire) action, state);
-                sendAllUpdatedState();
+                return true;
             } else if (action instanceof PlaceShip) {
                 //Checks if its the setup phase
                 if (phase != 0) {
-                    sendAllUpdatedState();
                     return false;
                 }
                 BattleShipMainActivity.place.start();//plays a placing sound
                 PlaceShip placeAction = new PlaceShip((PlaceShip) action);
                 if (placeShip(placeAction, state)){
-                    sendAllUpdatedState();
                     return true;
                 }
             }
-            sendAllUpdatedState();
             return false;
         }
 
@@ -190,8 +190,14 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                 } else if (newShip.getSize() == 2) {
                     currentFleet[playerNum][5] = new BattleshipObj(newShip);
                 }
-                state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
-            sendAllUpdatedState();
+            int enemy;
+            if (playerNum == 0) { //Determines the player and enemy number
+                enemy = 1;
+            } else {
+                enemy = 0;
+            }
+            state.setPlayersTurn(enemy);
+            state.setPlayersFleet(currentFleet, placeAction.getPlayerNum());
             return true;
         }
 
@@ -214,6 +220,9 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             } else {
                 enemy = 0;
             }
+            if(playerNum != state.getPlayersTurn()){
+                return false;
+            }
             if (state.canFire(coord)) { //If the coord has NOT already been hit
                 state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
                 int i, j;
@@ -227,15 +236,17 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                             enemyBoard[coord.getX()][coord.getY()].setHit(true);
                             enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
                             BattleShipMainActivity.explosion.start();
+                            Log.i("FIRE", "fire: HIT");
                             state.setPlayersTurn(playerNum);
                             return true;
                         }
                     }
                 }
                 //DRAW WHITE the player missed
+                Log.i("MISS", "fire: MISS");
                 state.setPlayersTurn(enemy);
+                Log.i("Player turn", "fire: " + state.getPlayersTurn());
                 BattleShipMainActivity.splash.start();
-                sendAllUpdatedState();
                 return true;
             }
             return false;
