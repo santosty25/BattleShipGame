@@ -309,8 +309,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                        int i;
-
                         int shipId = setupView.onTouchEventNew(motionEvent);
                     Log.i("SHIP ID", "onTouch: " + shipId);
                     int newSize = 0;
