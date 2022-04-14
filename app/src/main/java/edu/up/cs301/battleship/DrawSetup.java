@@ -564,8 +564,6 @@ public class DrawSetup extends SurfaceView {
                                 twohpTop = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
                             }
                             invalidate();
-//                            twohpLeft = event.getX() - 35.0f;
-//                            twohpTop = event.getY();
                         }
                         break;
                     }
@@ -671,6 +669,29 @@ public class DrawSetup extends SurfaceView {
         }
         return 0;
     }
+    public void checkOverlapping(){
+        BattleshipObj[] fleet = state.getPlayersFleet()[playerID];
+        if(fleet[0].getSize() == 1){
+            resetFivehp();
+        }
+        if(fleet[1].getSize() == 1){
+            resetFourhp1();
+        }
+        if(fleet[2].getSize() == 1){
+            resetFourhp2();
+        }
+        if(fleet[3].getSize() == 1){
+            resetThreehp1();
+        }
+        if(fleet[4].getSize() == 1){
+            resetThreehp2();
+        }
+        if(fleet[5].getSize() == 1){
+            resetTwohp();
+        }
+        this.invalidate();
+    }
+
 
     //getters to transfer coordinates from this phase to midgame Draw phase
     public float getFivehpLeft() {

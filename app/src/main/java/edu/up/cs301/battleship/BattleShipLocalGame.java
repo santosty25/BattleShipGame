@@ -77,11 +77,11 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             int winner = gameState.checkPlayerFleet();
             if (winner == 0) {
                 gameState.setPhase(BattleShipGameState.END_PHASE);
-                return main.getPlayer0Name() + " has won. ";
+                return "Player 0 has won. ";
             }
             else if (winner == 1) {
                 gameState.setPhase(BattleShipGameState.END_PHASE);
-                return main.getPlayer1Name() + " has won. ";
+                return "Player 1 has won. ";
             }
             return null;
         }
@@ -189,8 +189,6 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
                         return true;
                     }
                 }
-            else if(action instanceof PlaceShip){
-                if(phase != 0){
             if (action instanceof Fire) {
                 if (phase != 1) {
                     return false;
@@ -267,39 +265,43 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 
 
         /**
-         *
+         * Fires at a coordinate specified by the fireAction
+         * Updates gameboard
+         * If the hit is successful the player can fire again
+         * @param fireAction
+         * @param state
+         * @return
          */
         public boolean fire(Fire fireAction, BattleShipGameState state) {
             Coordinates coord = new Coordinates(fireAction.getCoord());
             int playerNum = fireAction.getPlayerNum();
             int enemy;
-            if (playerNum == 0) {
+            if (playerNum == 0) { //Determines the player and enemy number
                 enemy = 1;
             } else {
                 enemy = 0;
+            }
+            if(playerNum != state.getPlayersTurn()){
+                return false;
             }
             if (state.canFire(coord)) { //If the coord has NOT already been hit
                 state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
                 int i, j;
                 BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
-                Log.i("Players turn ", "makeMove: " + playerNum);
-                Log.i("Firing", " ");
                 for (i = 0; i < shipsOnBoard[enemy].length; i++) {
-                    Log.i("length", "ships " + shipsOnBoard[enemy].length);
                     for (j = 0; j < shipsOnBoard[enemy][i].getLocation().length; j++) {//Reads locations of opponents board
                         if (shipsOnBoard[enemy][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[enemy][i].getLocation()[j].getY() == coord.getY()) {
                             //Checks if the coordinate sent with the fire action has a ship on it
                             //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
                             Coordinates[][] enemyBoard = state.getBoard(enemy).getCurrentBoard();
                             enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
-                            Log.i("SUCCESSFUL SHOT", "At x: " + coord.getX() + " Y: " + coord.getY());
                             BattleShipMainActivity.explosion.start();
                             state.setPlayersTurn(playerNum);
                             return true;
                         }
                     }
                 }
-                //DRAW WHITE
+                //DRAW WHITE the player missed
                 state.setPlayersTurn(enemy);
                 BattleShipMainActivity.splash.start();
                 return true;

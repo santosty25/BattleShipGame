@@ -108,7 +108,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             int col = r.nextInt(10);
             this.previousHit = new Coordinates(false, false, row, col);
             Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
-            game.sendAction(new Fire(this, this.previousHit));
+            game.sendAction(new Fire(this, this.previousHit, playerNum));
         }
 
         if (this.startAlgor == true) { //check cardinal directions
@@ -153,7 +153,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && dir == BattleShipSmartAI.LEFT) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
                 if (this.dir == BattleShipSmartAI.RIGHT) {
@@ -173,7 +173,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && this.dir == BattleShipSmartAI.RIGHT) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
                 if (this.dir == BattleShipSmartAI.UP) {
@@ -197,7 +197,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && this.dir == BattleShipSmartAI.UP) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
                 if (this.dir == BattleShipSmartAI.DOWN) {
@@ -217,7 +217,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                         hitCoord = this.checkIfCoordHit(board, this.previousHit);
                     }
                     if (hitCoord == false && this.dir == BattleShipSmartAI.DOWN) {
-                        game.sendAction(new Fire(this, this.previousHit));
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
                     }
                 }
 
