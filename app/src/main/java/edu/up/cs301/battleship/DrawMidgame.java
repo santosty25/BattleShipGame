@@ -159,21 +159,21 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
         }
         fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
-        fivehp = Bitmap.createScaledBitmap(fivehp, 130, 25, false);
+        fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
         if(rotFiveHp) {
             fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
         }
 //        fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
 
         fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-        fourhp1 = Bitmap.createScaledBitmap(fourhp1, 98, 25, false);
+        fourhp1 = Bitmap.createScaledBitmap(fourhp1, 123, 28, false);
         if(rotFourHp1) {
             fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
         }
         //fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
 
         fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-        fourhp2 = Bitmap.createScaledBitmap(fourhp2, 98, 25, false);
+        fourhp2 = Bitmap.createScaledBitmap(fourhp2, 123, 25, false);
         if(rotFourHp2) {
             fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
         }
@@ -181,7 +181,7 @@ public class DrawMidgame extends SurfaceView{
 
         //CREATES 3 hp BS #1
         threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-        threehp1 = Bitmap.createScaledBitmap(threehp1, 72, 20, false);
+        threehp1 = Bitmap.createScaledBitmap(threehp1, 94, 24, false);
         if(rotThreeHp1) {
             threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
         }
@@ -189,7 +189,7 @@ public class DrawMidgame extends SurfaceView{
 
         //CREATES 3 hp BS #2
         threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-        threehp2 = Bitmap.createScaledBitmap(threehp2, 72, 20, false);
+        threehp2 = Bitmap.createScaledBitmap(threehp2, 94, 24, false);
         if(rotThreeHp2) {
             threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
         }
@@ -197,7 +197,7 @@ public class DrawMidgame extends SurfaceView{
 
         //CREATES 2 hp BS
         twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-        twohp = Bitmap.createScaledBitmap(twohp, 45, 20, false);
+        twohp = Bitmap.createScaledBitmap(twohp, 61, 24, false);
         if(rotTwoHP) {
             twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
         }
@@ -245,11 +245,10 @@ public class DrawMidgame extends SurfaceView{
                 }
             }
         }
+
         /**Draw on your board
          * Need to change the center methods
          * */
-
-
         BattleshipObj[][] playerFleet = new BattleshipObj[2][6];
         for (int i = 0;  i < 2; i++) {
             for (int j =0; j < 6; j++){
@@ -268,6 +267,9 @@ public class DrawMidgame extends SurfaceView{
                 toPlace = playerFleet[playerID][i].getFirstCoord();
                 fivehpLeft = state.middleXOfEnemyBoard(toPlace) - 21.5f;
                 fivehpTop = state.middleYOfEnemyBoard(toPlace) - 16;
+                if (toPlace.getY() <= 3) {
+                    fivehpTop = state.middleYOfEnemyBoard(toPlace) - 13;
+                }
             }
             else if (playerFleet[playerID][i].getSize() == 4) {
                 if (i == 1) {
@@ -298,23 +300,32 @@ public class DrawMidgame extends SurfaceView{
                     toPlace = playerFleet[playerID][i].getFirstCoord();
                     threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     if (toPlace.getX() > 7) {
-                        threehp1Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                        threehp1Left = state.middleXOfEnemyBoard(toPlace) - 23f;
                     }
                     else if (toPlace.getX() < 4) {
                         threehp1Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     }
                     threehp1Top= state.middleYOfEnemyBoard(toPlace) - 16;
+                    if (toPlace.getY() <= 3) {
+                        threehp1Top = state.middleYOfEnemyBoard(toPlace) - 13;
+                    }
                 }
                 else {
                     toPlace = playerFleet[playerID][i].getFirstCoord();
                     threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     if (toPlace.getX() > 7) {
-                        threehp2Left = state.middleXOfEnemyBoard(toPlace) - 21.5f;
+                        threehp2Left = state.middleXOfEnemyBoard(toPlace) - 23f;
                     }
                     else if (toPlace.getX() < 4) {
                         threehp2Left = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                     }
+
                     threehp2Top = state.middleYOfEnemyBoard(toPlace) - 16;
+
+                    if (toPlace.getY() <= 3) {
+                        threehp2Top = state.middleYOfEnemyBoard(toPlace) - 13;
+                    }
+
                 }
             }
             else if (playerFleet[playerID][i].getSize() == 2) {
@@ -326,7 +337,12 @@ public class DrawMidgame extends SurfaceView{
                 else if (toPlace.getX() < 4) {
                     twohpLeft = state.middleXOfEnemyBoard(toPlace) - 17.5f;
                 }
+
                 twohpTop = state.middleYOfEnemyBoard(toPlace) - 16;
+                if (toPlace.getY() <= 3) {
+                    twohpTop = state.middleYOfEnemyBoard(toPlace) - 13;
+                }
+
             }
 
         }
@@ -342,14 +358,14 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
         }
         else {
-            canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top - 7, blackPaint);
+            canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top - 9, blackPaint);
         }
 
         if (rotFourHp2) {
             canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
         }
         else {
-            canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top - 7, blackPaint);
+            canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top - 9, blackPaint);
         }
 
         if (rotThreeHp1) {

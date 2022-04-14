@@ -686,43 +686,7 @@ public class DrawSetup extends SurfaceView {
     }
 
 
-    //getters to transfer coordinates from this phase to midgame Draw phase
-    public float getFivehpLeft() {
-        return this.fivehpLeft;
-    }
-    public float getFivehpTop() {
-        return this.fivehpTop;
-    }
-    public float getFourhp1Left() {
-        return this.fourhp1Left;
-    }
-    public float getFourhp1Top() {
-        return this.fourhp1Top;
-    }
-    public float getFourhp2Left() {
-        return this.fourhp2Left;
-    }
-    public float getFourhp2Top() {
-        return this.fourhp2Top;
-    }
-    public float getThreehp1Left() {
-        return this.threehp1Left;
-    }
-    public float getThreehp1Top() {
-        return this.threehp1Top;
-    }
-    public float getThreehp2Left() {
-        return this.threehp2Left;
-    }
-    public float getThreehp2Top() {
-        return this.threehp2Top;
-    }
-    public float getTwohpLeft() {
-        return this.twohpLeft;
-    }
-    public float getTwohpTop() {
-        return this.twohpTop;
-    }
+
 
     public void setPlayerID(int playerID) { this.playerID = playerID;}
 
