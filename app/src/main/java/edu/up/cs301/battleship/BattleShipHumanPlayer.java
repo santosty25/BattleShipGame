@@ -127,6 +127,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             }
             if (setupView != null){
                 setupView.setState(currGS);
+                setupView.setPlayerID(playerNum);
+                setupView.checkOverlapping();
             }
             if (midGameView != null) {
                 midGameView.setState(currGS);
@@ -142,8 +144,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
      */
     @Override
     public void setAsGui(GameMainActivity activity) {
-
-
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
         Button nextButton = activity.findViewById(R.id.confirm_button);
@@ -162,7 +162,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
                     }
                 //}
-
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
@@ -171,8 +170,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView.invalidate();
                 changePhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
-
-
                 //Sets the coordinates of the midgame view to the same ones of the setupview then
                 // you need to change and adjust the coords in the drawMidGamePhase
                 midGameView.setFivehpLeft(setupView.getFivehpLeft());
@@ -302,7 +299,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
 
         /** On Touch for setupphase*/
-
         if (shipIsSelected == false) {
             gameView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -414,14 +410,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     return true;
                 }
             });
-
-
-
             setupView.invalidate();
             midGameView.invalidate();
-
-            /** On Touch for setupphase*/
-
         }
     }
 
