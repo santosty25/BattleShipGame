@@ -383,6 +383,32 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
+                                    switch(shipId) {
+                                        case 1: {
+                                            setupView.resetFivehp();
+                                            break;
+                                        }
+                                        case 2: {
+                                            setupView.resetFourhp1();
+                                            break;
+                                        }
+                                        case 3: {
+                                            setupView.resetFourhp2();
+                                            break;
+                                        }
+                                        case 4: {
+                                            setupView.resetThreehp1();
+                                            break;
+                                        }
+                                        case 5: {
+                                            setupView.resetThreehp2();
+                                            break;
+                                        }
+                                        case 6: {
+                                            setupView.resetTwohp();
+                                            break;
+                                        }
+                                    }
                                     return false;
                                 }
                                 eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp, yUp);
@@ -395,6 +421,32 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             for (int j = 0; j < selectedBattleShip.getSize(); j++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
+                                    switch(shipId) {
+                                        case 1: {
+                                            setupView.resetFivehp();
+                                            break;
+                                        }
+                                        case 2: {
+                                            setupView.resetFourhp1();
+                                            break;
+                                        }
+                                        case 3: {
+                                            setupView.resetFourhp2();
+                                            break;
+                                        }
+                                        case 4: {
+                                            setupView.resetThreehp1();
+                                            break;
+                                        }
+                                        case 5: {
+                                            setupView.resetThreehp2();
+                                            break;
+                                        }
+                                        case 6: {
+                                            setupView.resetTwohp();
+                                            break;
+                                        }
+                                    }
                                     return false;
                                 }
                                 eachShipCoord[j] = currGS.xyToCoordSetupGame(xUp, yUp);
