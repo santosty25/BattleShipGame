@@ -47,14 +47,15 @@ public class BattleShipDumbAI extends GameComputerPlayer {
                 shipNum++;
             }
         }
-
+        if(shipNum == 6){
+            game.sendAction(new SwitchPhase(this, playerNum, true));
+        }
         if (compGS.getPhase() == BattleShipGameState.SETUP_PHASE){
             placeShip();
         }
-        else{
+        else if (compGS.getPhase() == BattleShipGameState.BATTLE_PHASE){
             fireAction();
         }
-        //fires at coordinates randomly
         Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
         //sleep(1);
     }
@@ -131,6 +132,14 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         col = r.nextInt(10);
         Log.i("COMPUTER FIRE;", "Fired at " + row + " " + col + ".");
         Coordinates fire = new Coordinates(false, false, row, col);
+        int enemy = 1;
+        if(playerNum ==1){
+            enemy = 0;
+        }
+        if (compGS.getBoard(enemy).getCurrentBoard()[row][col].getHit()){
+            fireAction();
+        }
+        sleep(2);
         game.sendAction(new Fire(this, fire, playerNum));
 
     }
