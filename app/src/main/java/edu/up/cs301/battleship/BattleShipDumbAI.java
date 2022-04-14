@@ -2,6 +2,7 @@ package edu.up.cs301.battleship;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
@@ -19,8 +20,9 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
  */
 public class BattleShipDumbAI extends GameComputerPlayer {
 
-
+    private ArrayList<BattleshipObj> fleet = new ArrayList<BattleshipObj>();
     private BattleshipObj battleship;
+    private int placeShips;
 
 
     /**
@@ -30,6 +32,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
      */
     public BattleShipDumbAI(String name) {
         super(name);
+        this.placeShips = 1;
     }
 
     @Override
@@ -40,12 +43,16 @@ public class BattleShipDumbAI extends GameComputerPlayer {
 
         BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
         if (gameState.getPhase() == BattleShipGameState.SETUP_PHASE){
-            this.setShips(5);
-            this.setShips(4);
-            this.setShips(4);
-            this.setShips(3);
-            this.setShips(3);
-            this.setShips(2);
+            if(this.placeShips == 1) {
+                this.setShips(5);
+                this.setShips(4);
+                this.setShips(4);
+                this.setShips(3);
+                this.setShips(3);
+                this.setShips(2);
+                game.sendAction(new SwitchPhase(this, playerNum, true));
+            }
+            ++this.placeShips;
         }
         //fires at coordinates randomly
         Log.i("COMPUTER PLAYERS TURN", "");
@@ -126,7 +133,30 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         } else {
             location = new Coordinates[]{coords[0], coords[1], coords[2], coords[3], coords[4]};
         }
-        this.battleship = new BattleshipObj(size, location);
+        this.checkShip(size, location);
+        this.fleet.add(battleship);
         game.sendAction(new PlaceShip(this, this.battleship, playerNum));
+    }
+
+    public BattleshipObj checkShip(int size, Coordinates[] location) {
+        this.battleship = new BattleshipObj(size, location);
+        if(this.fleet.size() != 0) {
+            Coordinates[] shipPlace = battleship.getLocation();
+            boolean overlap = false;
+            for(int i = 0; i < this.fleet.size(); i++) {
+                for(int j = 0; j < size; j++) {
+                    for(int k = 0; k < this.fleet.get(i).getSize(); k++) {
+                        Coordinates[] placeShips = this.fleet.get(i).getLocation();
+                        if(shipPlace[j].getX() == placeShips[k].getX() &&
+                                shipPlace[j].getY() == placeShips[k].getY()) {
+                            overlap = true;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return this.battleship;
     }
 }
