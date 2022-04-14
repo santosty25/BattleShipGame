@@ -19,14 +19,16 @@ public class Fire extends GameAction implements Serializable {
 
     private Coordinates coord; //the coordinates where a player has fired
     private static final long serialVersionUID = 040420021l;
+    private int playerNum;
 
     /**
      * Fire - constructor that initializes instance variables.
      * @param player - the player
      * @param coord - coordinates where the player wants to fire at
      */
-    public Fire(GamePlayer player, Coordinates coord) {
+    public Fire(GamePlayer player, Coordinates coord, int playerNum) {
         super(player);
+        this.playerNum = playerNum;
         Log.i("fire action", "Instance of fire action ");
         this.coord = new Coordinates(coord);
     }
@@ -45,5 +47,9 @@ public class Fire extends GameAction implements Serializable {
      */
     public Coordinates getCoord() {
         return coord;
+    }
+
+    public int getPlayerNum() {
+        return playerNum;
     }
 }

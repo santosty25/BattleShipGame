@@ -1,12 +1,14 @@
 package edu.up.cs301.battleship;
 
 import android.app.GameManager;
+import android.graphics.CornerPathEffect;
 import android.util.Log;
 
 import java.io.Serializable;
 
 import javax.security.auth.login.LoginException;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 //import androidx.appcompat.widget.AppCompatRadioButton$InspectionCompanion;
@@ -56,7 +58,7 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playersTurn = num;
         //Log.i("BSG", "Made player turn");
         this.timer = 30;
-        this.phase = SETUP_PHASE;
+        this.phase = 0;
         //Log.i("BSG", "Made timer");
         this.remainingShips = new int[2];
         for (int k = 0; k < remainingShips.length; k++) {
@@ -296,10 +298,29 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param fleets - a 2d array of battleship objects
      */
     public void setPlayersFleet(BattleshipObj[][] fleets, int playerNum){
-        int j;
-            for(j = 0; j < 6; j++){
-                this.playersFleet[playerNum][j] = new BattleshipObj(fleets[playerNum][j]);
+        int j, i;
+        //clears the board
+        GameBoard board = new GameBoard(this.playersBoard[playerNum]);
+        for(j = 0; j < board.getCurrentBoard().length; j++){
+            for(i = 0; i < board.getCurrentBoard()[j].length; i++){
+                board.setHasShip(j, i, false);
             }
+        }
+
+        //Reads the ships location and sets the Coordinate to hasShip
+        for(j = 0; j < 6; j++){
+            this.playersFleet[playerNum][j] = new BattleshipObj(fleets[playerNum][j]);
+            this.playersFleet[playerNum][j].getLocation();
+            for(i = 0; i < this.playersFleet[playerNum][j].getSize(); i++){
+                int x = playersFleet[playerNum][j].getLocation()[i].getX();
+                int y =  playersFleet[playerNum][j].getLocation()[i].getY();
+                if(x != -1 && y != -1) {
+                    board.setHasShip(x, y, true);
+                }
+            }
+        }
+            this.playersBoard[playerNum] = new GameBoard(board);
+
         }
 
 
