@@ -391,76 +391,34 @@ public class DrawMidgame extends SurfaceView{
         }
 
 
-
-
-//        canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-//        canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
-//        canvas.drawBitmap(fourhp2, fourhp2Left, fourhp2Top, blackPaint);
-//        canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
-//        canvas.drawBitmap(threehp2, threehp2Left, threehp2Top, blackPaint);
-//        canvas.drawBitmap(twohp, twohpLeft, twohpTop, blackPaint);
-
-//        // 5HP ship
-//        canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
-//        // 4HP ship
-//        canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
-//        // 4HP ship
-//        canvas.drawBitmap(xSink, 1825.0f, 480.0f, blackPaint);
-//        // 3HP ship
-//        canvas.drawBitmap(xSink, 1825.0f, 630.0f, blackPaint);
-//        // 3HP ship
-//        canvas.drawBitmap(xSink, 1825.0f, 760.0f, blackPaint);
-//        // 2HP ship
-//        canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
-
-        this.invalidate();
-
-
-
         // draw red x over sunk ships
         int check = 0;
         boolean firstSunk = false;
+        int enemy = 0;
+        if(playerID == 0){
+            enemy = 1;
+        }
+        state.getPlayersFleet()[enemy][5].getSunk();
+
 
         // 2HP ship
-        check = state.checkIndividualShip(2, 1);
-        if (check == 1) {
+        if (state.getPlayersFleet()[enemy][5].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
-            this.invalidate();
         }
-
-        // 3HP ships
-        check = state.checkIndividualShip(3, 1);
-        if (check == 1) {
+        if (state.getPlayersFleet()[enemy][4].getSunk()) {
+            canvas.drawBitmap(xSink, 1825.0f, 760.0f , blackPaint);
+        }
+        if (state.getPlayersFleet()[enemy][3].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 630.0f, blackPaint);
-            firstSunk = true;
-            this.invalidate();
         }
-        check = state.checkIndividualShip(3, 1);
-        if (check == 2 && firstSunk) {
-            canvas.drawBitmap(xSink, 1825.0f, 760.0f, blackPaint);
-            firstSunk = false;
-            this.invalidate();
-        }
-
-
-        // 4HP ships
-        check = state.checkIndividualShip(4, 1);
-        if (check == 1) {
-            canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
-            firstSunk = true;
-            this.invalidate();
-        }
-        check = state.checkIndividualShip(4, 1);
-        if (check == 2 && firstSunk) {
+        if (state.getPlayersFleet()[enemy][2].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 480.0f, blackPaint);
-            this.invalidate();
         }
-
-        // 5HP ship
-        check = state.checkIndividualShip(5, 0);
-        if (check == 1) {
+        if (state.getPlayersFleet()[enemy][1].getSunk()) {
+            canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
+        }
+        if (state.getPlayersFleet()[enemy][0].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
-            this.invalidate();
         }
 
             //Draws players board

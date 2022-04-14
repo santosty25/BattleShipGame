@@ -33,8 +33,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     private DrawMidgame midGameView;
     private DrawSetup setupView;
     /**
-     * helper-class to finish a "flash.
-     *
+     * helper-class to finish a flash
      */
     private class Unflasher implements Runnable {
 
@@ -156,6 +155,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
                 midGameView = activity.findViewById(R.id.boardView);
                 midGameView.setPlayerID(playerNum);
+                game.sendAction(new SwitchPhase(reference, playerNum, true));
                 midGameView.invalidate();
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
                 //Sets the coordinates of the midgame view to the same ones of the setupview then
