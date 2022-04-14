@@ -21,6 +21,7 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
 public class BattleShipDumbAI extends GameComputerPlayer {
 
     private ArrayList<BattleshipObj> fleet = new ArrayList<BattleshipObj>();
+    private BattleShipGameState compGS;
     private BattleshipObj battleship;
     private int placeShips;
 
@@ -41,8 +42,12 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             return;
         }
 
-        BattleShipGameState gameState = new BattleShipGameState((BattleShipGameState) info);
-        if (gameState.getPhase() == BattleShipGameState.SETUP_PHASE){
+
+        Random r = new Random();
+        int row;
+        int col;
+        this.compGS = new BattleShipGameState((BattleShipGameState) info);
+        if (compGS.getPhase() == BattleShipGameState.SETUP_PHASE){
             if(this.placeShips == 1) {
                 this.setShips(5);
                 this.setShips(4);
@@ -55,15 +60,12 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             ++this.placeShips;
         }
         //fires at coordinates randomly
-        Log.i("COMPUTER PLAYERS TURN", "");
-        Random r = new Random();
-        int row;
-        int col;
+        Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
         //sleep(1);
         row = r.nextInt(10);
         col = r.nextInt(10);
+        Log.i("COMPUTER FIRE;", "Fired at " + row + " " + col + ".");
         Coordinates fire = new Coordinates(false, false, row, col);
-        Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
         game.sendAction(new Fire(this, fire, playerNum));
     }
 
