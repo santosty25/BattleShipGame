@@ -170,6 +170,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView.setPlayerID(playerNum);
                 midGameView.invalidate();
                 changePhase(1);
+                game.sendAction(new SwitchPhase(reference, playerNum, true));
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
 

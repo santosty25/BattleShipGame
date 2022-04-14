@@ -60,9 +60,8 @@ public class Coordinates implements Serializable {
      * @param hit
      * @return
      */
-    public boolean setHit(boolean hit){
+    public void setHit(boolean hit){
         this.hit = hit;
-        return this.hasShip;
     }
 
     /**

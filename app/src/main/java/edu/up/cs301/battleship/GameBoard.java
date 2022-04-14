@@ -59,8 +59,8 @@ public class GameBoard extends Coordinates implements Serializable {
      * @param hit - whether the ship has been hit or not
      */
     public boolean setCoordHit(int row, int col, boolean hit){
-        if(getCoordHit(row, col) == false) {
-            this.currentBoard[row][col].setHit(hit);
+        if(this.getCoordHit(row, col) == false) {
+            this.currentBoard[row - 1][col - 1].setHit(hit);
             return true;
         }
         return false;
@@ -79,7 +79,7 @@ public class GameBoard extends Coordinates implements Serializable {
      * @return bool, if the coordinate has been hit
      */
     public boolean getCoordHit(int row, int col){
-        return this.currentBoard[row][col].getHit();
+        return this.currentBoard[row - 1][col - 1].getHit();
     }
 
     /**
