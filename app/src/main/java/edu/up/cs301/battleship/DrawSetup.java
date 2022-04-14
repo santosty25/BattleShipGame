@@ -284,11 +284,11 @@ public class DrawSetup extends SurfaceView {
 
     public int onTouchEventNew(MotionEvent event) {
         BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
-
         int newSize = 0;
         //checks which action is happening
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {  //checks which ship is being selected
+                selectedShipIdfinal = 0;
                 downX = event.getX();
                 downY = event.getY();
                 selectedShipId = containsWhichShip(event.getX(),event.getY());
@@ -382,6 +382,7 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(5, upXVal, upYVal, rotFiveHp)) {
                             resetFivehp();
                             rotFiveHp = true;
+                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -414,6 +415,7 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp1)) {
                             resetFourhp1();
                             rotFourHp1 = true;
+                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -445,6 +447,7 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp2)) {
                             resetFourhp2();
                             rotFourHp2 = true;
+                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -477,6 +480,7 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp1)) {
                             resetThreehp1();
                             rotThreeHp1 = true;
+                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -508,6 +512,7 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp2)) {
                             resetThreehp2();
                             rotThreeHp2 = true;
+                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -593,23 +598,74 @@ public class DrawSetup extends SurfaceView {
     }
 
     public int containsWhichShip(float x, float y) {
-        if (x >= fivehpLeft && x <= fivehpLeft + 70 && y >= fivehpTop && y <= fivehpTop + 360) { // top right ship 5hp
-            return 1;
+        // Checks to see if the ship is rotated
+        if (rotFiveHp) {
+            if (x >= fivehpLeft && x <= fivehpLeft + 70 && y >= fivehpTop && y <= fivehpTop + 360) { // top right ship 5hp
+                return 1;
+            }
         }
-        else if (x >= fourhp1Left && x <= fourhp1Left + 70 && y >= fourhp1Top && y <= fourhp1Top + 288) { //
-            return 2;
+        else {
+            if (x >= fivehpLeft && x <= fivehpLeft + 360 && y >= fivehpTop - 15 && y <= fivehpTop + 70 - 15) { // top right ship 5hp
+                return 1;
+            }
         }
-        else if (x >= fourhp2Left && x <= fourhp2Left + 70 && y >= fourhp2Top && y <= fourhp2Top + 288) {
-            return 3;
+
+        //Four hp 1 ship
+        if (rotFourHp1) {
+            if (x >= fourhp1Left && x <= fourhp1Left + 70 && y >= fourhp1Top && y <= fourhp1Top + 288) { //
+                return 2;
+            }
         }
-        else if (x >= threehp1Left && x <= threehp1Left + 60 && y >= threehp1Top && y <= threehp1Top + 216) {
-            return 4;
+        else {
+            if (x >= fourhp1Left && x <= fourhp1Left + 288 && y >= fourhp1Top - 15 && y <= fourhp1Top + 70 - 15) { //
+                return 2;
+            }
         }
-        else if (x >= threehp2Left && x <= threehp2Left + 60 && y >= threehp2Top && y <= threehp2Top + 216) {
-            return 5;
+
+        //Four hp 2 ship
+        if (rotFourHp2) {
+            if (x >= fourhp2Left && x <= fourhp2Left + 70 && y >= fourhp2Top && y <= fourhp2Top + 288) {
+                return 3;
+            }
         }
-        else if (x >= twohpLeft && x <= twohpLeft + 60 && y >= twohpTop && y <= twohpTop + 144) {
-            return 6;
+        else {
+            if (x >= fourhp2Left && x <= fourhp2Left + 288 && y >= fourhp2Top - 15 && y <= fourhp2Top + 70 - 15) {
+                return 3;
+            }
+        }
+
+        if (rotThreeHp1) {
+            if (x >= threehp1Left && x <= threehp1Left + 60 && y >= threehp1Top && y <= threehp1Top + 216) {
+                return 4;
+            }
+        }
+        else {
+            if (x >= threehp1Left && x <= threehp1Left + 216 && y >= threehp1Top - 15 && y <= threehp1Top + 60 - 15) {
+                return 4;
+            }
+        }
+
+        if (rotThreeHp2) {
+            if (x >= threehp2Left && x <= threehp2Left + 60 && y >= threehp2Top && y <= threehp2Top + 216) {
+                return 5;
+            }
+        }
+        else {
+            if (x >= threehp2Left && x <= threehp2Left + 216 && y >= threehp2Top - 15 && y <= threehp2Top + 60 - 15) {
+                return 5;
+            }
+        }
+
+        //Checks if ship 2 is being selected
+        if (rotTwoHP) {
+            if (x >= twohpLeft && x <= twohpLeft + 60 && y >= twohpTop && y <= twohpTop + 144) {
+                return 6;
+            }
+        }
+        else {
+            if (x >= twohpLeft && x <= twohpLeft + 144 && y >= twohpTop - 15 && y <= twohpTop + 60 - 15) {
+                return 6;
+            }
         }
         return 0;
     }
