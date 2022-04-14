@@ -420,33 +420,32 @@ public class DrawMidgame extends SurfaceView{
             this.invalidate();
         }
         check = state.checkIndividualShip(3, 1);
-            if (check == 2 && firstSunk) {
-                canvas.drawBitmap(xSink, 1825.0f, 760.0f, blackPaint);
-                firstSunk = false;
-                this.invalidate();
-            }
+        if (check == 2 && firstSunk) {
+            canvas.drawBitmap(xSink, 1825.0f, 760.0f, blackPaint);
+            firstSunk = false;
+            this.invalidate();
+        }
 
 
         // 4HP ships
         check = state.checkIndividualShip(4, 1);
-            if (check == 1) {
-                canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
-                firstSunk = true;
-                this.invalidate();
-            }
+        if (check == 1) {
+            canvas.drawBitmap(xSink, 1825.0f, 300.0f, blackPaint);
+            firstSunk = true;
+            this.invalidate();
+        }
         check = state.checkIndividualShip(4, 1);
-            if (check == 2 && firstSunk) {
-                canvas.drawBitmap(xSink, 1825.0f, 480.0f, blackPaint);
-                firstSunk = false;
-                this.invalidate();
-            }
+        if (check == 2 && firstSunk) {
+            canvas.drawBitmap(xSink, 1825.0f, 480.0f, blackPaint);
+            this.invalidate();
+        }
 
         // 5HP ship
         check = state.checkIndividualShip(5, 0);
-            if (check == 1) {
-                canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
-                this.invalidate();
-            }
+        if (check == 1) {
+            canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
+            this.invalidate();
+        }
 
             //Draws players board
         GameBoard drawEnemyBoard = this.state.getBoard(playerID);

@@ -34,6 +34,8 @@ public class BattleShipMainActivity extends GameMainActivity {
     public static MediaPlayer splash;
     public static MediaPlayer place;
     public static MediaPlayer explosion;
+    public static String player0Name;
+    public static String player1Name;
 
 
     /**
@@ -48,6 +50,7 @@ public class BattleShipMainActivity extends GameMainActivity {
 
         playerTypes.add(new GamePlayerType("Local Human Player") {
             public GamePlayer createPlayer(String name) {
+                player0Name = name;
                 return new BattleShipHumanPlayer(name);
             }
         });
@@ -55,6 +58,7 @@ public class BattleShipMainActivity extends GameMainActivity {
         // dumb computer player
         playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
             public GamePlayer createPlayer(String name) {
+                player1Name = name;
                 return new BattleShipDumbAI(name);
             }
         });
@@ -62,6 +66,7 @@ public class BattleShipMainActivity extends GameMainActivity {
         // smarter computer player
         playerTypes.add(new GamePlayerType("Computer Player (smart)") {
             public GamePlayer createPlayer(String name) {
+                player1Name = name;
                 return new BattleShipSmartAI(name);
             }
         });
@@ -95,4 +100,13 @@ public class BattleShipMainActivity extends GameMainActivity {
     public LocalGame createLocalGame(GameState gameState) {
         return new BattleShipLocalGame();
     }
+
+    public String getPlayer0Name() {
+        return player0Name;
+    }
+
+    public String getPlayer1Name() {
+        return player1Name;
+    }
 }
+

@@ -74,7 +74,6 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                 this.setShips(3);
                 this.setShips(3);
                 this.setShips(2);
-                game.sendAction(new SwitchPhase(this, playerNum, true));
             }
         }
         ++this.placeShips;
