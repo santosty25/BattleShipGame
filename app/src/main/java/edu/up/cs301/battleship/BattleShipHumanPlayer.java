@@ -151,14 +151,18 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
 
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Checking if all ships have been placed
-                int i, j;
+                int j;
                 //for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
                         if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
+                            return;
+                        }
+                        if (setupView.checkIfShipsAreReset()) {
                             return;
                         }
                     }
