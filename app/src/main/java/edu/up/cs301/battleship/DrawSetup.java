@@ -382,7 +382,6 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(5, upXVal, upYVal, rotFiveHp)) {
                             resetFivehp();
                             rotFiveHp = true;
-                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -415,7 +414,6 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp1)) {
                             resetFourhp1();
                             rotFourHp1 = true;
-                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -447,7 +445,6 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(4, upXVal, upYVal, rotFourHp2)) {
                             resetFourhp2();
                             rotFourHp2 = true;
-                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -480,7 +477,6 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp1)) {
                             resetThreehp1();
                             rotThreeHp1 = true;
-                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
@@ -512,7 +508,6 @@ public class DrawSetup extends SurfaceView {
                         else if (checkInitialPlaceOutOfBounds(3, upXVal, upYVal, rotThreeHp2)) {
                             resetThreehp2();
                             rotThreeHp2 = true;
-                            BattleShipHumanPlayer.selectedIsRotated = true;
                             invalidate();
                             return 0;
                         }
