@@ -1,26 +1,15 @@
 package edu.up.cs301.battleship;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
 import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;
-import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.R;
-import edu.up.cs301.tictactoe.infoMessage.TTTState;
-import edu.up.cs301.tictactoe.views.TTTSurfaceView;
 
 /**
  * BattleShipHumanPlayer - This class represents a human player
@@ -36,15 +25,10 @@ import edu.up.cs301.tictactoe.views.TTTSurfaceView;
 public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     private GameMainActivity myActivity = null;
-    private boolean switchPhase = false;
     private BattleShipHumanPlayer reference = this;
     protected BattleShipGameState currGS;
     boolean shipIsSelected = false;
     private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
-
-    private int lastSelectedShip = 0;
-    public static boolean selectedIsRotated = true;
-
     //mid game surface view
     private DrawMidgame midGameView;
     private DrawSetup setupView;
@@ -371,7 +355,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                            yUp -= adjustment;
 //                        }
 
-                        Coordinates[] eachShipCoord;
+                        Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
 
                         if (isShipRotated) {
                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
@@ -386,7 +370,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             }
                         }
                         else {
-                        eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
+                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int j = 0; j < selectedBattleShip.getSize(); j++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
@@ -397,6 +381,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 xUp += 74;
                             }
                         }
+
 //                        if(lastSelectedShip == shipId && shipId != 0){
 //                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
 //                            for(i = 0; i < eachShipCoord.length; i ++){

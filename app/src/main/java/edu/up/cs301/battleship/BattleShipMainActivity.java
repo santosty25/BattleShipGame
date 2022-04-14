@@ -34,8 +34,8 @@ public class BattleShipMainActivity extends GameMainActivity {
     public static MediaPlayer splash;
     public static MediaPlayer place;
     public static MediaPlayer explosion;
-    public String player0Name;
-    public String player1Name;
+    public static String player0Name;
+    public static String player1Name;
 
 
     /**
