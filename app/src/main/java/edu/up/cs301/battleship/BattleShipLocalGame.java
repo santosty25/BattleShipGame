@@ -19,8 +19,10 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
     public class BattleShipLocalGame extends LocalGame {
 
         private BattleShipGameState localState;
+        private BattleShipMainActivity main;
         private boolean player0Ready = false;
         private boolean player1Ready = false;
+
         /**
          * BattleShipLocalGame - Constructor for the BattleShipLocalGame.
          */
@@ -75,11 +77,11 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             int winner = gameState.checkPlayerFleet();
             if (winner == 0) {
                 gameState.setPhase(BattleShipGameState.END_PHASE);
-                return "Player 0 has won. ";
+                return main.getPlayer0Name() + " has won. ";
             }
             else if (winner == 1) {
                 gameState.setPhase(BattleShipGameState.END_PHASE);
-                return "Player 1 has won. ";
+                return main.getPlayer1Name() + " has won. ";
             }
             return null;
         }
