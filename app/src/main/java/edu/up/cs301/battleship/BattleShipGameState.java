@@ -144,7 +144,7 @@ public class BattleShipGameState extends GameState implements Serializable {
     }
 
     public void setCoordHit(int row, int col, boolean isHit, int playerNum) {
-        this.playersBoard[playerNum].setCoordHit(row - 1, col - 1, true);
+        this.playersBoard[playerNum].setCoordHit(row, col, true);
     }
 
     /**

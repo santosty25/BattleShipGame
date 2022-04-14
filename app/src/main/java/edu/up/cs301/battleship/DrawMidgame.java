@@ -229,7 +229,7 @@ public class DrawMidgame extends SurfaceView{
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
                 Log.i("NOT NULL", "");
-                if(drawBoard.getCoordHit(row + 1, col + 1)){
+                if(drawBoard.getCoordHit(row, col)){
                     Coordinates[][] board = drawBoard.getCurrentBoard();
                     float xDrift = 1.5f * (float)row;
                     float yDrift = 0.7f * (float)col;
@@ -426,7 +426,7 @@ public class DrawMidgame extends SurfaceView{
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
                 Log.i("NOT NULL", "");
-                if(drawEnemyBoard.getCoordHit(row + 1, col + 1)){
+                if(drawEnemyBoard.getCoordHit(row, col)){
                     Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
                     float xDrift =  1.8f * (float)row;
                     float yDrift =  1.75f * (float)col;

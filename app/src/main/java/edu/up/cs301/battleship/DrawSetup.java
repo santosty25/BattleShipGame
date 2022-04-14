@@ -239,7 +239,7 @@ public class DrawSetup extends SurfaceView {
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
                 Log.i("NOT NULL", "");
-                if (drawEnemyBoard.getCoordHit(row + 1, col + 1)) {
+                if (drawEnemyBoard.getCoordHit(row, col)) {
                     Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
                     if (drawEnemyBoard.getHasShip()) {
 

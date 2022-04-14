@@ -60,7 +60,7 @@ public class GameBoard extends Coordinates implements Serializable {
      */
     public boolean setCoordHit(int row, int col, boolean hit){
         if(this.getCoordHit(row, col) == false) {
-            this.currentBoard[row - 1][col - 1].setHit(hit);
+            this.currentBoard[row][col].setHit(hit);
             return true;
         }
         return false;
@@ -79,7 +79,7 @@ public class GameBoard extends Coordinates implements Serializable {
      * @return bool, if the coordinate has been hit
      */
     public boolean getCoordHit(int row, int col){
-        return this.currentBoard[row - 1][col - 1].getHit();
+        return this.currentBoard[row][col].getHit();
     }
 
     /**

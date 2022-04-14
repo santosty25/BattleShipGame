@@ -362,7 +362,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
                         if (isShipRotated) {
                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
-                            for (int i = 0; i < selectedBattleShip.getSize(); i++) {
+                            for (i = 0; i < selectedBattleShip.getSize(); i++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
                                     return false;

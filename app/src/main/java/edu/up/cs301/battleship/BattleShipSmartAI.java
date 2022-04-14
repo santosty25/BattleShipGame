@@ -32,7 +32,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     private BattleshipObj battleship;
     private int placeShips;
     private int dir;
-    private int test = 0;
+    private int start;
     private ArrayList<Coordinates> possibleShip = new ArrayList<Coordinates>();
     private ArrayList<Coordinates> successHits = new ArrayList<Coordinates>();
     private Coordinates previousHit;
@@ -44,6 +44,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
 
     public BattleShipSmartAI(String name) {
         super(name);
+        this.start = 0;
         this.assumRemainShips = 6;
         this.placeShips = 1;
         this.dir = 0;
@@ -64,9 +65,8 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         } else {
             enemyNum = 0;
         }
-        GameBoard board = new GameBoard(gameState.getBoard(enemyNum));
         Log.i("COMPUTER PLAYERS TURN", "");
-        if(gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
+        if (gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
             if (this.placeShips == 1) {
                 this.setShips(5);
                 this.setShips(4);
@@ -78,7 +78,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         ++this.placeShips;
         //fires at coordinates randomly
-        if(gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
+        if (gameState.getPhase() == BattleShipGameState.BATTLE_PHASE) {
             Log.i("COMPUTER PLAYERS TURN", "");
             if (gameState.getRemainingShips(enemyNum) < this.assumRemainShips) {
                 this.reset();
@@ -93,28 +93,28 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                     boolean wasHit = playerBoard.getCoordHit(x, y);
                     Coordinates[][] coords = playerBoard.getCurrentBoard();
                     //Reads locations of opponents board and checks if hit was successful
-                    if (coords[x][y].getHasShip() == true && wasHit == true) {
+                    if (coords[x - 1][y - 1].getHasShip() == true && wasHit == true) {
                         hit = true;
                     }
                 }
                 if (hit == true) {//starts algorithm
                     this.startAlgor = true;
                     this.possibleShip.add(previousHit);
+                    this.successHits.add(previousHit);
+                } else {
+                    //fire randomly
+                    Random r = new Random();
+                    sleep(1);
+                    int row = r.nextInt(10);
+                    int col = r.nextInt(10);
+                    this.previousHit = new Coordinates(false, false, row, col);
+                    Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
+                    game.sendAction(new Fire(this, this.previousHit, playerNum));
+
                 }
-            }
-            if (this.startAlgor == false) {//fire randomly
-                Random r = new Random();
-                sleep(1);
-                int row = r.nextInt(10) + 1;
-                int col = r.nextInt(10) + 1;
-                this.previousHit = new Coordinates(false, false, row, col);
-                Log.i("COMPUTER randomFire", "Fired at " + row + " " + col + ".");
-                game.sendAction(new Fire(this, this.previousHit, playerNum));
             }
 
             if (this.startAlgor == true) { //check cardinal directions
-                Coordinates lastFire = new Coordinates(possibleShip.get(0));
-                int next = 1;
                 //check if coordinates are near the borders
                 if (this.previousHit.getX() == 1 || this.previousHit.getX() == 10 ||
                         this.previousHit.getY() == 1 || this.previousHit.getY() == 10) {
@@ -122,107 +122,75 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                 }
                 boolean hit = false;
 
-                GameBoard playerBoard = new GameBoard(gameState.getBoard(enemyNum));
+                GameBoard playerBoard = gameState.getBoard(enemyNum);
                 int x = previousHit.getX();
                 int y = previousHit.getY();
                 boolean wasHit = playerBoard.getCoordHit(x, y);
+
                 Coordinates[][] coords = playerBoard.getCurrentBoard();
                 //check for successful hit
-                if (coords[x][y].getHasShip() == true && wasHit == true) {
+                if (coords[x - 1][y - 1].getHasShip() == true && wasHit == true) {
                     hit = true;
                 }
-                if (hit == true) {
-                    this.successHits.add(this.previousHit);
-                } else {
+                if (hit == false) {
+                    this.successHits.remove(this.successHits.size() - 1);
                     this.dir++;
-                }
-                boolean hitCoord;
-                if (dir == BattleShipSmartAI.RIGHT) {
-                    this.previousHit = new Coordinates(true, false,
-                            lastFire.getX() + next, lastFire.getY());
-                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    //checks if a coordinate has been fired at and moves coordinate left 1
-                    while (hit == true) {
-                        ++next;
-                        if (lastFire.getX() + next > 10) {
-                            next = 1;
-                            this.dir++;
-                            break;
-                        }
-                        this.previousHit = new Coordinates(true, false,
-                                lastFire.getX() + next, lastFire.getY());
-                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    }
-                    if (hitCoord == false && dir == BattleShipSmartAI.LEFT) {
-                        game.sendAction(new Fire(this, this.previousHit, playerNum));
-                    }
-                }
-                if (this.dir == BattleShipSmartAI.LEFT) {
-                    this.previousHit = new Coordinates(true, false,
-                            lastFire.getX() - next, lastFire.getY());
-                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    while (hit == true) {
-                        ++next;
-                        //checks if a coordinate has been fired at and moves coordinate right 1
-                        if (lastFire.getX() - next < 1) {
-                            next = 1;
-                            this.dir++;
-                            break;
-                        }
-                        this.previousHit = new Coordinates(true, false,
-                                lastFire.getX() - next, lastFire.getY());
-                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    }
-                    if (hitCoord == false && this.dir == BattleShipSmartAI.RIGHT) {
-                        game.sendAction(new Fire(this, this.previousHit, playerNum));
-                    }
-                }
-                if (this.dir == BattleShipSmartAI.UP) {
-                    //adds previous coordinates that are ships next to each other
-                    for (int i = 1; i < this.successHits.size(); i++) {
-                        this.possibleShip.add(successHits.get(i));
-                    }
-                    this.previousHit = new Coordinates(true, false,
-                            lastFire.getX(), lastFire.getY() - next);
-                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    //checks if a coordinate has been fired at and moves coordinate up 1
-                    while (hit == true) {
-                        ++next;
-                        if (lastFire.getY() - next < 1) {
-                            next = 1;
-                            this.dir++;
-                            break;
-                        }
-                        this.previousHit = new Coordinates(true, false,
-                                lastFire.getX(), lastFire.getY() - next);
-                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    }
-                    if (hitCoord == false && this.dir == BattleShipSmartAI.UP) {
-                        game.sendAction(new Fire(this, this.previousHit, playerNum));
-                    }
-                }
-                if (this.dir == BattleShipSmartAI.DOWN) {
-                    this.previousHit = new Coordinates(true, false,
-                            lastFire.getX(), lastFire.getY() + next);
-                    //checks if a coordinate has been fired at and moves coordinate down 1
-                    hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    while (hit == true) {
-                        ++next;
-                        if (lastFire.getY() + next > 10) {
-                            next = 1;
-                            this.dir++;
-                            break;
-                        }
-                        this.previousHit = new Coordinates(true, false,
-                                lastFire.getX(), lastFire.getY() + next);
-                        hitCoord = this.checkIfCoordHit(board, this.previousHit);
-                    }
-                    if (hitCoord == false && this.dir == BattleShipSmartAI.DOWN) {
-                        game.sendAction(new Fire(this, this.previousHit, playerNum));
-                    }
-                }
+                    this.start = 0;
 
+                    if (dir == BattleShipSmartAI.RIGHT) {
+                        if(this.start == 0) {
+                            Coordinates lastFire = this.successHits.get(0);
+                            this.previousHit = new Coordinates(true, false,
+                                    lastFire.getX() + 1, lastFire.getY());
+                            this.start++;
+                        }
+                        Coordinates lastFire = this.successHits.get(this.successHits.size() - 1);
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX() + 1, lastFire.getY());
+                        this.successHits.add(this.previousHit);
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
 
+                    }
+                    if (this.dir == BattleShipSmartAI.LEFT) {
+                        if(this.start == 0) {
+                            Coordinates lastFire = this.successHits.get(0);
+                            this.previousHit = new Coordinates(true, false,
+                                    lastFire.getX() + 1, lastFire.getY());
+                            this.start++;
+                        }
+                        Coordinates lastFire = this.successHits.get(this.successHits.size() - 1);
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX() - 1, lastFire.getY());
+                        this.successHits.add(this.previousHit);
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
+                    }
+                    if (this.dir == BattleShipSmartAI.UP) {
+                        if(this.start == 0) {
+                            Coordinates lastFire = this.successHits.get(0);
+                            this.previousHit = new Coordinates(true, false,
+                                    lastFire.getX() + 1, lastFire.getY());
+                            this.start++;
+                        }
+                        Coordinates lastFire = this.successHits.get(this.successHits.size() - 1);
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX(), lastFire.getY() - 1);
+                        this.successHits.add(this.previousHit);
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
+                    }
+                    if (this.dir == BattleShipSmartAI.DOWN) {
+                        if(this.start == 0) {
+                            Coordinates lastFire = this.successHits.get(0);
+                            this.previousHit = new Coordinates(true, false,
+                                    lastFire.getX() + 1, lastFire.getY());
+                            this.start++;
+                        }
+                        Coordinates lastFire = this.successHits.get(this.successHits.size() - 1);
+                        this.previousHit = new Coordinates(true, false,
+                                lastFire.getX(), lastFire.getY() + 1);
+                        this.successHits.add(this.previousHit);
+                        game.sendAction(new Fire(this, this.previousHit, playerNum));
+                    }
+                }
             }
         }
     }
@@ -267,7 +235,6 @@ public class BattleShipSmartAI extends GameComputerPlayer {
      * @param size - the size of the battleship
      */
     public void setShips(int size) {
-        test++;
         Coordinates[] location;
         Random randGen = new Random();
         final int HORIZONTAL = 0;
@@ -316,7 +283,6 @@ public class BattleShipSmartAI extends GameComputerPlayer {
 
 
         for (int i = 0; i < location.length; i++) {
-            Log.d("location test X", "" + location[i].getX() + " " + location[i].getY() + " test: " + test);
         }
         this.battleship = new BattleshipObj(size, location);
         game.sendAction(new PlaceShip(this, this.battleship, playerNum));
