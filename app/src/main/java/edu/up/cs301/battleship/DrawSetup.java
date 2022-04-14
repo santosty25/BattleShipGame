@@ -687,6 +687,31 @@ public class DrawSetup extends SurfaceView {
         this.invalidate();
     }
 
+    public boolean checkIfShipsAreReset() {
+        float[] shipPos=
+                {fivehpTop, fivehpLeft,
+                        fourhp1Top, fourhp1Left,
+                        fourhp2Top, fourhp2Left,
+                        threehp1Top, threehp1Left,
+                        threehp2Top, threehp2Left,
+                        twohpTop, twohpLeft       };
+
+        float[] shipInitial =
+                {fivehpTopInitial, fivehpLeftInitial,
+                        fourhp1TopInitial, fourhp1LeftInitial,
+                        fourhp2TopInitial, fourhp2LeftInitial,
+                        threehp1TopInitial, threehp1LeftInitial,
+                        threehp2TopInitial, threehp2LeftInitial,
+                        twohpTopInitial, twohpLeftInitial};
+
+
+        for (int i=0; i < shipInitial.length; i++) {
+            if (shipPos[i] == shipInitial[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
