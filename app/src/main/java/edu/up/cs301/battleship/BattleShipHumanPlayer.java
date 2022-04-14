@@ -149,11 +149,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         Button nextButton = activity.findViewById(R.id.confirm_button);
         //setup phase surfaceView object
         SurfaceView gameView = activity.findViewById(R.id.boardView);
-        //Continue button
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Checking if all ships have been placed before going to midgame phase
+                //Checking if all ships have been placed
                 int i, j;
                 //for(i = 0; i < 2; i ++){
                     for(j = 0; j < 6; j++) {
@@ -169,6 +169,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView = activity.findViewById(R.id.boardView);
                 midGameView.setPlayerID(playerNum);
                 midGameView.invalidate();
+                changePhase(1);
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
 
 
@@ -306,7 +307,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             gameView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+
                         int i;
+
                         int shipId = setupView.onTouchEventNew(motionEvent);
                         //Uses the ship id to determine which ship has been tapped
                     int newSize = 0;
@@ -340,6 +343,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             break;
                         }
                     }
+
+                    Log.i("Test Coordinates", "FIND ME HERE" + motionEvent.getX() + ", " + motionEvent.getY());
 
                         selectedBattleShip.setSize(newSize);
                         if (newSize < 0 || newSize >= 6) {
@@ -421,6 +426,48 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     }
 
 
+
+    public void placeShip(BattleshipObj newShip){
+        int i, j;
+        BattleshipObj[][] currentFleet = new BattleshipObj[2][6];
+        for (i = 0;  i < 2; i++) {
+            for (j =0; j < 6; j++){
+                if (currGS.getPlayersFleet()[i][j] != null) {
+                    currentFleet[i][j] = new BattleshipObj(currGS.getPlayersFleet()[i][j]);
+                }
+            }
+        }
+        if(newShip.getSize() == 5) { //Ship of size 5 is placed at index 0
+            Log.i("placing ship size: 0 ", "" + newShip.getSize());
+            currentFleet[0][0] = new BattleshipObj(newShip);
+        }
+        else if(newShip.getSize() == 4){
+            if(newShip.getTwinShip() == 0){
+                //Because there are two ships of the same length we need to identify which is which
+                currentFleet[0][1] = new BattleshipObj(newShip);
+            }
+            else{
+                currentFleet[0][2] = new BattleshipObj(newShip);
+            }
+        }
+        else if(newShip.getSize() == 3){
+            if(newShip.getTwinShip() == 0){
+                currentFleet[0][3] = new BattleshipObj(newShip);
+            }
+            else{
+                currentFleet[0][4] = new BattleshipObj(newShip);
+            }
+        }
+        else if(newShip.getSize() == 2) {
+            currentFleet[0][5] = new BattleshipObj(newShip);
+        }
+        currGS.setPlayersFleet(currentFleet, playerNum);
+    }
+
+
+    public void changePhase(int phase){
+        this.currGS.setPhase(phase);
+    }
     public BattleShipGameState getGS(){
         return this.currGS;
     }
