@@ -439,8 +439,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         }
     }
 
-
-
     public void placeShip(BattleshipObj newShip){
         int i, j;
         BattleshipObj[][] currentFleet = new BattleshipObj[2][6];

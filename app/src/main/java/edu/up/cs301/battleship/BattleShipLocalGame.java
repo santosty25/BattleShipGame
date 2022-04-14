@@ -227,7 +227,7 @@ public class BattleShipLocalGame extends LocalGame {
             return false;
         }
         if (state.canFire(coord)) { //If the coord has NOT already been hit
-            state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
+            state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY() , true); //SET THE COORDINATE TO HIT
             int i, j;
             BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
             for (i = 0; i < shipsOnBoard[enemy].length; i++) {
@@ -239,6 +239,7 @@ public class BattleShipLocalGame extends LocalGame {
                         enemyBoard[coord.getX()][coord.getY()].setHit(true);
                         enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
                         BattleShipMainActivity.explosion.start();
+                        sendAllUpdatedState();
                         state.setPlayersTurn(playerNum);
                         return true;
                     }
@@ -247,6 +248,7 @@ public class BattleShipLocalGame extends LocalGame {
             //DRAW WHITE the player missed
             state.setPlayersTurn(enemy);
             BattleShipMainActivity.splash.start();
+            sendAllUpdatedState();
             return true;
         }
         return false;
