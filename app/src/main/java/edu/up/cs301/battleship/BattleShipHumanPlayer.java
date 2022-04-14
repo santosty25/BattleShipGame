@@ -372,39 +372,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 //                            yUp -= adjustment;
 //                        }
 
-                        Coordinates[] eachShipCoord;
+                        Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
 
                         if (isShipRotated) {
                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
-                                    switch(shipId) {
-                                        case 1: {
-                                            setupView.resetFivehp();
-                                            break;
-                                        }
-                                        case 2: {
-                                            setupView.resetFourhp1();
-                                            break;
-                                        }
-                                        case 3: {
-                                            setupView.resetFourhp2();
-                                            break;
-                                        }
-                                        case 4: {
-                                            setupView.resetThreehp1();
-                                            break;
-                                        }
-                                        case 5: {
-                                            setupView.resetThreehp2();
-                                            break;
-                                        }
-                                        case 6: {
-                                            setupView.resetTwohp();
-                                            break;
-                                        }
-                                    }
                                     return false;
                                 }
                                 eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp, yUp);
@@ -413,36 +387,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             }
                         }
                         else {
-                        eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
+                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int j = 0; j < selectedBattleShip.getSize(); j++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
-                                    switch(shipId) {
-                                        case 1: {
-                                            setupView.resetFivehp();
-                                            break;
-                                        }
-                                        case 2: {
-                                            setupView.resetFourhp1();
-                                            break;
-                                        }
-                                        case 3: {
-                                            setupView.resetFourhp2();
-                                            break;
-                                        }
-                                        case 4: {
-                                            setupView.resetThreehp1();
-                                            break;
-                                        }
-                                        case 5: {
-                                            setupView.resetThreehp2();
-                                            break;
-                                        }
-                                        case 6: {
-                                            setupView.resetTwohp();
-                                            break;
-                                        }
-                                    }
                                     return false;
                                 }
                                 eachShipCoord[j] = currGS.xyToCoordSetupGame(xUp, yUp);
@@ -450,6 +398,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 xUp += 74;
                             }
                         }
+
 //                        if(lastSelectedShip == shipId && shipId != 0){
 //                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
 //                            for(i = 0; i < eachShipCoord.length; i ++){
