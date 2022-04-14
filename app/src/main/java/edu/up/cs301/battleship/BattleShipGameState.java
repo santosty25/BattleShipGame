@@ -310,12 +310,11 @@ public class BattleShipGameState extends GameState implements Serializable {
         //Reads the ships location and sets the Coordinate to hasShip
         for(j = 0; j < 6; j++){
             this.playersFleet[playerNum][j] = new BattleshipObj(fleets[playerNum][j]);
-            this.playersFleet[playerNum][j].getLocation();
             for(i = 0; i < this.playersFleet[playerNum][j].getSize(); i++){
-                int x = playersFleet[playerNum][j].getLocation()[i].getX();
-                int y =  playersFleet[playerNum][j].getLocation()[i].getY();
-                if(x != -1 && y != -1) {
-                    board.setHasShip(x, y, true);
+                    int x = playersFleet[playerNum][j].getLocation()[i].getX();
+                    int y = playersFleet[playerNum][j].getLocation()[i].getY();
+                    if (x != -1 && y != -1) {
+                        board.setHasShip(x, y, true);
                 }
             }
         }
