@@ -146,6 +146,11 @@ public class BattleShipGameState extends GameState implements Serializable {
     public void setCoordHit(int row, int col, boolean isHit, int playerNum) {
         this.playersBoard[playerNum].setCoordHit(row, col, true);
     }
+    public void setHasShip(int row, int col, boolean isHit, int playerNum){
+        this.playersBoard[playerNum].getHasShip(row, col);
+    }
+
+
 
     /**
      * canFire - a method that let's a player fire at a specific coordinate. If it
