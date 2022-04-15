@@ -1,5 +1,4 @@
 package edu.up.cs301.battleship;
-import android.util.Log;
 
 import java.io.Serializable;
 
@@ -33,7 +32,6 @@ public class GameBoard extends Coordinates implements Serializable {
         }
     }
 
-
     /**
      * GameBoard - Copy constructor for the Board object
      * iterates through the list assigning each coordinate with
@@ -49,7 +47,6 @@ public class GameBoard extends Coordinates implements Serializable {
                 this.currentBoard[i][j] = new Coordinates(orig.currentBoard[i][j]);
             }
         }
-//        Log.i("DONE", "DONE");
     }
 
     /**
@@ -73,8 +70,6 @@ public class GameBoard extends Coordinates implements Serializable {
     public boolean getHasShip(int x, int y ){
         return this.currentBoard[x][y].getHasShip();
     }
-
-
 
     /**
      * Checks if the coordinate values passed in has been hit

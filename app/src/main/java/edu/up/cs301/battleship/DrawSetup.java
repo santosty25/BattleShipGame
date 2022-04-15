@@ -574,7 +574,6 @@ public class DrawSetup extends SurfaceView {
             selectedBoardToEnd = 10 - placedCoord.getX();
         }
 
-
         if (selectedBoardToEnd < size) {
             return true;
         }
@@ -731,10 +730,7 @@ public class DrawSetup extends SurfaceView {
         return false;
     }
 
-
-
     public void setPlayerID(int playerID) { this.playerID = playerID;}
-
 
     /**
      * reset____ - sets the corresponding ship to the initial position

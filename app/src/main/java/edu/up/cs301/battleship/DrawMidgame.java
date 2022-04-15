@@ -362,7 +362,6 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
         }
         else {
-
             canvas.drawBitmap(threehp1, threehp1Left, threehp1Top - 7, blackPaint);
         }
 
@@ -380,7 +379,6 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(twohp, twohpLeft, twohpTop - 7, blackPaint);
         }
 
-
         // draw red x over sunk ships
         int check = 0;
         boolean firstSunk = false;
@@ -389,7 +387,6 @@ public class DrawMidgame extends SurfaceView{
             enemy = 1;
         }
         state.getPlayersFleet()[enemy][5].getSunk();
-
 
         // 2HP ship
         if (state.getPlayersFleet()[enemy][5].getSunk()) {

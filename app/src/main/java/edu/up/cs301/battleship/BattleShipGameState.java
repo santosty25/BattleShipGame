@@ -85,7 +85,7 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param copy - A copy of the original BattleShipGameState
      */
     public BattleShipGameState(BattleShipGameState copy) {
-        //change so that certain information doeesn't get sent to a specific player
+        //change so that certain information doesn't get sent to a specific player
         Log.i("COPY", "COPY BEING CREATED");
         this.playerID = new int[2];
 

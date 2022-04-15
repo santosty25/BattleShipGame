@@ -362,36 +362,6 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         return false;
     }
-    /**
-     * setOrientation - This method sets the orientation of the ships and creates an
-     * array of Coordinates
-     * @param orientation - orientation of the ship
-     * @param row - x coord
-     * @param col - y coord
-     * @return the array of Coorinates where the ship is to be placed
-     */
-    public void setOrientation(int orientation, int row, int col, int size) {
-
-        final int HORIZONTAL = 0;
-        //check for orientation and create
-//        if(orientation == HORIZONTAL) {
-//            this.coord1 = new Coordinates (false, true, row, col + 2);
-//            this.coord2 = new Coordinates(false, true, row, col + 1);
-//            this.coord3 = new Coordinates(false, true, row, col);
-//            this.coord4 = new Coordinates(false, true, row, col - 1);
-//            this.coord5 = new Coordinates(false, true, row, col - 2);
-//        }
-//        else {
-//            this.coord1 = new Coordinates (false, true, row + 2, col);
-//            this.coord2 = new Coordinates(false, true, row + 1, col);
-//            this.coord3 = new Coordinates(false, true, row, col);
-//            this.coord4 = new Coordinates(false, true, row - 1, col);
-//            this.coord5 = new Coordinates(false, true, row - 2, col);
-//        }
-
-        //Coordinates[] coords = new Coordinates[]{coord1, coord2, coord3, coord4, coord5};
-        //this.placeShips(coords, size);
-    }
 
     public void placeShips() {
         int i = 0;

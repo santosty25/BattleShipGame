@@ -76,6 +76,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
      * @param color
      * 			the color to flash
      * @param duration
+     *          how long the flash will last
      */
     @Override
     protected void flash(int color, int duration) {
@@ -95,9 +96,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
     }
 
     /**
-     * Recveives game info, updating the gamestate
+     * receiveInfo Recveives game info, updating the gamestate
      * and game views
-     * @param info
+     * @param info - info given to the player
      */
     @Override
     public void receiveInfo(GameInfo info) {
@@ -144,17 +145,14 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             @Override
             public void onClick(View view) {
                 //Checking if all ships have been placed
-                int j;
-                //for(i = 0; i < 2; i ++){
-                    for(j = 0; j < 6; j++) {
-                        if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
-                            return;
-                        }
-                        if (setupView.checkIfShipsAreReset()) {
-                            return;
-                        }
+                for (int j = 0; j < 6; j++) {
+                    if (currGS.getPlayersFleet()[playerNum][j].getSize() == 1) {
+                        return;
                     }
-                //}
+                    if (setupView.checkIfShipsAreReset()) {
+                        return;
+                    }
+                }
                 activity.setContentView(R.layout.midgame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);

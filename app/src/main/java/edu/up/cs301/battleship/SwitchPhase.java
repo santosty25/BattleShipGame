@@ -17,12 +17,13 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  */
 public class SwitchPhase extends GameAction implements Serializable {
 
-    private int playerNum;
+    private int playerNum;//the player number
     private static final long serialVersionUID = 040420021l;
-    private boolean isReady;
+    private boolean isReady; //boolean determining if a player is ready
 
     /**
-     * constructor for GameAction
+     * Constructor that switches the phase
+     * once the player has placed all their ships.
      *
      * @param player the player who created the action
      */

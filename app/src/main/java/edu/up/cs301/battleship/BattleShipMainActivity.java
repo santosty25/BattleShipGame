@@ -1,11 +1,6 @@
 package edu.up.cs301.battleship;
 
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 

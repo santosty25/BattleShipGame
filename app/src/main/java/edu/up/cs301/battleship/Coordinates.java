@@ -19,7 +19,6 @@ public class Coordinates implements Serializable {
 
     private static final long serialVersionUID = 040420023l;
 
-
     /**
      * creates a coordinate object setting its instance variables
      * @param hit
