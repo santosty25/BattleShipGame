@@ -71,6 +71,11 @@ public class GameBoard extends Coordinates implements Serializable {
         this.currentBoard[row][col].setHasShip(hasSHip);
     }
 
+    public boolean getHasShip(int x, int y ){
+        return this.currentBoard[x][y].getHasShip();
+    }
+
+
 
     /**
      * Checks if the coordinate values passed in has been hit
