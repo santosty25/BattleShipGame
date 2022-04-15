@@ -181,6 +181,8 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         return false;
     }
 
+
+
     public boolean checkRight(){
         int nextX = succHits.getX();
         Coordinates rightCoord = new Coordinates(succHits);
@@ -233,6 +235,10 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         return true;
     }
+
+
+
+
 
     /**
      * setShips - This method creates a battleship of a given size and
