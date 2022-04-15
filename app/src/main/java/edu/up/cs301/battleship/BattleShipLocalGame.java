@@ -14,7 +14,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  * @author Austen Furutani
  * @author Keoni Han
  * @author Steven Lee
- * @version 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class BattleShipLocalGame extends LocalGame {
 
@@ -202,56 +202,56 @@ public class BattleShipLocalGame extends LocalGame {
 
 
         /**
-         * Fires at a coordinate specified by the fireAction
+         * * Fires at a coordinate specified by the fireAction
          * Updates gameboard
          * If the hit is successful the player can fire again
          * @param fireAction
          * @param state
          * @return
          */
-        public boolean fire(Fire fireAction, BattleShipGameState state) {
-            Log.i("Firing", "fire: ");
-            Coordinates coord = new Coordinates(fireAction.getCoord());
-            int playerNum = fireAction.getPlayerNum();
-            int enemy;
-            if (playerNum == 0) { //Determines the player and enemy number
-                enemy = 1;
-            } else {
-                enemy = 0;
-            }
-            if(playerNum != state.getPlayersTurn()){
-                return false;
-            }
-            if (state.canFire(coord)) { //If the coord has NOT already been hit
-                state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
-                int i, j;
-                Coordinates[][] enemyBoard = state.getBoard(enemy).getCurrentBoard();
-                BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
-                for (i = 0; i < shipsOnBoard[enemy].length; i++) {
-                    for (j = 0; j < shipsOnBoard[enemy][i].getLocation().length; j++) {//Reads locations of opponents board
-                        if (shipsOnBoard[enemy][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[enemy][i].getLocation()[j].getY() == coord.getY()) {
-                            //Checks if the coordinate sent with the fire action has a ship on it
-                            //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
-                            enemyBoard[coord.getX()][coord.getY()].setHit(true);
-                            enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
-                            BattleShipMainActivity.explosion.start();
-                            Log.i("FIRE", "fire: HIT");
-                            state.setPlayersTurn(playerNum);
-                            sendAllUpdatedState();
-                            return true;
-                        }
-                    }
-                }
-                //DRAW WHITE the player missed
-                Log.i("MISS", "fire: MISS");
-                enemyBoard[coord.getX()][coord.getY()].setHit(true);
-                state.setPlayersTurn(enemy);
-                Log.i("Player turn", "fire: " + state.getPlayersTurn());
-                BattleShipMainActivity.splash.start();
-                sendAllUpdatedState();
-                return true;
-            }
+    public boolean fire(Fire fireAction, BattleShipGameState state) {
+        Log.i("Firing", "fire: ");
+        Coordinates coord = new Coordinates(fireAction.getCoord());
+        int playerNum = fireAction.getPlayerNum();
+        int enemy;
+        if (playerNum == 0) { //Determines the player and enemy number
+            enemy = 1;
+        } else {
+            enemy = 0;
+        }
+        if(playerNum != state.getPlayersTurn()){
             return false;
         }
+        if (state.canFire(coord)) { //If the coord has NOT already been hit
+            state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
+            int i, j;
+            Coordinates[][] enemyBoard = state.getBoard(enemy).getCurrentBoard();
+            BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
+            for (i = 0; i < shipsOnBoard[enemy].length; i++) {
+                for (j = 0; j < shipsOnBoard[enemy][i].getLocation().length; j++) {//Reads locations of opponents board
+                    if (shipsOnBoard[enemy][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[enemy][i].getLocation()[j].getY() == coord.getY()) {
+                        //Checks if the coordinate sent with the fire action has a ship on it
+                        //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                        enemyBoard[coord.getX()][coord.getY()].setHit(true);
+                        enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
+                        BattleShipMainActivity.explosion.start();
+                        Log.i("FIRE", "fire: HIT");
+                        state.setPlayersTurn(playerNum);
+                        sendAllUpdatedState();
+                        return true;
+                    }
+                }
+            }
+            //DRAW WHITE the player missed
+            Log.i("MISS", "fire: MISS");
+            enemyBoard[coord.getX()][coord.getY()].setHit(true);
+            state.setPlayersTurn(enemy);
+            Log.i("Player turn", "fire: " + state.getPlayersTurn());
+            BattleShipMainActivity.splash.start();
+            sendAllUpdatedState();
+            return true;
         }
+        return false;
+    }
+}
 

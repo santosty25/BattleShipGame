@@ -1,7 +1,5 @@
 package edu.up.cs301.battleship;
 
-import android.util.Log;
-
 import java.io.Serializable;
 
 /**
@@ -20,7 +18,6 @@ public class Coordinates implements Serializable {
     private int y; //the y value of the coordinate
 
     private static final long serialVersionUID = 040420023l;
-
 
     /**
      * creates a coordinate object setting its instance variables
@@ -47,7 +44,6 @@ public class Coordinates implements Serializable {
      * @param orig
      */
     public Coordinates(Coordinates orig){
-        //Log.i("Copying ", "Hit: " + orig.hit + " x " + orig.x + " y " + orig.y);
         this.hit = orig.hit;
         this.hasShip = orig.hasShip;
         this.x = orig.x;

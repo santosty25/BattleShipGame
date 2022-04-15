@@ -411,6 +411,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     /**
      * Places ship depending on how many ships the comp has already placed
      */
+
     public void placeShips() {
         Log.i("PLACING SHIP", "ship Num" + shipNum);
         Coordinates[] loc;
