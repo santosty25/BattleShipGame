@@ -25,7 +25,7 @@ import edu.up.cs301.tictactoe.infoMessage.TTTState;
  * @author Austen Furutani
  * @author Tyler Santos
  * @author Steven Lee
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class DrawMidgame extends SurfaceView{
     private Paint blackPaint = new Paint();
@@ -144,9 +144,6 @@ public class DrawMidgame extends SurfaceView{
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
-//        canvas.drawBitmap(whiteMarker, 150.0f, 290.0f, new Paint());
-//        canvas.drawBitmap(redMarker, 490.0f, 290.0f, new Paint());
-//        canvas.drawBitmap(userSelection, 540.0f, 450.0f, new Paint());
         for(TapValues tap : tapValues){
             Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
@@ -156,21 +153,18 @@ public class DrawMidgame extends SurfaceView{
         if(rotFiveHp) {
             fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
         }
-//        fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
 
         fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp1 = Bitmap.createScaledBitmap(fourhp1, 123, 28, false);
         if(rotFourHp1) {
             fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
         }
-        //fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
 
         fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp2 = Bitmap.createScaledBitmap(fourhp2, 123, 25, false);
         if(rotFourHp2) {
             fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
         }
-        //fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
 
         //CREATES 3 hp BS #1
         threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
