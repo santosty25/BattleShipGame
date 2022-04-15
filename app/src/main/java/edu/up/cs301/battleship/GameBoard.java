@@ -59,7 +59,7 @@ public class GameBoard extends Coordinates implements Serializable {
      * @param hit - whether the ship has been hit or not
      */
     public boolean setCoordHit(int row, int col, boolean hit){
-        if(getCoordHit(row, col) == false) {
+        if(this.getCoordHit(row, col) == false) {
             this.currentBoard[row][col].setHit(hit);
             return true;
         }

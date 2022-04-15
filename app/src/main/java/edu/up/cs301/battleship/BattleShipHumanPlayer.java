@@ -1,15 +1,26 @@
 package edu.up.cs301.battleship;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.icu.number.LocalizedNumberFormatter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
+import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
+import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
 import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;
+import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.R;
+import edu.up.cs301.tictactoe.infoMessage.TTTState;
+import edu.up.cs301.tictactoe.views.TTTSurfaceView;
 
 /**
  * BattleShipHumanPlayer - This class represents a human player
@@ -25,10 +36,14 @@ import edu.up.cs301.game.R;
 public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     private GameMainActivity myActivity = null;
+    private boolean switchPhase = false;
     private BattleShipHumanPlayer reference = this;
     protected BattleShipGameState currGS;
     boolean shipIsSelected = false;
     private BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
+
+    private int lastSelectedShip = 0;
+
     //mid game surface view
     private DrawMidgame midGameView;
     private DrawSetup setupView;
@@ -276,7 +291,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 public boolean onTouch(View view, MotionEvent motionEvent) {
 
                         int shipId = setupView.onTouchEventNew(motionEvent);
-                    Log.i("SHIP ID", "onTouch: " + shipId);
+                        //Uses the ship id to determine which ship has been tapped
                     int newSize = 0;
                     boolean isShipRotated = true;
                     switch(shipId) {
@@ -328,11 +343,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if (currGS == null) {//ensure the gamestate has been initialized
                             return false;
                         }
-                        Coordinates sendShipTo = currGS.xyToCoordSetupGame(xUp, yUp);
-                        if (sendShipTo != null) {
-                            Log.i("Selected ship is", "selected ship is size " + newSize);
-                        }
-                        if (currGS.xyToCoordSetupGame(xUp, yUp) == null) {
+                        if(currGS.xyToCoordSetupGame(xUp,yUp) == null){ //checks if coordinate value is valiid
                             return true;
                         }
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];

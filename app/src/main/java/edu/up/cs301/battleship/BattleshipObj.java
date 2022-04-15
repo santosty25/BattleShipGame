@@ -35,11 +35,12 @@ public class BattleshipObj implements Serializable {
         this.twinShip = 0;
         this.sunk = false;
         this.location = new Coordinates[this.size];
-        //Log.i("in battleship", "BEFORE LOOP");
         int i;
         if (location != null) {
-            for (i = 0; i < location.length; i++) {
-                this.location[i] = new Coordinates(location[i]);
+            if(location.length != 0) {
+                for (i = 0; i < location.length; i++) {
+                    this.location[i] = new Coordinates(location[i]);
+                }
             }
         }
     }
@@ -47,7 +48,7 @@ public class BattleshipObj implements Serializable {
     /**
      * BattleshipObj - A copy constructor of a BattleshipObj
      *
-     * @param orig
+     * @param orig - the original battleship object
      */
     public BattleshipObj(BattleshipObj orig) {
         this.size = orig.size;
@@ -58,7 +59,6 @@ public class BattleshipObj implements Serializable {
         for (i = 0; i < orig.location.length; i++) {
             this.location[i] = new Coordinates(orig.location[i]);
         }
-        //Log.i("in BSOBJ", "BattleshipObj: size " + orig.size);
     }
 
     /**

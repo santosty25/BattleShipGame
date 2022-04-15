@@ -21,9 +21,6 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
 public class BattleShipDumbAI extends GameComputerPlayer {
     private int shipNum;
     private BattleShipGameState compGS;
-    private BattleshipObj battleship;
-    private int placeShips;
-
 
     /**
      * Constructor
