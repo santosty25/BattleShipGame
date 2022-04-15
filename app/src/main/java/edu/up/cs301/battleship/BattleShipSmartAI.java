@@ -67,30 +67,21 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         } else {
             enemyNum = 0;
         }
-        //take no action if not my turn
-        if (this.gameState.getPlayersTurn() != playerNum) return;
-        Log.i("COMPUTER PLAYERS TURN", "");
-        if (this.gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
-            int size = 0;
-            if(this.placeShips == 0) {
-                size = 2;
+
+        GameBoard board = new GameBoard(gameState.getBoard(enemyNum));
+
+        //CALLING PLACE SHIPS
+        shipNum = 0;
+        for(int i = 0; i < gameState.getPlayersFleet()[playerNum].length; i++){
+            if(gameState.getPlayersFleet()[playerNum][i].getSize() != 1){
+                shipNum++;
             }
-            else if(this.placeShips == 1 || this.placeShips == 2) {
-                size = 3;
-            }
-            else if(this.placeShips == 3 || this.placeShips == 4) {
-                size = 4;
-            }
-            else if(this.placeShips == 5) {
-                size = 5;
-            }
-            else if(this.placeShips == 6) {
-                game.sendAction(new SwitchPhase(this, playerNum, true));
-            }
-            if(this.placeShips <= 6 && size != 0) {
-                this.setShips(size, gameState);
-            }
-            this.placeShips++;
+        }
+        if(shipNum == 6){
+            game.sendAction(new SwitchPhase(this, playerNum, true));
+        }
+        if (gameState.getPhase() == BattleShipGameState.SETUP_PHASE){
+            placeShip();
         }
         else if(this.gameState.getPhase() == BattleShipGameState.BATTLE_PHASE){
             this.fire();
