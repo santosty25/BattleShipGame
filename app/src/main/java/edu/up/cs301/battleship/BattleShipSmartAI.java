@@ -70,8 +70,8 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         //take no action if not my turn
         if (this.gameState.getPlayersTurn() != playerNum) return;
         Log.i("COMPUTER PLAYERS TURN", "");
-        int size = 0;
         if (this.gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
+            int size = 0;
             if(this.placeShips == 0) {
                 size = 2;
             }
@@ -87,7 +87,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             else if(this.placeShips == 6) {
                 game.sendAction(new SwitchPhase(this, playerNum, true));
             }
-            if(this.placeShips <= 6) {
+            if(this.placeShips <= 6 && size != 0) {
                 this.setShips(size, gameState);
             }
             this.placeShips++;
@@ -338,21 +338,20 @@ public class BattleShipSmartAI extends GameComputerPlayer {
      */
     public boolean checkShip(BattleShipGameState gs, Coordinates[] coords) {
         int shipError = 0;
-        for (int i = 0;  i < 2; i++) {
-            for (int j =0; j < 6; j++){
-                for(int k = 0; k < coords.length; k++) {
-                    if (gs.getPlayersFleet()[i][j] == null) {
-                        continue;
-                    }
-                    else {
-                        for(int l = 0; l < gs.getPlayersFleet()[playerNum][j].getLocation().length; l++)
-                        if(gs.getPlayersFleet()[playerNum][j].getLocation()[l].getX() == coords[k].getX() &&
-                                gs.getPlayersFleet()[playerNum][j].getLocation()[l].getY() == coords[k].getY()){
+
+        for (int j = 0; j < 6; j++) {
+            for (int k = 0; k < coords.length; k++) {
+                if (gs.getPlayersFleet()[playerNum][j] == null) {
+                    continue;
+                } else {
+                    for (int l = 0; l < gs.getPlayersFleet()[playerNum][j].getLocation().length; l++)
+                        if (gs.getPlayersFleet()[playerNum][j].getLocation()[l].getX() == coords[k].getX() &&
+                                gs.getPlayersFleet()[playerNum][j].getLocation()[l].getY() == coords[k].getY()) {
                             return true;
                         }
-                    }
                 }
             }
+
         }
         return false;
     }
