@@ -23,6 +23,7 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
  * @author Steven Lee
  * @version Spring 2022 - 3/31/22
  */
+//push
 public class BattleShipSmartAI extends GameComputerPlayer {
     public static final int RIGHT = 0;
     public static final int LEFT = 1;
