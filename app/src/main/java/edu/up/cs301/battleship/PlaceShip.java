@@ -14,7 +14,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  * @author Austen Furutani
  * @author Tyler Santos
  * @author Steven Lee
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class PlaceShip extends GameAction implements Serializable {
 

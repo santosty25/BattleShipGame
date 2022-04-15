@@ -35,6 +35,7 @@ public class DrawSetup extends SurfaceView {
     public int playerID;
     private Context context;
 
+    // Instance variables for the coordinates that check the original positions so you can reset the position of the ships
     final private float fivehpLeftInitial = 1814.0f;
     final private float fivehpTopInitial = 108.0f;
     final private float fourhp1LeftInitial = 1684.0f;
@@ -48,24 +49,25 @@ public class DrawSetup extends SurfaceView {
     final private float twohpLeftInitial = 1680.0f;
     final private float twohpTopInitial = 807.0f;
 
+    // Instance Variables to set the current ship's location
     Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
-    private float fivehpLeft = 1814.0f;
-    private float fivehpTop = 108.0f;
+    private float fivehpLeft = fivehpLeftInitial;
+    private float fivehpTop = fivehpTopInitial;
     Bitmap fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-    private float fourhp1Left = 1684.0f;
-    private float fourhp1Top = 70.0f;
+    private float fourhp1Left = fourhp1LeftInitial;
+    private float fourhp1Top = fourhp1TopInitial;
     Bitmap fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-    private float fourhp2Left = 1677.0f;
-    private float fourhp2Top = 393.0f;
+    private float fourhp2Left = fourhp2LeftInitial;
+    private float fourhp2Top = fourhp2TopInitial;
     Bitmap threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-    private float threehp1Left = 1828.0f;
-    private float threehp1Top = 500.0f;
+    private float threehp1Left = threehp1LeftInitial;
+    private float threehp1Top = threehp1TopInitial;
     Bitmap threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-    private float threehp2Left = 1830.0f;
-    private float threehp2Top = 760.0f;
+    private float threehp2Left = threehp2LeftInitial;
+    private float threehp2Top = threehp2TopInitial;
     Bitmap twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-    private float twohpLeft = 1680.0f;
-    private float twohpTop = 807.0f;
+    private float twohpLeft = twohpLeftInitial;
+    private float twohpTop = twohpTopInitial;
 
     private int selectedShipId = 0;
     private int selectedShipIdfinal = 0;
@@ -185,6 +187,10 @@ public class DrawSetup extends SurfaceView {
 
         canvas.drawRect(1650.0f, 50.0f, 1900, 1050, orangePaint);
         Coordinates toPlace;
+
+        // Checks to see if the ship is horizontal or vertical
+        // Vertical - 1st if statement
+        // Horizontal - else statement
         if (rotFiveHp) {
             canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
         }
@@ -248,43 +254,13 @@ public class DrawSetup extends SurfaceView {
                 }
             }
         }
-
-//        BattleshipObj[][] playerFleet= state.getPlayersFleet(); // 5 4 4 3 3 2
-//        for (int i = 0; i < playerFleet[playerID].length; i++) {
-//            float xValue;
-//            float yValue;
-//            if(playerFleet[playerID][i].getSize() == 5){
-//                toPlace = playerFleet[playerID][i].getFirstCoord();
-//                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
-//                yValue = state.middleYOfCoord(toPlace) - 25;
-//                Log.i("ID", "onDraw: " + selectedShipId);
-//                if(selectedShipId != 1){
-//                    fivehpLeft = xValue;
-//                    fivehpTop = yValue;
-//                }
-//                canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-//                this.invalidate();
-//            }
-//            else if(playerFleet[playerID][i].getSize() == 4){
-//                toPlace = playerFleet[playerID][i].getFirstCoord();
-//                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
-//                yValue = state.middleYOfCoord(toPlace) - 25;
-//                if(playerFleet[playerID][i].getTwinShip() == 0){
-//                    if(selectedShipId != 2) {
-//                        fourhp1Left = xValue;
-//                        fourhp1Left = yValue;
-//                    }
-//                    canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
-//                }
-//
-//            }
-//
-//        }
     }
 
     public int onTouchEventNew(MotionEvent event) {
-        BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
+
         int newSize = 0;
+        BattleshipObj selectedBattleShip = new BattleshipObj(0, null);
+
         //checks which action is happening
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {  //checks which ship is being selected
@@ -296,7 +272,9 @@ public class DrawSetup extends SurfaceView {
                 break;
             }
             case MotionEvent.ACTION_MOVE:
-                switch(selectedShipId) {   //updates the ships drawn coordinates to the cursor/finger
+                switch(selectedShipId) {
+                    // updates the ships drawn coordinates to the cursor/finger
+                    // (35.0f is the adjustment to move the center of the ship to the user's finger
                     case 1: {
                         fivehpLeft = event.getX() - 35.0f;
                         fivehpTop = event.getY();
@@ -330,12 +308,13 @@ public class DrawSetup extends SurfaceView {
                 }
                 invalidate();
                 break;
-            case MotionEvent.ACTION_UP: { //places it, gets the ship size and sends it back to the human player method
+            case MotionEvent.ACTION_UP: {
+                //places it, gets the ship size and sends it back to the human player method
                 float upXVal = event.getX();
                 float upYVal = event.getY();
                 Coordinates selectedCoord;
 
-                //Rotates ships if tapped on once
+                //Rotates ships if tapped on once and not dragged
                 if (event.getX() == downX && event.getY() == downY) {
                     switch (selectedShipId) {
                         case 1:{
@@ -372,6 +351,12 @@ public class DrawSetup extends SurfaceView {
                 }
 
                 //Checks to see if placement is out of bounds
+
+                // First if-statement checks if it's off the board
+                // second if-statement checks if the part of the ships gets placed out of bounds based on the orientation
+                // third if-statment updates the location coordinates of the
+                // ship and adjusts it based on the inconsistencies of the board grids
+
                 switch(selectedShipId) {
                     case 1: {
                         if (event.getX() < 708.9f || event.getX() > 1462.95f || event.getY() < 185.017f || event.getY() > 927.99f) {
@@ -461,8 +446,6 @@ public class DrawSetup extends SurfaceView {
                                 fourhp2Top = BattleShipGameState.middleYOfCoord(selectedCoord) - 16;
                             }
                             invalidate();
-//                            fourhp2Left = event.getX() - 35.0f;
-//                            fourhp2Top = event.getY();
                         }
                         break;
                     }
@@ -525,8 +508,6 @@ public class DrawSetup extends SurfaceView {
                             }
 
                             invalidate();
-//                            threehp2Left = event.getX() - 35.0f;
-//                            threehp2Top = event.getY();
                         }
                         break;
                     }
@@ -570,6 +551,16 @@ public class DrawSetup extends SurfaceView {
         return selectedShipIdfinal;
     }
 
+
+    /**
+     * checkInitialPlaceOutOfBounds - Checks to see if the coordinate where the user dragged
+     * results in a boat being partially out of bounds
+     * @param size
+     * @param x
+     * @param y
+     * @param rotated
+     * @return true if it's not a valid placement and false if it's valid
+     */
     public static boolean checkInitialPlaceOutOfBounds(int size, float x, float y, boolean rotated) {
         Coordinates placedCoord = BattleShipGameState.xyToCoordSetupGame(x,y);
         int selectedBoardToEnd;
@@ -583,13 +574,28 @@ public class DrawSetup extends SurfaceView {
             selectedBoardToEnd = 10 - placedCoord.getX();
         }
 
-
         if (selectedBoardToEnd < size) {
             return true;
         }
         return false;
     }
 
+    /**
+     * containsWhichShip - Checks to see which ship is tapped based on the coordinates of the tap
+     * passed in as the parameters
+     *
+     * Ship ID's
+     * 1 - FiveHP ship
+     * 2 - FourHP1 ship
+     * 3 - FourHP2 ship
+     * 4 - ThreeHP1 ship
+     * 5 - ThreeHP2 ship
+     * 6 - TwoHP ship
+     *
+     * @param x
+     * @param y
+     * @return returns the ship id based on which ship is selected
+     */
     public int containsWhichShip(float x, float y) {
         // Checks to see if the ship is rotated
         if (rotFiveHp) {
@@ -662,6 +668,11 @@ public class DrawSetup extends SurfaceView {
         }
         return 0;
     }
+
+    /**
+     * checkOverlapping - Checks to see if any ships are overlapping
+     * by checking the gamestate's fleets
+     */
     public void checkOverlapping(){
         BattleshipObj[] fleet = state.getPlayersFleet()[playerID];
         if(fleet[0].getSize() == 1){
@@ -685,11 +696,45 @@ public class DrawSetup extends SurfaceView {
         this.invalidate();
     }
 
+    /**
+     * checkIfShipsAreReset - Checks to see if any of the ships are in
+     * it's initial position to prevent bugs from happening.
+     * (i.e. rotating an already placed ship would tp the
+     * ship back to the initial spot and allow the player to continue to midgame)
+     *
+     * @return returns True if one ship coordinate is the same as the initial and False if all ships are on the board
+     */
+    public boolean checkIfShipsAreReset() {
+        float[] shipPos=
+                {fivehpTop, fivehpLeft,
+                        fourhp1Top, fourhp1Left,
+                        fourhp2Top, fourhp2Left,
+                        threehp1Top, threehp1Left,
+                        threehp2Top, threehp2Left,
+                        twohpTop, twohpLeft       };
+
+        float[] shipInitial =
+                {fivehpTopInitial, fivehpLeftInitial,
+                        fourhp1TopInitial, fourhp1LeftInitial,
+                        fourhp2TopInitial, fourhp2LeftInitial,
+                        threehp1TopInitial, threehp1LeftInitial,
+                        threehp2TopInitial, threehp2LeftInitial,
+                        twohpTopInitial, twohpLeftInitial};
 
 
+        for (int i=0; i < shipInitial.length; i++) {
+            if (shipPos[i] == shipInitial[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void setPlayerID(int playerID) { this.playerID = playerID;}
 
+    /**
+     * reset____ - sets the corresponding ship to the initial position
+     */
     public void resetFivehp() {
         fivehpLeft = fivehpLeftInitial;
         fivehpTop = fivehpTopInitial;

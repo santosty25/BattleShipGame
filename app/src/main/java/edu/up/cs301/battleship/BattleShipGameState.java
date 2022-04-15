@@ -11,7 +11,6 @@ import javax.security.auth.login.LoginException;
 import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
-//import androidx.appcompat.widget.AppCompatRadioButton$InspectionCompanion;
 
 /**
  * BattleShipGameState - Contains the state of a BattleShipGame. Sent by the game
@@ -21,7 +20,7 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  * @author Keoni Han
  * @author Steven Lee
  * @author Tyler Santos
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class BattleShipGameState extends GameState implements Serializable {
     public static final int SETUP_PHASE = 0;
@@ -81,34 +80,12 @@ public class BattleShipGameState extends GameState implements Serializable {
     }
 
     /**
-     * BattleShipGameState - Basic constructor that intializes instance variables
-     * with arguments.
-     * @param playerID - player's ID
-     * @param playersBoard - player's board
-     * @param playersTurn - who's turn it is
-     * @param timer - the timer of the game
-     * @param phase - what phase of the game is it
-     * @param remainingShips - a player's remaining ships
-     * @param playersFleet - a player's fleet of ships
-     */
-    public BattleShipGameState(int[] playerID, GameBoard[] playersBoard, int playersTurn, int timer,
-                               int phase, int remainingShips[], BattleshipObj[][] playersFleet) {
-        this.playerID = playerID;
-        this.playersBoard = playersBoard;
-        this.playersTurn = playersTurn;
-        this.timer = timer;
-        this.phase = phase;
-        this.remainingShips = remainingShips;
-        this.playersFleet = playersFleet;
-    }
-
-    /**
      * BattleShipGameState - A deep copy constructor of the
      * BattleShipGameState
      * @param copy - A copy of the original BattleShipGameState
      */
     public BattleShipGameState(BattleShipGameState copy) {
-        //change so that certain information doeesn't get sent to a specific player
+        //change so that certain information doesn't get sent to a specific player
         Log.i("COPY", "COPY BEING CREATED");
         this.playerID = new int[2];
 
@@ -139,8 +116,6 @@ public class BattleShipGameState extends GameState implements Serializable {
                     Log.i("====================", " ");
             }
         }
-        //Log.i("Test", "after Players fleet for loop");
-
     }
 
     /**
@@ -482,7 +457,6 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public int getPlayerID() { return this.playerID[playersTurn]; }
 
-    //SAVED FOR BETA RELEASE
     /**
      * getTimer - Gets the timer.
      * @return - The timer
@@ -495,7 +469,6 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public int getPhase() { return this.phase; }
 
-    //SAVED FOR BETA RELEASE
     /**
      * getRemainingShips - Gets the number of remaining ships for a specific player.
      * @param playerNum - the player number
@@ -558,7 +531,6 @@ public class BattleShipGameState extends GameState implements Serializable {
         return 2;
     }
 
-    //SAVED FOR BETA RELEASE
     /**
      * setPlayerFleet - updates the number of ships in a player's fleet
      */
@@ -583,37 +555,9 @@ public class BattleShipGameState extends GameState implements Serializable {
         }
 
         //checks who is checking the remaining ships
-
         this.remainingShips[0] = player0fleet;
         this.remainingShips[0] = player1fleet;
 
-    }
-
-    //SAVED FOR BETA RELEASE
-    /**
-     * checkIndividualShip - Checks whether a specific ship has been sunk/
-     * @param shipSize - the size of the ship that is being checked
-     * @param playerNum - the player who is being checked
-     * @return 0 - no ships have been sunk
-     *         1 - a ship of a given size has been sunk
-     *         2 - 2 ships of a given size has been sunk
-     */
-    public int checkIndividualShip (int shipSize, int playerNum) {
-        int size; // the size of the ship
-        int sunk = 0; // the amount of ships of a given size that have been sunk
-        for(int i = 0; i < playersFleet[playerNum].length; i++) {
-            size = playersFleet[playerNum][i].getSize();
-            boolean isSunk = playersFleet[playerNum][i].getSunk();
-            if(size == shipSize) {
-                if(isSunk == true) {
-                    sunk++;
-                }
-            }
-            else {
-                continue;
-            }
-        }
-        return sunk;
     }
 
     /**
@@ -624,24 +568,4 @@ public class BattleShipGameState extends GameState implements Serializable {
         return playersFleet;
     }
 
-    //SAVED FOR BETA RELEASE
-    /**
-     * checkAllShipsSunk - Checks if each coord on a ship has been hit.
-     * @param playerNum
-     * @return true - if all the ships were fully hit
-     *         false - if one of the ships hasn't been fully hit
-     */
-    public boolean checkAllShipsSunk(int playerNum) {
-        int numSunk = 0;
-        for(int i = 0; i < playersFleet.length; i++) {
-            boolean isSunk = playersFleet[playerNum][i].checkIfHit();
-            if(isSunk == false) {
-                numSunk++;
-            }
-        }
-        if(numSunk > 0) {
-            return false;
-        }
-        return true;
-    }
 }

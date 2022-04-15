@@ -14,6 +14,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
  * @author Austen Furutani
  * @author Keoni Han
  * @author Steven Lee
+ * @version Spring 2022 - 4/14/22
  */
 public class Fire extends GameAction implements Serializable {
 

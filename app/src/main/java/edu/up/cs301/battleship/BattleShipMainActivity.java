@@ -1,11 +1,6 @@
 package edu.up.cs301.battleship;
 
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 
@@ -21,15 +16,41 @@ import edu.up.cs301.game.R;
 /**
  * BattleShipMainActivity - Primary activity for a game of Battleship.
  *
+ * Status:
+ * The rules have been implemented into our game. Each player is able to set up their ships
+ * and tap on the screen to fire at a coordinate once confirming their ship placement.If a player
+ * misses the turn wil switch but if the hit was successful, the player gets to go again. When
+ * all the ships of one side are sunk the game will end. If a ship gets sunk,
+ * the ship will be revealed on the right side bar that will mark an "X" on one of the ships
+ * indicating it has been sunk.
+ * All parts of the GUI have been implemented except for the fire button, the pause button, and
+ * the targeting marker. We decided that the player will tap on the screen to fire instead of
+ * confirming it through a button which means that the targeting marker wasn't needed. A pause
+ * button wasn't implemented since we felt it wasn't needed for beta.
+ * The dumb AI places all of its ships on the top left side of the grid and will fire randomly.
+ * The smart AI fires randomly at first and once it detects a hit, it will fire in the
+ * cardinal directions. The smart AI's ship placement is random.
+ * The game does support network play.
+ * The graphics of the game were made to be as appealing as possible.
+ * The game can only be played between a Human Player and an AI Player and a
+ * Human Player with another Human Player through network play.
+ * The GUI allows the player to drag a ship onto the grid which will snap to place
+ * and the player can tap the ship to rotate. If a ship goes out of bounds, it will
+ * be returned to the inventory.
+ *
+ * Features: When playing through network play each player needs to take
+ * turns to place a ship starting with player 0. Don't fire by tapping on the
+ * grid unless both players are on the midgame screen.
+ *
  * @author Tyler Santos
  * @author Austen Furutani
  * @author Keoni Han
  * @author Steven Lee
- * @version Spring 2022 - 3/22/22
+ * @version Spring 2022 - 4/14/22
  */
 public class BattleShipMainActivity extends GameMainActivity {
     //Tag for logging
-    private static final String TAG = "TTTMainActivity";
+    private static final String TAG = "BattleShipMainActivity";
     public static final int PORT_NUMBER = 6785;
     public static MediaPlayer splash;
     public static MediaPlayer place;

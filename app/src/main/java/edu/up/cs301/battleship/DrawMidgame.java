@@ -112,8 +112,6 @@ public class DrawMidgame extends SurfaceView{
         Bitmap remainingShips = BitmapFactory.decodeResource(getResources(), R.drawable.ships);
         remainingShips = Bitmap.createScaledBitmap(remainingShips, 150, 1000, false);
 
-
-
         //When user hits a ship a red marker will be placed
         Bitmap redMarker = BitmapFactory.decodeResource(getResources(), R.drawable.hitmarker);
         redMarker =  Bitmap.createScaledBitmap(redMarker, 300, 250, false);
@@ -128,13 +126,8 @@ public class DrawMidgame extends SurfaceView{
         Bitmap userSelection = BitmapFactory.decodeResource(getResources(), R.drawable.tagetselector);
         userSelection =  Bitmap.createScaledBitmap(userSelection, 200, 150, false);
 
-
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
-
-
-
-
 
         /**
          * Draws everything to surface view, as of now COOR is just giberish and guess work, will work out
@@ -220,9 +213,6 @@ public class DrawMidgame extends SurfaceView{
         else{
             enemyID = 0;
         }
-
-
-
 
         //Draw on enemies board
         GameBoard drawBoard = this.state.getBoard(enemyID);
@@ -372,7 +362,6 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(threehp1, threehp1Left, threehp1Top, blackPaint);
         }
         else {
-
             canvas.drawBitmap(threehp1, threehp1Left, threehp1Top - 7, blackPaint);
         }
 
@@ -390,14 +379,12 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(twohp, twohpLeft, twohpTop - 7, blackPaint);
         }
 
-
-        // draw red x over sunk ships
+        // Draw red x over sunk ships
         int enemy = 0;
         if(playerID == 0){
             enemy = 1;
         }
         state.getPlayersFleet()[enemy][5].getSunk();
-
 
         if (state.getPlayersFleet()[enemy][5].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
@@ -418,7 +405,7 @@ public class DrawMidgame extends SurfaceView{
             canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
         }
 
-            //Draws players board
+        //Draws players board
         GameBoard drawEnemyBoard = this.state.getBoard(playerID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {

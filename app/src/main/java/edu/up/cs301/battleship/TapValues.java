@@ -8,7 +8,7 @@ package edu.up.cs301.battleship;
  * @author Keoni Han
  * @author Tyler Santos
  * @author Steven Lee
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class TapValues {
     private int x;
