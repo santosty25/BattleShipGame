@@ -1,14 +1,7 @@
 package edu.up.cs301.battleship;
 
-import android.app.GameManager;
-import android.graphics.CornerPathEffect;
 import android.util.Log;
-
-import java.io.Serializable;
-
-import javax.security.auth.login.LoginException;
-
-import edu.up.cs301.game.GameFramework.Game;
+import java.io.Serializable;;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 

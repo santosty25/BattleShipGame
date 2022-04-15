@@ -1,6 +1,5 @@
 package edu.up.cs301.battleship;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.Serializable;

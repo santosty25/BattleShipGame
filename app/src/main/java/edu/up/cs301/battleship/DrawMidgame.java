@@ -6,16 +6,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
-import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.R;
-import edu.up.cs301.tictactoe.infoMessage.TTTState;
+
 
 /**
  * DrawMidgame - A SurfaceView class that represents what is drawn during the
