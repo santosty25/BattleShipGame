@@ -118,7 +118,7 @@ public class BattleShipLocalGame extends LocalGame {
                 this.player1Ready = true;
             }
 
-            if(this.player0Ready == true || this.player1Ready == true) {
+            if(this.player0Ready == true && this.player1Ready == true) {
                 state.setPhase(BattleShipGameState.BATTLE_PHASE);
                 sendAllUpdatedState();
             }
