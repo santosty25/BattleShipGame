@@ -174,7 +174,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView.invalidate();
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
                 //Sets the coordinates of the midgame view to the same ones of the setupview then
-                // you need to change and adjust the coords in the drawMidGamePhase
+
+                // Finds out which ships should be rotated which way from the setupView object
+                // and sends it to the midGameView Object
                 midGameView.setRotFiveHp(setupView.getRotFiveHp());
                 midGameView.setRotFourHp1(setupView.getRotFourHp1());
                 midGameView.setRotFourHp2(setupView.getRotFourHp2());
@@ -348,6 +350,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
 
+
+                        // Checks to see which orientation the ship is in and creates a coordinate array from the tap origin
                         if (isShipRotated) {
                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int i = 0; i < selectedBattleShip.getSize(); i++) {
@@ -380,7 +384,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         return true;
                     }
                     shipIsSelected = true;
-
                     return true;
                 }
             });
