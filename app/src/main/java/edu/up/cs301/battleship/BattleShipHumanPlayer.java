@@ -335,13 +335,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         if (currGS.xyToCoordSetupGame(xUp, yUp) == null) {
                             return true;
                         }
-//                        int selectToBoardEnd = 10 - currGS.xyToCoordSetupGame(xUp,yUp).getY();
-//
-//                        if (selectToBoardEnd < newSize) {
-//                            int adjustment = (newSize) * 74;
-//                            yUp -= adjustment;
-//                        }
-
                         Coordinates[] eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
 
                         if (isShipRotated) {
@@ -368,21 +361,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                 xUp += 74;
                             }
                         }
-
-//                        if(lastSelectedShip == shipId && shipId != 0){
-//                            BattleshipObj temp = new BattleshipObj(currGS.getPlayersFleet()[playerNum][shipId - 1]);
-//                            for(i = 0; i < eachShipCoord.length; i ++){
-//                                if (!(eachShipCoord[i].getX() == temp.getLocation()[i].getX() && eachShipCoord[i].getY() == temp.getLocation()[i].getY())){
-//                                    sameLoc = false;
-//                                }
-//                            }
-//                        }
-//                        else{
-//                            lastSelectedShip = shipId;
-//                        }
-//                        if(sameLoc){
-//                            setupView.swapRotFiveHp();
-//                        }
                         selectedBattleShip.setLocation(eachShipCoord);
 
                         if (selectedBattleShip != null) {//sends a placeship action

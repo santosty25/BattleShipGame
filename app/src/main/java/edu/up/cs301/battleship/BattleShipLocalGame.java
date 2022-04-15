@@ -221,7 +221,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
             } else {
                 enemy = 0;
             }
-            if(playerNum != state.getPlayersTurn()){
+            if(playerNum != state.getPlayersTurn() || state.getPhase() != 1){
                 return false;
             }
             if (state.canFire(coord)) { //If the coord has NOT already been hit
