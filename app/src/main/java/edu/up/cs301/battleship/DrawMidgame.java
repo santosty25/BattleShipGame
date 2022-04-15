@@ -392,8 +392,6 @@ public class DrawMidgame extends SurfaceView{
 
 
         // draw red x over sunk ships
-        int check = 0;
-        boolean firstSunk = false;
         int enemy = 0;
         if(playerID == 0){
             enemy = 1;
@@ -401,7 +399,6 @@ public class DrawMidgame extends SurfaceView{
         state.getPlayersFleet()[enemy][5].getSunk();
 
 
-        // 2HP ship
         if (state.getPlayersFleet()[enemy][5].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
         }
