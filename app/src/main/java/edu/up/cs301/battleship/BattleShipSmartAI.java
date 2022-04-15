@@ -48,7 +48,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         super(name);
         this.start = 0;
         this.assumRemainShips = 6;
-        this.placeShips = 1;
+        this.placeShips = 0;
         this.dir = 0;
         this.startAlgor = false;
         this.numTurnsSinceFire = 0;
@@ -67,31 +67,34 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         } else {
             enemyNum = 0;
         }
+        //take no action if not my turn
+        if (this.gameState.getPlayersTurn() != playerNum) return;
         Log.i("COMPUTER PLAYERS TURN", "");
-        this.shipNum = 0;
+        int size = 0;
         if (this.gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
-            for (int i = 0; i < 7; i++) {
-                this.shipNum++;
-                if (this.gameState.getPhase() == BattleShipGameState.SETUP_PHASE) {
-                    if (this.shipNum == 0) {
-                        this.setShips(2, this.gameState);
-                    } else if (this.shipNum == 1 || shipNum == 2) {
-                        this.setShips(3, this.gameState);
-                    } else if (this.shipNum == 3 || shipNum == 4) {
-                        this.setShips(4, this.gameState);
-                    } else if (this.shipNum == 5) {
-                        this.setShips(5, this.gameState);
-                    } else {
-                        game.sendAction(new SwitchPhase(this, playerNum, true));
-                    }
-                }
+            if(this.placeShips == 0) {
+                size = 2;
             }
+            else if(this.placeShips == 1 || this.placeShips == 2) {
+                size = 3;
+            }
+            else if(this.placeShips == 3 || this.placeShips == 4) {
+                size = 4;
+            }
+            else if(this.placeShips == 5) {
+                size = 5;
+            }
+            else if(this.placeShips == 6) {
+                game.sendAction(new SwitchPhase(this, playerNum, true));
+            }
+            if(this.placeShips <= 6) {
+                this.setShips(size, gameState);
+            }
+            this.placeShips++;
         }
         else if(this.gameState.getPhase() == BattleShipGameState.BATTLE_PHASE){
             this.fire();
         }
-        //fires at coordinates randomly
-
     }
 
     public void fire() {
@@ -219,6 +222,10 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
 
     }
+
+    /**
+     * reset - Resets the algorithm so that the AI fires randomly.
+     */
     public void reset() {
         this.assumRemainShips--;
         this.successHits.clear();
@@ -235,8 +242,8 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     public void setShips(int size, BattleShipGameState gs) {
         Coordinates[] location;
         Random randGen = new Random();
-        int randRow = randGen.nextInt(10);
-        int randCol = randGen.nextInt(10);
+        int randRow = randGen.nextInt(10) + 1;
+        int randCol = randGen.nextInt(10) + 1;
         int randOrientation = randGen.nextInt(2);
 
         Coordinates coord1;
@@ -277,26 +284,75 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         else {
             location = new Coordinates[]{coord1, coord2, coord3, coord4, coord5};
         }
+        boolean overlap = this.checkShip(gs, location);
+        while (overlap == true) {
 
-        while (this.checkShip(gs, battleship) == true) {
-            this.setShips(size, gs);
+            randRow = randGen.nextInt(10) + 1;
+            randCol = randGen.nextInt(10) + 1;
+            randOrientation = randGen.nextInt(2);
+
+            //create random x and y coords for ships that doesn't go out of bounds
+            while (randRow < 2 || randRow > 7) {
+                randRow = randGen.nextInt(10);
+            }
+            while (randCol < 2 || randCol > 7) {
+                randCol = randGen.nextInt(10);
+            }
+            if (randOrientation == 0) {
+                coord1 = new Coordinates(false, true, randRow, randCol + 2);
+                coord2 = new Coordinates(false, true, randRow, randCol + 1);
+                coord3 = new Coordinates(false, true, randRow, randCol);
+                coord4 = new Coordinates(false, true, randRow, randCol - 1);
+                coord5 = new Coordinates(false, true, randRow, randCol - 2);
+            } else {
+                coord1 = new Coordinates(false, true, randRow + 2, randCol);
+                coord2 = new Coordinates(false, true, randRow + 1, randCol);
+                coord3 = new Coordinates(false, true, randRow, randCol);
+                coord4 = new Coordinates(false, true, randRow - 1, randCol);
+                coord5 = new Coordinates(false, true, randRow - 2, randCol);
+            }
+            if (size == 2) {
+                location = new Coordinates[]{coord2, coord3};
+            } else if (size == 3) {
+                location = new Coordinates[]{coord2, coord3, coord4};
+            }
+            else if (size == 4) {
+                location = new Coordinates[]{coord1, coord2, coord3, coord4};
+            }
+            else {
+                location = new Coordinates[]{coord1, coord2, coord3, coord4, coord5};
+            }
+            overlap = this.checkShip(gs, location);
         }
 
         this.battleship = new BattleshipObj(size, location);
         game.sendAction(new PlaceShip(this, this.battleship, playerNum));
     }
 
-    public boolean checkShip(BattleShipGameState gs, BattleshipObj ship) {
+    /**
+     * checkShip - Checks if a given ship has the same location as the battleship
+     * that has already been placed on the board.
+     * @param gs - the gamestate
+     * @param coords - the given coordinates
+     * @return true if the ships are overlapping and false if they aren't
+     */
+    public boolean checkShip(BattleShipGameState gs, Coordinates[] coords) {
         int shipError = 0;
         for (int i = 0;  i < 2; i++) {
             for (int j =0; j < 6; j++){
-                if (gs.getPlayersFleet()[i][j] == null) {
-                    shipError++;
+                for(int k = 0; k < coords.length; k++) {
+                    if (gs.getPlayersFleet()[i][j] == null) {
+                        continue;
+                    }
+                    else {
+                        for(int l = 0; l < gs.getPlayersFleet()[playerNum][j].getLocation().length; l++)
+                        if(gs.getPlayersFleet()[playerNum][j].getLocation()[l].getX() == coords[k].getX() &&
+                                gs.getPlayersFleet()[playerNum][j].getLocation()[l].getY() == coords[k].getY()){
+                            return true;
+                        }
+                    }
                 }
             }
-        }
-        if(shipError > 0) {
-            return true;
         }
         return false;
     }
