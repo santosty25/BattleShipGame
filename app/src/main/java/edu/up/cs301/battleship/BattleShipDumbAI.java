@@ -16,11 +16,11 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
  * @author Austen Furutani
  * @author Keoni Han
  * @author Steven Lee
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class BattleShipDumbAI extends GameComputerPlayer {
-    private int shipNum;
-    private BattleShipGameState compGS;
+    private int shipNum; //the number of ships being placed
+    private BattleShipGameState compGS; //the AI's copy of the gamestate
 
     /**
      * Constructor
@@ -31,6 +31,10 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         super(name);
     }
 
+    /**
+     * receiveInfo - Receives a copy of the gamestate and any other information.
+     * @param info - the information being sent to the AI
+     */
     @Override
     protected void receiveInfo(GameInfo info) {
         if (!(info instanceof BattleShipGameState)) {
@@ -54,8 +58,12 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             fireAction();
         }
         Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
-        //sleep(1);
+        sleep(1);
     }
+
+    /**
+     * placeShip - Places ships at the top left corner of the board.
+     */
     public void placeShip(){
         int i = 0;
         Log.i("PLACING SHIP", "ship Num" + shipNum);
@@ -121,6 +129,9 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         game.sendAction(new PlaceShip(this, selectedBattleShip, playerNum));
     }
 
+    /**
+     * fireAction - Fires at a random coordinate.
+     */
     public void fireAction(){
         Random r = new Random();
         int row;

@@ -248,38 +248,6 @@ public class DrawSetup extends SurfaceView {
                 }
             }
         }
-
-//        BattleshipObj[][] playerFleet= state.getPlayersFleet(); // 5 4 4 3 3 2
-//        for (int i = 0; i < playerFleet[playerID].length; i++) {
-//            float xValue;
-//            float yValue;
-//            if(playerFleet[playerID][i].getSize() == 5){
-//                toPlace = playerFleet[playerID][i].getFirstCoord();
-//                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
-//                yValue = state.middleYOfCoord(toPlace) - 25;
-//                Log.i("ID", "onDraw: " + selectedShipId);
-//                if(selectedShipId != 1){
-//                    fivehpLeft = xValue;
-//                    fivehpTop = yValue;
-//                }
-//                canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
-//                this.invalidate();
-//            }
-//            else if(playerFleet[playerID][i].getSize() == 4){
-//                toPlace = playerFleet[playerID][i].getFirstCoord();
-//                xValue = state.middleXOfEnemyBoard(toPlace) + 975;
-//                yValue = state.middleYOfCoord(toPlace) - 25;
-//                if(playerFleet[playerID][i].getTwinShip() == 0){
-//                    if(selectedShipId != 2) {
-//                        fourhp1Left = xValue;
-//                        fourhp1Left = yValue;
-//                    }
-//                    canvas.drawBitmap(fourhp1, fourhp1Left, fourhp1Top, blackPaint);
-//                }
-//
-//            }
-//
-//        }
     }
 
     public int onTouchEventNew(MotionEvent event) {

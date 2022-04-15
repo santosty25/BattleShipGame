@@ -66,7 +66,6 @@ public class GameBoard extends Coordinates implements Serializable {
         return false;
     }
 
-
     public void setHasShip(int row, int col, boolean hasSHip){
         this.currentBoard[row][col].setHasShip(hasSHip);
     }

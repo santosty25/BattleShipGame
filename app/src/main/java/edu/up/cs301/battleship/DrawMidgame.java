@@ -112,8 +112,6 @@ public class DrawMidgame extends SurfaceView{
         Bitmap remainingShips = BitmapFactory.decodeResource(getResources(), R.drawable.ships);
         remainingShips = Bitmap.createScaledBitmap(remainingShips, 150, 1000, false);
 
-
-
         //When user hits a ship a red marker will be placed
         Bitmap redMarker = BitmapFactory.decodeResource(getResources(), R.drawable.hitmarker);
         redMarker =  Bitmap.createScaledBitmap(redMarker, 300, 250, false);
@@ -128,13 +126,8 @@ public class DrawMidgame extends SurfaceView{
         Bitmap userSelection = BitmapFactory.decodeResource(getResources(), R.drawable.tagetselector);
         userSelection =  Bitmap.createScaledBitmap(userSelection, 200, 150, false);
 
-
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
-
-
-
-
 
         /**
          * Draws everything to surface view, as of now COOR is just giberish and guess work, will work out
@@ -220,9 +213,6 @@ public class DrawMidgame extends SurfaceView{
         else{
             enemyID = 0;
         }
-
-
-
 
         //Draw on enemies board
         GameBoard drawBoard = this.state.getBoard(enemyID);
