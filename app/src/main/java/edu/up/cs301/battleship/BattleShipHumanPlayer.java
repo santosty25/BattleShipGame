@@ -105,7 +105,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         if (!(info instanceof BattleShipGameState)) {
             return;
         } else {
-            Log.i("received info", "receiveInfo: NEW INFO ");
             this.reference = this;
             this.currGS = new BattleShipGameState((BattleShipGameState) info);
             int playersTurn = currGS.getPlayersTurn();

@@ -58,7 +58,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             fireAction();
         }
         Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
-        sleep(1);
+        //sleep(1);
     }
 
     /**
@@ -147,7 +147,6 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         if (compGS.getBoard(enemy).getCurrentBoard()[row][col].getHit()){
             fireAction();
         }
-        sleep(2);
         game.sendAction(new Fire(this, fire, playerNum));
 
     }

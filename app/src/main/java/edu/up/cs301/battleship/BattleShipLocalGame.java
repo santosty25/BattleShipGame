@@ -225,15 +225,13 @@ public class BattleShipLocalGame extends LocalGame {
         if (state.canFire(coord)) { //If the coord has NOT already been hit
             state.getBoard(enemy).setCoordHit(coord.getX(), coord.getY(), true); //SET THE COORDINATE TO HIT
             int i, j;
-            Coordinates[][] enemyBoard = state.getBoard(enemy).getCurrentBoard();
             BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
             for (i = 0; i < shipsOnBoard[enemy].length; i++) {
                 for (j = 0; j < shipsOnBoard[enemy][i].getLocation().length; j++) {//Reads locations of opponents board
                     if (shipsOnBoard[enemy][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[enemy][i].getLocation()[j].getY() == coord.getY()) {
                         //Checks if the coordinate sent with the fire action has a ship on it
                         //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
-                        enemyBoard[coord.getX()][coord.getY()].setHit(true);
-                        enemyBoard[coord.getX()][coord.getY()].setHasShip(true);
+                        state.getBoard(enemy).setHasShip(coord.getX(), coord.getY(), true); //Sets the coord to hit
                         BattleShipMainActivity.explosion.start();
                         Log.i("FIRE", "fire: HIT");
                         state.setPlayersTurn(playerNum);
@@ -244,7 +242,6 @@ public class BattleShipLocalGame extends LocalGame {
             }
             //DRAW WHITE the player missed
             Log.i("MISS", "fire: MISS");
-            enemyBoard[coord.getX()][coord.getY()].setHit(true);
             state.setPlayersTurn(enemy);
             Log.i("Player turn", "fire: " + state.getPlayersTurn());
             BattleShipMainActivity.splash.start();
