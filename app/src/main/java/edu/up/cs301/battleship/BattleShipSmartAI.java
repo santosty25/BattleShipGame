@@ -103,7 +103,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         Log.i("COMPUTER FIRING AT ", "fire:" +  fireLoc.getX() + " " + fireLoc.getY());
         this.previousHit = new Coordinates (fireLoc);
-        //sleep(1);
+        //sleep(1); changes
         game.sendAction(new Fire(this, fireLoc, playerNum));
     }
 
