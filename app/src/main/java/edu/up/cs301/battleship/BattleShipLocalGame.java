@@ -230,7 +230,8 @@ public class BattleShipLocalGame extends LocalGame {
                 for (j = 0; j < shipsOnBoard[enemy][i].getLocation().length; j++) {//Reads locations of opponents board
                     if (shipsOnBoard[enemy][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[enemy][i].getLocation()[j].getY() == coord.getY()) {
                         //Checks if the coordinate sent with the fire action has a ship on it
-                        //Draw red marker IT SHOULD STILL BE THE PLAYERS TURN
+                        //Draw red marker
+                        //IT SHOULD STILL BE THE PLAYERS TURN
                         state.getBoard(enemy).setHasShip(coord.getX(), coord.getY(), true); //Sets the coord to hit
                         BattleShipMainActivity.explosion.start();
                         Log.i("FIRE", "fire: HIT");
