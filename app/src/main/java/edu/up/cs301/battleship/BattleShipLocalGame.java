@@ -237,6 +237,7 @@ public class BattleShipLocalGame extends LocalGame {
                         BattleShipMainActivity.explosion.start();
                         Log.i("FIRE", "fire: HIT");
                         state.setPlayersTurn(playerNum);
+                        sendAllUpdatedState();
                         return true;
                     }
                 }
@@ -247,12 +248,10 @@ public class BattleShipLocalGame extends LocalGame {
             state.setPlayersTurn(enemy);
             Log.i("Player turn", "fire: " + state.getPlayersTurn());
             BattleShipMainActivity.splash.start();
+            sendAllUpdatedState();
             return true;
         }
         return false;
     }
 }
-
-
-
 

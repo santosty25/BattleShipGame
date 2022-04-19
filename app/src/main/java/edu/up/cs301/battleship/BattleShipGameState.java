@@ -1,14 +1,7 @@
 package edu.up.cs301.battleship;
 
-import android.app.GameManager;
-import android.graphics.CornerPathEffect;
 import android.util.Log;
-
-import java.io.Serializable;
-
-import javax.security.auth.login.LoginException;
-
-import edu.up.cs301.game.GameFramework.Game;
+import java.io.Serializable;;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 
@@ -117,6 +110,11 @@ public class BattleShipGameState extends GameState implements Serializable {
             }
         }
     }
+    public void setHasShip(int row, int col, boolean isHit, int playerNum){
+        this.playersBoard[playerNum].getHasShip(row, col);
+    }
+
+
 
     /**
      * canFire - a method that let's a player fire at a specific coordinate. If it

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Keoni Han
  * @author Steven Lee
  * @author Tyler Santos
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/14/22
  */
 public class GameBoard extends Coordinates implements Serializable {
     private Coordinates currentBoard[][]; //a Coordinate array representing the board

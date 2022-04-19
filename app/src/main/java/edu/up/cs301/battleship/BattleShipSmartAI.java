@@ -91,80 +91,116 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
     }
 
+    /**
+     * The fire though process for the smart AI
+     * TODO need to rework checks sometimes pauses for unknown reasons
+     * Randomly fires until it finds a direction of a ship
+     *
+     */
     public void fire() {
         if (this.gameState.getPhase() != BattleShipGameState.BATTLE_PHASE) {
             return;
         }
-        Log.i("COMPUTER PLAYERS TURN", "");
         Random r = new Random();
         int row = r.nextInt(10);
         int col = r.nextInt(10);
-        Coordinates fireLoc = new Coordinates(false, false, row, col);
-//        if (this.previousHit != null) {
-//            Log.i("LAST WAS A HIT", "@" + previousHit.getX() + previousHit.getY());
-//            if(checkSuccHit(previousHit)) {
-//                this.succHits = new Coordinates(previousHit);
-//                Log.i("last succ hit", "fire: " + succHits.getX() + " " +  succHits.getY());
-//            }
-//            if(this.succHits != null) {
-//                Log.i("last succ hit", "fire: " + succHits.getX() + " " +  succHits.getY());
-//                if (checkRight() == true) {
-//                    Coordinates rightCoord = new Coordinates(succHits);
-//                    int val = rightCoord.getX() + 1;
-//                    rightCoord.setX(val);
-//                    fireLoc = new Coordinates(rightCoord);
-//                } else if (checkLeft()== true) {
-//                    Coordinates leftCoord = new Coordinates(succHits);
-//                    int val = leftCoord.getX() - 1;
-//                    leftCoord.setX(val);
-//                    fireLoc = new Coordinates(leftCoord);
-//                }
-//                else if(checkUp()== true){
-//                    Coordinates upCoord = new Coordinates(succHits);
-//                    int val = upCoord.getY() + 1;
-//                    upCoord.setX(upCoord.getY() + val);
-//                    fireLoc = new Coordinates(upCoord);
-//                }
-//                else if(checkDown()== true){
-//                    Coordinates downCoord = new Coordinates(succHits);
-//                    int val = downCoord.getY() - 1;
-//                    downCoord.setX(val);
-//                    fireLoc = new Coordinates(downCoord);
-//                }
-//            }
-//        }
-//        if (checkIfMiss(fireLoc)){
-//            fire();
-//        }
+        Coordinates fireLoc = new Coordinates(false, false, row, col); // a random fire coordinate
+        if (this.previousHit != null) { //check if a previous hit exits
+            if(checkSuccHit(previousHit)) { //Checks if last hit hit a battle ship
+                dir = 0;
+                if(succHits != null){
+                    if(succHits.getY() == previousHit.getY()){ //if the two y values are the same then the direction is right to left
+                        dir = 1;
+                    }
+                    else if(succHits.getX() == previousHit.getX()){//if the two x values are teh same than the direction is up to down
+                        dir = 2;
+                    }
+                }
+                this.succHits = new Coordinates(previousHit);
+                Log.i("last succ hit", "fire: " + succHits.getX() + " " +  succHits.getY());
+            }
+            if(this.succHits != null) {
+                Log.i("last succ hit", "fire: " + succHits.getX() + " " +  succHits.getY());
+                if(dir == 0){ //basecase unknown direction
+                    if (checkRight() == true) { //checks if right is a valid move
+                        Coordinates rightCoord = new Coordinates(succHits);
+                        int val = rightCoord.getX() + 1;
+                        rightCoord.setX(val);
+                        fireLoc = new Coordinates(rightCoord);
+                    } else if (checkLeft() == true) { //check if left is a valid move
+                        Coordinates leftCoord = new Coordinates(succHits);
+                        int val = leftCoord.getX() - 1;
+                        leftCoord.setX(val);
+                        fireLoc = new Coordinates(leftCoord);
+                    }
+                    else if (checkDown() == true) { //checks if down is a valid move
+                        Coordinates downCoord = new Coordinates(succHits);
+                        int val = downCoord.getY() - 1;
+                        downCoord.setX(val);
+                        fireLoc = new Coordinates(downCoord);
+                    }
+                    else if (checkUp() == true) { //checks if up is a valid move
+                        Coordinates upCoord = new Coordinates(succHits);
+                        int val = upCoord.getY() + 1;
+                        upCoord.setY(val);
+                        fireLoc = new Coordinates(upCoord);
+                    }
+                    else{//no moves are possible so fire with random
+                        fireLoc = new Coordinates(false, false, row, col);
+                    }
+                }
+                else if(dir == 1) { //ship is facing left to right
+                    if (checkRight() == true) { //is right valid
+                        Coordinates rightCoord = new Coordinates(succHits);
+                        int val = rightCoord.getX() + 1;
+                        rightCoord.setX(val);
+                        fireLoc = new Coordinates(rightCoord);
+                    } else if (checkLeft() == true) { //is left valid
+                        Coordinates leftCoord = new Coordinates(succHits);
+                        int val = leftCoord.getX() - 1;
+                        leftCoord.setX(val);
+                        fireLoc = new Coordinates(leftCoord);
+                    }
+                    else{ //no moves are possible so fire with random
+                        fireLoc = new Coordinates(false, false, row, col);
+                        dir = 2;
+                    }
+                }
+                else if(dir == 2) { //direction is up and down
+                    if (checkDown() == true) { //is down valid?
+                        Coordinates downCoord = new Coordinates(succHits);
+                        int val = downCoord.getY() - 1;
+                        downCoord.setX(val);
+                        fireLoc = new Coordinates(downCoord);
+                    }
+                    else if (checkUp() == true) { // is up valid
+                        Coordinates upCoord = new Coordinates(succHits);
+                        int val = upCoord.getY() + 1;
+                        upCoord.setY(val);
+                        fireLoc = new Coordinates(upCoord);
+                    }
+                    else{//no moves are possible so fire with random
+                        fireLoc = new Coordinates(false, false, row, col);
+                        dir = 1;
+                    }
+                }
+            }
+        }
+        if (checkIfMiss(fireLoc)){
+         fireLoc = new Coordinates(false, false, row, col);
+        }
         Log.i("COMPUTER FIRING AT ", "fire:" +  fireLoc.getX() + " " + fireLoc.getY());
         this.previousHit = new Coordinates (fireLoc);
         //sleep(1);
         game.sendAction(new Fire(this, fireLoc, playerNum));
     }
 
-    /**
-     * reset - Resets the algorithm so that the AI fires randomly.
-     */
-    public void reset() {
-        this.assumRemainShips--;
-        this.successHits.clear();
-        this.startAlgor = false;
-    }
 
     /**
-     * checkIfCoordHit - Checks if the previous fire was a successful hit.
-     *
-     * @param coord - a given coordinate
-     * @return true if the coordinate was a hit
-     * false if the coordinate was a miss
+     * checks if last fire hit a ship
+     * @param coord
+     * @return
      */
-    public boolean checkIfCoordHit(Coordinates coord) {
-        GameBoard board = new GameBoard(this.gameState .getBoard(enemyNum));
-        if (coord != null) {
-            return (board.getCoordHit(coord.getX(), coord.getY()) && board.getHasShip(coord.getX(), coord.getY()));
-        }
-        return false;
-    }
     public boolean checkSuccHit(Coordinates coord){
         GameBoard board = new GameBoard(this.gameState .getBoard(enemyNum));
         if(board.getHasShip(coord.getX(), coord.getY())){
@@ -172,6 +208,12 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         return false;
     }
+
+    /**
+     * checks if a coord has already been fired at
+     * @param coord
+     * @return
+     */
     public boolean checkIfMiss(Coordinates coord) {
         GameBoard board = new GameBoard(this.gameState.getBoard(enemyNum));
         if (coord != null) {
@@ -182,7 +224,11 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     }
 
 
-
+    /**
+     * The following 4 methods are the same, just different directions
+     * Check if direction is a valid move, if it is it returns true
+     * @return
+     */
     public boolean checkRight(){
         int nextX = succHits.getX();
         Coordinates rightCoord = new Coordinates(succHits);
@@ -190,7 +236,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             return false;
         }
         rightCoord.setX(nextX + 1);
-        if(checkIfMiss(rightCoord)){
+        if(checkIfMiss(rightCoord) == true ){
             Log.i("SHIP ALREADY HIT", "checkRight: SHIP ALREADY HIT");
             return false;
         }
@@ -203,21 +249,20 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             return false;
         }
         leftCoord.setX(nextX - 1);
-        if(checkIfMiss(leftCoord)){
+        if(checkIfMiss(leftCoord) == true ){
             Log.i("SHIP ALREADY HIT", "checkLeft: SHIP ALREADY HIT");
             return false;
         }
         return true;
     }
     public boolean checkUp(){
-        int nextY = succHits.getY() + 1;
+        int nextY = succHits.getY();
         Coordinates upCoord = new Coordinates(succHits);
-        if(nextY > 9){
+        if(nextY >= 9){
             return false;
         }
-        upCoord.setX(nextY);
-        if(checkIfMiss(upCoord)){
-            Log.i("SHIP ALREADY HIT", "checkUp: SHIP ALREADY HIT");
+        upCoord.setY(nextY + 1);
+        if(checkIfMiss(upCoord) == true){
             return false;
         }
         return true;
@@ -229,7 +274,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             return false;
         }
         downCoord.setX(nextY - 1);
-        if(checkIfMiss(downCoord)){
+        if(checkIfMiss(downCoord) == true){
             Log.i("SHIP ALREADY HIT", "CheckDown: SHIP ALREADY HIT");
             return false;
         }
@@ -363,8 +408,11 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         return false;
     }
 
+    /**
+     * Places ship depending on how many ships the comp has already placed
+     */
+
     public void placeShips() {
-        int i = 0;
         Log.i("PLACING SHIP", "ship Num" + shipNum);
         Coordinates[] loc;
         Coordinates[] temp = new Coordinates[1];

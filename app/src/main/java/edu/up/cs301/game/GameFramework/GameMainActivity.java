@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -205,6 +207,17 @@ public abstract class GameMainActivity extends Activity implements
         }else {
             Logger.setDebugValue(false);
         }
+
+//        Button howToPlay = findViewById(R.id.howToPlay);
+//
+//        howToPlay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                setContentView(R.layout.how_to_play_screen);
+//            }
+//            });
+
+
     }// onCreate
 
     /**
@@ -506,6 +519,9 @@ public abstract class GameMainActivity extends Activity implements
         v = findViewById(R.id.debugLogging);
         v.setOnClickListener(this);
 
+        v = findViewById(R.id.howToPlay);
+        v.setOnClickListener(this);
+
 
         String ipCode = IPCoder.encodeLocalIP();
         String ipAddress = IPCoder.getLocalIpAddress();
@@ -624,6 +640,17 @@ public abstract class GameMainActivity extends Activity implements
                 Logger.setDebugValue(false);
             }
         }
+        else if(button.getId() == R.id.howToPlay) {
+            setContentView(R.layout.how_to_play_screen);
+            View v = findViewById(R.id.back_button);
+            v.setOnClickListener(this);
+        }
+//        else if(button.getId() == R.id.back_button) {
+//            setContentView(R.layout.game_config_main);
+//            justStarted = true;
+//            doingConfiguration = true;
+//        }
+
 
     }// onClick
 

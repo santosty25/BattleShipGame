@@ -52,9 +52,9 @@ public class BattleShipMainActivity extends GameMainActivity {
     //Tag for logging
     private static final String TAG = "BattleShipMainActivity";
     public static final int PORT_NUMBER = 6785;
-    public static MediaPlayer splash;
-    public static MediaPlayer place;
-    public static MediaPlayer explosion;
+    public static MediaPlayer splash; //sound effect for missing
+    public static MediaPlayer place; //sound effect for ship placement
+    public static MediaPlayer explosion; //sound effect for hitting a ship
     public static String player0Name;
     public static String player1Name;
 
