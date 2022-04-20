@@ -27,6 +27,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     private BattleshipObj battleship;
     private BattleShipGameState gameState;
     private int shipNum;
+    public static int AvoidLoop;
     private int dir;
     private Coordinates previousHit;
     private Coordinates succHits;
@@ -36,6 +37,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     public BattleShipSmartAI(String name) {
         super(name);
         this.dir = 0;
+        AvoidLoop = 0;
     }
 
 
@@ -101,8 +103,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             }
         }
         Log.i("COMPUTER FIRING AT ", "fire:" +  fireLoc.getX() + " " + fireLoc.getY());
-        this.previousHit = new Coordinates (fireLoc);
-        //sleep(1); changes
+        this.previousHit = new Coordinates(fireLoc);
         game.sendAction(new Fire(this, fireLoc, playerNum));
     }
 
@@ -114,6 +115,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
      * @return Coordinate to be fired at
      */
     public Coordinates nextFire(){ //fires
+        AvoidLoop++;
         Random r = new Random();
         int row = r.nextInt(10);
         int col = r.nextInt(10);
@@ -123,6 +125,10 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             }
         }
         Coordinates fireLoc = new Coordinates(false, false, row, col);
+        if(AvoidLoop >= 100){
+            AvoidLoop = 0;
+            return(fireLoc);
+        }
         if(dir == 0){ //basecase unknown direction
             if (checkRight()) { //checks if right is a valid move
                 Coordinates rightCoord = new Coordinates(succHits);
@@ -170,17 +176,17 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             }
         }
         else if(dir == 2){
-            if (checkDown()) { //checks if down is a valid move
-                Coordinates downCoord = new Coordinates(succHits);
-                int val = succHits.getY() + 1;
-                downCoord.setY(val);
-                fireLoc = new Coordinates(downCoord);
-            }
-            else if (checkUp()) { //checks if up is a valid move
+            if (checkUp()) { //checks if up is a valid move
                 Coordinates upCoord = new Coordinates(succHits);
                 int val = succHits.getY() - 1;
                 upCoord.setY(val);
                 fireLoc = new Coordinates(upCoord);
+            }
+            else if (checkDown()) { //checks if down is a valid move
+                Coordinates downCoord = new Coordinates(succHits);
+                int val = succHits.getY() + 1;
+                downCoord.setY(val);
+                fireLoc = new Coordinates(downCoord);
             }
             else{
                 dir = 0; //reset dir to be 0
