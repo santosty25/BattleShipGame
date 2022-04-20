@@ -43,7 +43,6 @@ public class GameBoard extends Coordinates implements Serializable {
         this.currentBoard = new Coordinates[10][10];
         for (i = 0; i < 10; i++){
             for(j = 0; j < 10; j++){
-                //Log.i("COPY", "GameBoard: " + i + " " + j);
                 this.currentBoard[i][j] = new Coordinates(orig.currentBoard[i][j]);
             }
         }
@@ -56,15 +55,12 @@ public class GameBoard extends Coordinates implements Serializable {
      * @param hit - whether the ship has been hit or not
      */
     public boolean setCoordHit(int row, int col, boolean hit){
-        if(this.getCoordHit(row, col) == false) {
-            this.currentBoard[row][col].setHit(hit);
-            return true;
-        }
-        return false;
+        this.currentBoard[row][col].setHit(hit);
+        return true;
     }
 
-    public void setHasShip(int row, int col, boolean hasSHip){
-        this.currentBoard[row][col].setHasShip(hasSHip);
+    public void setHasShip(int row, int col, boolean hasShip){
+        this.currentBoard[row][col].setHasShip(hasShip);
     }
 
     public boolean getHasShip(int x, int y ){
