@@ -494,7 +494,7 @@ public class DrawMidgame implements Animator {
             canvas.drawBitmap(xSink, 1825.0f, 110.0f, blackPaint);
         }
 
-        //Draws players board
+        // Draws players board
         GameBoard drawEnemyBoard = this.state.getBoard(playerID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {

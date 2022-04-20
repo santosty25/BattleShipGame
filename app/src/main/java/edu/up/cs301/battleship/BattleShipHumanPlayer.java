@@ -207,11 +207,16 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         setupView.setPlayerID(playerNum);
 
 
+
+
         /** On Touch for setupphase*/
         if (shipIsSelected == false) {
             gameView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if(currGS.getPlayersTurn() != playerNum){
+                        return true;
+                    }
 
                     int shipId = setupView.onTouchEventNew(motionEvent);
                     //Uses the ship id to determine which ship has been tapped
