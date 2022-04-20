@@ -79,34 +79,36 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public BattleShipGameState(BattleShipGameState copy) {
         //change so that certain information doesn't get sent to a specific player
-        Log.i("COPY", "COPY BEING CREATED");
-        this.playerID = new int[2];
+        if (copy != null) {
+            Log.i("COPY", "COPY BEING CREATED");
+            this.playerID = new int[2];
 
-        for(int k = 0; k < 2; k++){
-            this.playerID[k] = copy.playerID[k];
-        }
-        this.playersBoard = new GameBoard[2];
-        for(int l = 0; l < 2; l++) {
-            this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
-        }
-        this.playersTurn = copy.playersTurn;
-        this.timer = copy.timer;
-        this.phase = copy.phase;
-        this.remainingShips = copy.remainingShips;
-        this.playersFleet = new BattleshipObj[2][6];
+            for (int k = 0; k < 2; k++) {
+                this.playerID[k] = copy.playerID[k];
+            }
+            this.playersBoard = new GameBoard[2];
+            for (int l = 0; l < 2; l++) {
+                this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
+            }
+            this.playersTurn = copy.playersTurn;
+            this.timer = copy.timer;
+            this.phase = copy.phase;
+            this.remainingShips = copy.remainingShips;
+            this.playersFleet = new BattleshipObj[2][6];
 
-        int i, j;
-        //Log.i("Test", "before Players fleet for loop");
-        for (i = 0;  i < 2; i++) {
-            for (j = 0; j < 6; j++){
-                this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
+            int i, j;
+            //Log.i("Test", "before Players fleet for loop");
+            for (i = 0; i < 2; i++) {
+                for (j = 0; j < 6; j++) {
+                    this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
                     //Log.i("SHIP INFO", "Length " + this.playersFleet[i][j].getSize());
                     Coordinates[] arrayTest = this.playersFleet[i][j].getLocation();
                     int k;
-                    for(k = 0; k < arrayTest.length; k++){
-                       // Log.i("coordinates", "" + arrayTest[k].getX() + " " + arrayTest[k].getY());
+                    for (k = 0; k < arrayTest.length; k++) {
+                        // Log.i("coordinates", "" + arrayTest[k].getX() + " " + arrayTest[k].getY());
                     }
                     //Log.i("====================", " ");
+                }
             }
         }
     }

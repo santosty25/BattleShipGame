@@ -1,5 +1,7 @@
 package edu.up.cs301.battleship;
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,10 +10,15 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.GameFramework.animation.Animator;
 import edu.up.cs301.game.R;
 
 
@@ -25,35 +32,56 @@ import edu.up.cs301.game.R;
  * @author Steven Lee
  * @version Spring 2022 - 4/14/22
  */
-public class DrawMidgame extends SurfaceView{
+public class DrawMidgame implements Animator {
     private Paint blackPaint = new Paint();
-    private Context context;
+    private Paint clear = new Paint();
     public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
+    private int count = 0;
     public int playerID;
 
-    protected BattleShipGameState state;
+    protected BattleShipGameState state = new BattleShipGameState();
     protected int flashColor = Color.BLACK;
+    protected Resources resources = null;
 
-    Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
+    Bitmap fivehp = null;
     private float fivehpLeft = 1814.0f;
     private float fivehpTop = 108.0f;
-    Bitmap fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+    Bitmap fourhp1 = null;
     private float fourhp1Left = 1684.0f;
     private float fourhp1Top = 70.0f;
-    Bitmap fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+    Bitmap fourhp2 = null;
     private float fourhp2Left = 1677.0f;
     private float fourhp2Top = 393.0f;
-    Bitmap threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+    Bitmap threehp1 = null;
     private float threehp1Left = 1828.0f;
     private float threehp1Top = 500.0f;
-    Bitmap threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+    Bitmap threehp2 = null;
     private float threehp2Left = 1830.0f;
     private float threehp2Top = 760.0f;
-    Bitmap twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
+    Bitmap twohp = null;
     private float twohpLeft = 1680.0f;
     private float twohpTop = 807.0f;
-    Bitmap xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
+    Bitmap xSink = null;
+    Bitmap background = null;
+    Bitmap grid = null;
+    Bitmap remainingShips = null;
+    Bitmap redMarker = null;
+    Bitmap whiteMarker = null;
+    Bitmap userSelection = null;
+    Bitmap enemyRedMarker = null;
+    Bitmap enemyWhiteMarker = null;
+    Bitmap playersGrid = null;
+    Bitmap missile = null;
 
+    private boolean willDraw;
+
+
+    private Activity activity;
+    private TextView xCoord;
+    private TextView yCoord;
+    private int playerNum;
+    private BattleShipLocalGame game;
+    private BattleShipHumanPlayer reference;
 
     private boolean rotFiveHp = true;
     private boolean rotFourHp1 = true;
@@ -62,68 +90,124 @@ public class DrawMidgame extends SurfaceView{
     private boolean rotThreeHp2 = true;
     private boolean rotTwoHP = true;
 
+    private float xTouch;
 
 
-    public DrawMidgame(Context context) {//default constructor,
-        super(context);
-        initPaints();
-        setWillNotDraw(false);//sets visible
-    }
+    public DrawMidgame(Activity activity, BattleShipHumanPlayer player) {
+        //init instance variables for on touch
+        this.activity = activity;
+        this.reference = player;
+        this.resources = this.activity.getResources();
+        this.xCoord = this.activity.findViewById(R.id.textView);
+        this.yCoord = this.activity.findViewById(R.id.textView2);
+        this.playerNum = player.getPlayerNum();
+        this.game = player.getGame();
+        //init bitmaps
+        fivehp = BitmapFactory.decodeResource(this.resources, R.drawable.fivehpbs);
+        fourhp1 = BitmapFactory.decodeResource(this.resources, R.drawable.fourhpbs);
+        fourhp2 = BitmapFactory.decodeResource(this.resources, R.drawable.fourhpbs);
+        threehp1 = BitmapFactory.decodeResource(this.resources, R.drawable.threehpbs);
+        threehp2 = BitmapFactory.decodeResource(this.resources, R.drawable.threehpbs);
+        twohp = BitmapFactory.decodeResource(this.resources, R.drawable.twohpbs);
+        xSink = BitmapFactory.decodeResource(this.resources, R.drawable.red_cross);
+        background = BitmapFactory.decodeResource(this.resources, R.drawable.battleshipbackground);
+        grid = BitmapFactory.decodeResource(this.resources, R.drawable.updatedgrid);
+        remainingShips = BitmapFactory.decodeResource(this.resources, R.drawable.ships);
+        redMarker = BitmapFactory.decodeResource(this.resources, R.drawable.hitmarker);
+        whiteMarker = BitmapFactory.decodeResource(this.resources, R.drawable.missmarker);
+        userSelection = BitmapFactory.decodeResource(this.resources, R.drawable.tagetselector);
 
-    public DrawMidgame(Context context, AttributeSet attirs){
-        super(context, attirs);
-        initPaints();
-        setWillNotDraw(false);//sets visible
-    }
-
-    public DrawMidgame(Context context, AttributeSet attirs, int defStyle){
-        super(context, attirs, defStyle);
-        initPaints();
-        setWillNotDraw(false);//sets visible
-    }
-
-    private void initPaints(){
-        this.blackPaint.setColor(0xFF00FF00);
-        this.blackPaint.setStyle(Paint.Style.FILL);
-    }
-
-    public void setState(BattleShipGameState state) {
-        this.state = new BattleShipGameState(state);
-    }
-
-    public void setFlashColor(int color) {
-        this.flashColor = color;
-    }
-
-    @Override
-    public void onDraw(Canvas canvas){
-        super.onDraw(canvas);
-
-        Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.battleshipbackground);
-        background = Bitmap.createScaledBitmap(background, getWidth(), getHeight(), false);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(270);
+        missile = BitmapFactory.decodeResource(this.resources, R.drawable.missile);
+        missile = Bitmap.createScaledBitmap(missile,  216, 60, false);
+        missile = Bitmap.createBitmap(missile, 0, 0 , missile.getWidth(), missile.getHeight(),
+                matrix, true);
 
         //Draws the board for the use will use to select and play their move
-        Bitmap grid = BitmapFactory.decodeResource(getResources(), R.drawable.updatedgrid);
         grid =  Bitmap.createScaledBitmap(grid, 1000, 1000, false);
-        Bitmap playersGrid =  Bitmap.createScaledBitmap(grid, 400, 400, false);
+        playersGrid =  Bitmap.createScaledBitmap(grid, 400, 400, false);
 
-        Bitmap remainingShips = BitmapFactory.decodeResource(getResources(), R.drawable.ships);
         remainingShips = Bitmap.createScaledBitmap(remainingShips, 150, 1000, false);
 
         //When user hits a ship a red marker will be placed
-        Bitmap redMarker = BitmapFactory.decodeResource(getResources(), R.drawable.hitmarker);
         redMarker =  Bitmap.createScaledBitmap(redMarker, 300, 250, false);
-        Bitmap enemyRedMarker = Bitmap.createScaledBitmap(redMarker, 100, 83, false);
+        enemyRedMarker = Bitmap.createScaledBitmap(redMarker, 100, 83, false);
 
         //A missed shot will be indicated with a white marker
-        Bitmap whiteMarker = BitmapFactory.decodeResource(getResources(), R.drawable.missmarker);
         whiteMarker =  Bitmap.createScaledBitmap(whiteMarker, 300, 250, false);
-        Bitmap enemyWhiteMarker =  Bitmap.createScaledBitmap(whiteMarker, 100, 83, false);
+        enemyWhiteMarker =  Bitmap.createScaledBitmap(whiteMarker, 100, 83, false);
 
         //When the user selects their move the COOR will be identified with a target
-        Bitmap userSelection = BitmapFactory.decodeResource(getResources(), R.drawable.tagetselector);
         userSelection =  Bitmap.createScaledBitmap(userSelection, 200, 150, false);
 
+        //creates bitmap for x on sidebar ships
+        xSink = Bitmap.createScaledBitmap(xSink, 100, 100, false);
+
+
+
+        this.blackPaint.setColor(0xFF00FF00);
+        this.blackPaint.setStyle(Paint.Style.FILL);
+        this.clear.setColor(0x00000000);
+        this.clear.setStyle(Paint.Style.STROKE);
+    }
+
+    /**
+     * The time interval (in milliseconds) between animation frames. Thus, for
+     * example, to draw a frame 20 times per second, you would return 50. This
+     * method is called once at the beginning of the animation, so changing the
+     * value during the animation will have no effect.
+     *
+     * @return the time interval (in milliseconds) between calls to this class'
+     *         "tick" method.
+     */
+    public int interval() {
+        return 30;
+    }
+
+    /**
+     * The background color with which to paint the canvas before the animation
+     * frame is drawn. This method is called at each tick, so the background
+     * color can change dynamically by having this method return different
+     * values.
+     *
+     * @return the desired background color
+     */
+    public int backgroundColor() {
+        return Color.TRANSPARENT;
+    }
+
+    /**
+     * Tells whether the animation should be paused.
+     *
+     * @return a true/false value that says whether the animation should be
+     *         paused.
+     */
+    public boolean doPause() {
+        return false;
+    }
+
+    /**
+     * Tells whether the animation should be stopped.
+     *
+     * @return true/false value that tells whether to terminate the animation.
+     */
+    public boolean doQuit() {
+        return false;
+    }
+
+    /**
+     * Called once every clock tick (frequency specified by the "interval"
+     * method) to draw the next animation-frame. Typically this is used to
+     * update the animation's data to reflect the passage of time (e.g., to
+     * modify an instance variable that gives the position of an object) before
+     * the frame is drawn.
+     *
+     * @param canvas
+     *            the Canvas object on which to draw the animation-frame.
+     */
+    public void tick(Canvas canvas){
+        background = Bitmap.createScaledBitmap(background, canvas.getWidth(), canvas.getHeight(), false);
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
 
@@ -137,7 +221,7 @@ public class DrawMidgame extends SurfaceView{
         else {
             Paint tempPaint = new Paint();
             tempPaint.setColor(this.flashColor);
-            canvas.drawRect(0.0f, 0.0f, getWidth(), getHeight(), tempPaint);
+            canvas.drawRect(0.0f, 0.0f, canvas.getWidth(), canvas.getHeight(), tempPaint);
         }
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
@@ -146,26 +230,26 @@ public class DrawMidgame extends SurfaceView{
             Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
         }
-        fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
+        //fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
         fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
         if(rotFiveHp) {
             fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
         }
 
-        fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+        //fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp1 = Bitmap.createScaledBitmap(fourhp1, 123, 28, false);
         if(rotFourHp1) {
             fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
         }
 
-        fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
+        //fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
         fourhp2 = Bitmap.createScaledBitmap(fourhp2, 123, 25, false);
         if(rotFourHp2) {
             fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
         }
 
         //CREATES 3 hp BS #1
-        threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+        //threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
         threehp1 = Bitmap.createScaledBitmap(threehp1, 94, 24, false);
         if(rotThreeHp1) {
             threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
@@ -173,7 +257,7 @@ public class DrawMidgame extends SurfaceView{
         // threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
 
         //CREATES 3 hp BS #2
-        threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
+        //threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
         threehp2 = Bitmap.createScaledBitmap(threehp2, 94, 24, false);
         if(rotThreeHp2) {
             threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
@@ -181,7 +265,7 @@ public class DrawMidgame extends SurfaceView{
         // threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
 
         //CREATES 2 hp BS
-        twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
+        //twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
         twohp = Bitmap.createScaledBitmap(twohp, 61, 24, false);
         if(rotTwoHP) {
             twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
@@ -189,8 +273,8 @@ public class DrawMidgame extends SurfaceView{
         // twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
 
         //CREATES RED HIT MARKER
-        xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
-        xSink = Bitmap.createScaledBitmap(xSink, 100, 100, false);
+        //xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
+
 
 
         if (state == null) {
@@ -207,6 +291,8 @@ public class DrawMidgame extends SurfaceView{
         }
 
         //Draw on enemies board
+        float xVal = 0;
+        float yVal = 0;
         GameBoard drawBoard = this.state.getBoard(enemyID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
@@ -215,17 +301,28 @@ public class DrawMidgame extends SurfaceView{
                     Coordinates[][] board = drawBoard.getCurrentBoard();
                     float xDrift = 1.5f * (float)row;
                     float yDrift = 0.7f * (float)col;
-                    float yVal = state.middleYOfCoord(board[row][col]) - (195.0f - yDrift) ;
-                    float xVal = state.middleXOfCoord(board[row][col]) - (226.0f - xDrift);
+                    yVal = state.middleYOfCoord(board[row][col]) - (195.0f - yDrift) ;
+                    xVal = state.middleXOfCoord(board[row][col]) - (226.0f - xDrift);
                     if(board[row][col].getHasShip()){
                         canvas.drawBitmap(redMarker, xVal, yVal,blackPaint);
                     }
                     else {
                         canvas.drawBitmap(whiteMarker, xVal, yVal, blackPaint);
                     }
-                    this.invalidate();
+
                 }
             }
+        }
+
+
+        if((float)count < yVal && this.willDraw == true) {
+            canvas.drawBitmap(missile, this.xTouch, count, blackPaint);
+            this.count+=15;
+        }
+        else if ((float)count > yVal) {
+            this.willDraw = false;
+            doQuit();
+            this.count = 0;
         }
 
         /**Draw on your board
@@ -406,69 +503,131 @@ public class DrawMidgame extends SurfaceView{
                     Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
                     float xDrift =  1.8f * (float)row;
                     float yDrift =  1.75f * (float)col;
-                    float yVal = state.middleYOfEnemyBoard(board[row][col])  - (75 + yDrift);
-                    float xVal = state.middleXOfEnemyBoard(board[row][col]) - (82 + xDrift);
+                    yVal = state.middleYOfEnemyBoard(board[row][col])  - (75 + yDrift);
+                    xVal = state.middleXOfEnemyBoard(board[row][col]) - (82 + xDrift);
                     if(board[row][col].getHasShip()){
                         canvas.drawBitmap(enemyRedMarker, xVal, yVal, blackPaint);
                     }
                     else {
                         canvas.drawBitmap(enemyWhiteMarker, xVal, yVal, blackPaint);
                     }
-                    this.invalidate();
                 }
             }
         }
     }
 
+    /**
+     * Called whenever the user touches the AnimationSurface so that the
+     * animation can respond to the event.
+     *
+     * @param motionEvent a MotionEvent describing the touch
+     */
+    public void onTouch(MotionEvent motionEvent) {
+        this.willDraw = true;
+        float xC = motionEvent.getX();
+        float yC = motionEvent.getY();
+        String letter = "";
+        boolean inBounds = true;
+        if(xC >= 710 && xC <= 1460) {
+            this.setXTouch(xC);
+        }
+
+
+        // X-Coordinates
+        if (xC < 710 || xC > 1460) {
+            xC = 0;
+            letter = "";
+            inBounds = false;
+        }
+        if (xC > 710 && xC < 785) {
+            xC = 1;
+        } else if (xC > 785 && xC < 860) {
+            xC = 2;
+        } else if (xC > 860 && xC < 935) {
+            xC = 3;
+        } else if (xC > 935 && xC < 1010) {
+            xC = 4;
+        } else if (xC > 1010 && xC < 1085) {
+            xC = 5;
+        } else if (xC > 1085 && xC < 1160) {
+            xC = 6;
+        } else if (xC > 1160 && xC < 1235) {
+            xC = 7;
+        } else if (xC > 1235 && xC < 1310) {
+            xC = 8;
+        } else if (xC > 1310 && xC < 1385) {
+            xC = 9;
+        } else if (xC > 1385 && xC < 1460) {
+            xC = 10;
+        }
+
+        // Y-Coordinates
+        if (yC < 180 || yC > 930) {
+            letter = "";
+            xC = 0;
+        }
+        if (inBounds == true) {
+            if (yC > 180 && yC < 255) {
+                letter = "A";
+            } else if (yC > 255 && yC < 330) {
+                letter = "B";
+            } else if (yC > 330 && yC < 405) {
+                letter = "C";
+            } else if (yC > 405 && yC < 480) {
+                letter = "D";
+            } else if (yC > 480 && yC < 555) {
+                letter = "E";
+            } else if (yC > 555 && yC < 630) {
+                letter = "F";
+            } else if (yC > 630 && yC < 705) {
+                letter = "G";
+            } else if (yC > 705 && yC < 780) {
+                letter = "H";
+            } else if (yC > 780 && yC < 855) {
+                letter = "I";
+            } else if (yC > 855 && yC < 930) {
+                letter = "J";
+            }
+        }
+
+        if (!(xC == 0)) {
+            xCoord.setText("X: " + (int) xC);
+        } else {
+            xCoord.setText("X: ");
+        }
+        yCoord.setText("Y: " + letter);
+
+        float x = motionEvent.getX();
+        float y = motionEvent.getY();
+        Log.d("In midGame", "Coords: " + x + ", " + y);
+        Log.i("Players Turn", "" + state.getPlayersTurn());
+        if (state.getPlayersTurn() == playerNum) {
+            Coordinates sendFireto = state.xyToCoordMidGame(x, y);
+            if (sendFireto != null) {
+                Log.i("Touch", "onTouch: sending fire ");
+                game.sendAction(new Fire(reference, sendFireto, playerNum));
+            }
+            //TODO do we need this? midGameView.invalidate();
+        }
+
+
+    }
+
+
     public void setPlayerID(int num) {
         this.playerID = num;
     }
-
-    //Setters to get positions of battleships from setup phase
-    public void setFivehpLeft(float newValue) {
-        fivehpLeft = newValue;
+    public void setState(BattleShipGameState state) {
+        this.state = new BattleShipGameState(state);
     }
-    public void setFivehpTop(float newValue) {
-        fivehpTop = newValue;
-    }
-    public void setFourhp1Left(float newValue) {
-        fourhp1Left = newValue;
-    }
-    public void setFourhp1Top(float newValue) {
-        fourhp1Top = newValue;
-    }
-    public void setFourhp2Left(float newValue) {
-        fourhp2Left = newValue;
-    }
-    public void setFourhp2Top(float newValue) {
-        fourhp2Top = newValue;
-    }
-    public void setThreehp1Left(float newValue) {
-        threehp1Left = newValue;
-    }
-    public void setThreehp1Top(float newValue) {
-        threehp1Top = newValue;
-    }
-    public void setThreehp2Left(float newValue) {
-        threehp2Left = newValue;
-    }
-    public void setThreehp2Top(float newValue) {
-        threehp2Top = newValue;
-    }
-    public void setTwohpLeft(float newValue) {
-        twohpLeft = newValue;
-    }
-    public void setTwohpTop(float newValue) {
-        twohpTop = newValue;
-    }
-
     public void setRotFiveHp(boolean newVal) {rotFiveHp = newVal;}
     public void setRotFourHp1(boolean newVal) {rotFourHp1 = newVal;}
     public void setRotFourHp2(boolean newVal) {rotFourHp2 = newVal;}
     public void setRotThreeHp1(boolean newVal) {rotThreeHp1 = newVal;}
     public void setRotThreeHp2(boolean newVal) {rotThreeHp2 = newVal;}
     public void setRotTwoHP(boolean newVal) {rotTwoHP = newVal;}
-
-
-
+    public void setFlashColor(int color) {
+        this.flashColor = color;
+    }
+    public void setXTouch(float x) { this.xTouch = x - 1.5f; }
 }
