@@ -20,14 +20,6 @@
         android:layout_marginBottom="@dimen/table_row_vert_pad">
 
         <Button
-            android:id="@+id/howToPlay"
-            android:layout_width="153dp"
-            android:layout_height="66dp"
-            android:layout_weight="3"
-            android:backgroundTint="#CD2424"
-            android:text="How To Play" />
-
-        <Button
             android:id="@+id/saveConfigButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

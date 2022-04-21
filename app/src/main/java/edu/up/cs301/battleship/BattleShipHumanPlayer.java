@@ -276,6 +276,11 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                     return false;
                                 }
                                 eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp, yUp);
+                                if(i > 0){
+                                    if(eachShipCoord[i-1].getY() ==  eachShipCoord[i].getY()){
+                                        eachShipCoord[i].setY(eachShipCoord[i-1].getY()+1);
+                                    }
+                                }
                                 Log.i("Coordinates ", "" + eachShipCoord[i].getX() + " " + eachShipCoord[i].getY());
                                 yUp += 74;
                             }
@@ -288,12 +293,16 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                     return false;
                                 }
                                 eachShipCoord[j] = currGS.xyToCoordSetupGame(xUp, yUp);
+                                if(j > 0){
+                                    if(eachShipCoord[j-1].getX() ==  eachShipCoord[j].getX()){
+                                        eachShipCoord[j].setX(eachShipCoord[j-1].getX()+1);
+                                    }
+                                }
                                 Log.i("Coordinates ", "" + eachShipCoord[j].getX() + " " + eachShipCoord[j].getY());
                                 xUp += 74;
                             }
                         }
                         selectedBattleShip.setLocation(eachShipCoord);
-
                         if (selectedBattleShip != null) {//sends a placeship action
                             game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }

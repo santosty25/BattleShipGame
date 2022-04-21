@@ -1,5 +1,6 @@
 package edu.up.cs301.battleship;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,9 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -113,6 +118,7 @@ public class DrawMidgame implements Animator {
         redMarker = BitmapFactory.decodeResource(this.resources, R.drawable.hitmarker);
         whiteMarker = BitmapFactory.decodeResource(this.resources, R.drawable.missmarker);
         userSelection = BitmapFactory.decodeResource(this.resources, R.drawable.tagetselector);
+
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
         missile = BitmapFactory.decodeResource(this.resources, R.drawable.missile);
@@ -123,6 +129,7 @@ public class DrawMidgame implements Animator {
         //Draws the board for the use will use to select and play their move
         grid =  Bitmap.createScaledBitmap(grid, 1000, 1000, false);
         playersGrid =  Bitmap.createScaledBitmap(grid, 400, 400, false);
+
         remainingShips = Bitmap.createScaledBitmap(remainingShips, 150, 1000, false);
 
         //When user hits a ship a red marker will be placed
@@ -319,8 +326,10 @@ public class DrawMidgame implements Animator {
             }
         }
 
+
         //Draws the ships according to that user's board taken from the game state
         Coordinates toPlace = new Coordinates(false,false,0,0);
+
         for (int i = 0; i < playerFleet[playerID].length; i++) {
             if (playerFleet[playerID][i].getSize() == 5) {
                 toPlace = playerFleet[playerID][i].getFirstCoord();
@@ -591,7 +600,10 @@ public class DrawMidgame implements Animator {
                 Log.i("Touch", "onTouch: sending fire ");
                 game.sendAction(new Fire(reference, sendFireto, playerNum));
             }
+            //TODO do we need this? midGameView.invalidate();
         }
+
+
     }
 
 
