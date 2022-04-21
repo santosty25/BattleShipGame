@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Keoni/AndroidStudioProjects/BattleShipGame/app/src/main/res/layout/game_config_main.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/Keoni/AndroidStudioProjects/BattleShipGame/app/src/main/res/layout/game_settings_tab.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/Keoni/AndroidStudioProjects/BattleShipGame/app/src/main/res/layout/midgame.xml" value="0.22" />
         <entry key="..\:/Users/Keoni/AndroidStudioProjects/BattleShipGame/app/src/main/res/layout/setup_phase.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/austf/AndroidStudioProjects/BattleShipGame/app/src/main/res/layout/how_to_play_screen.xml" value="1.25" />
