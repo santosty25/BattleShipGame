@@ -566,4 +566,8 @@ public class BattleShipGameState extends GameState implements Serializable {
         return playersFleet;
     }
 
+    public GameBoard[] getPlayersBoard() {
+        return playersBoard;
+    }
+
 }
