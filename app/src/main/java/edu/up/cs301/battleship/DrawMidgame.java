@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.animation.Animator;
 import edu.up.cs301.game.R;
 
@@ -80,7 +81,7 @@ public class DrawMidgame implements Animator {
     private TextView xCoord;
     private TextView yCoord;
     private int playerNum;
-    private BattleShipLocalGame game;
+    private Game game;
     private BattleShipHumanPlayer reference;
 
     private boolean rotFiveHp = true;
@@ -101,7 +102,7 @@ public class DrawMidgame implements Animator {
         this.xCoord = this.activity.findViewById(R.id.textView);
         this.yCoord = this.activity.findViewById(R.id.textView2);
         this.playerNum = player.getPlayerNum();
-        this.game = (BattleShipLocalGame) player.getGame();
+        this.game = player.getGame();
         //init bitmaps
         fivehp = BitmapFactory.decodeResource(this.resources, R.drawable.fivehpbs);
         fourhp1 = BitmapFactory.decodeResource(this.resources, R.drawable.fourhpbs);
