@@ -62,7 +62,6 @@ public class BattleShipGameStateTest {
 
         boolean place = gameState.placeShip(battleship, coords);
         assertTrue(place);
-        //
     }
 
     @Test
