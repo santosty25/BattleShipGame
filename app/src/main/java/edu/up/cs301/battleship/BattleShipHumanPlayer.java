@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.animation.AnimationSurface;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
@@ -45,8 +46,8 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         return this.playerNum;
     }
 
-    public BattleShipLocalGame getGame() {
-        return (BattleShipLocalGame) this.game;
+    public Game getGame() {
+        return this.game;
     }
 
     /**
@@ -171,8 +172,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 }
 
                 activity.setContentView(R.layout.midgame);
-                AnimationSurface mySurface = (AnimationSurface) activity
-                        .findViewById(R.id.animation_surface);
+                AnimationSurface mySurface = (AnimationSurface) activity.findViewById(R.id.animation_surface);
                 midGame = new DrawMidgame(myActivity, reference);
                 mySurface.setAnimator(midGame);
                 //midgame phase surface view

@@ -101,7 +101,7 @@ public class DrawMidgame implements Animator {
         this.xCoord = this.activity.findViewById(R.id.textView);
         this.yCoord = this.activity.findViewById(R.id.textView2);
         this.playerNum = player.getPlayerNum();
-        this.game = player.getGame();
+        this.game = (BattleShipLocalGame) player.getGame();
         //init bitmaps
         fivehp = BitmapFactory.decodeResource(this.resources, R.drawable.fivehpbs);
         fourhp1 = BitmapFactory.decodeResource(this.resources, R.drawable.fourhpbs);
