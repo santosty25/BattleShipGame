@@ -58,14 +58,14 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             fireAction();
         }
         Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
-        //sleep(1);
+        sleep(0.5);
     }
 
     /**
      * placeShip - Places ships at the top left corner of the board.
      */
     public void placeShip(){
-        int i = 0;
+        int i;
         Log.i("PLACING SHIP", "ship Num" + shipNum);
         Coordinates[] loc;
         Coordinates[] temp = new Coordinates[1];

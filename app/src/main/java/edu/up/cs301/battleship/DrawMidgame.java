@@ -1,6 +1,5 @@
 package edu.up.cs301.battleship;
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,89 +7,87 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.animation.Animator;
 import edu.up.cs301.game.R;
 
 
 /**
- * DrawMidgame - A SurfaceView class that represents what is drawn during the
- * mid game/battle phase.
+ * DrawMidgame - A class that represents what is drawn during the
+ * mid game/battle phase and creates an animation for a rocket shooting
+ * sown wherever the player tapped.
  *
  * @author Keoni Han
  * @author Austen Furutani
  * @author Tyler Santos
  * @author Steven Lee
- * @version Spring 2022 - 4/14/22
+ * @version Spring 2022 - 4/21/22
  */
 public class DrawMidgame implements Animator {
     private Paint blackPaint = new Paint();
     private Paint clear = new Paint();
     public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
-    private int count = 0;
-    public int playerID;
+    private int count = 0; //how many pixels the rocket moves
+    public int playerID; //reference to playerID
 
-    protected BattleShipGameState state = new BattleShipGameState();
+    protected BattleShipGameState state = new BattleShipGameState(); //reference to gamestate
     protected int flashColor = Color.BLACK;
     protected Resources resources = null;
 
-    Bitmap fivehp = null;
+    //bitmaps for the GUI, ships, and hit markers
+    private Bitmap fivehp = null;
     private float fivehpLeft = 1814.0f;
     private float fivehpTop = 108.0f;
-    Bitmap fourhp1 = null;
+    private Bitmap fourhp1 = null;
     private float fourhp1Left = 1684.0f;
     private float fourhp1Top = 70.0f;
-    Bitmap fourhp2 = null;
+    private Bitmap fourhp2 = null;
     private float fourhp2Left = 1677.0f;
     private float fourhp2Top = 393.0f;
-    Bitmap threehp1 = null;
+    private Bitmap threehp1 = null;
     private float threehp1Left = 1828.0f;
     private float threehp1Top = 500.0f;
-    Bitmap threehp2 = null;
+    private Bitmap threehp2 = null;
     private float threehp2Left = 1830.0f;
     private float threehp2Top = 760.0f;
-    Bitmap twohp = null;
+    private Bitmap twohp = null;
     private float twohpLeft = 1680.0f;
     private float twohpTop = 807.0f;
-    Bitmap xSink = null;
-    Bitmap background = null;
-    Bitmap grid = null;
-    Bitmap remainingShips = null;
-    Bitmap redMarker = null;
-    Bitmap whiteMarker = null;
-    Bitmap userSelection = null;
-    Bitmap enemyRedMarker = null;
-    Bitmap enemyWhiteMarker = null;
-    Bitmap playersGrid = null;
-    Bitmap missile = null;
+    private Bitmap xSink = null;
+    private Bitmap background = null;
+    private Bitmap grid = null;
+    private Bitmap remainingShips = null;
+    private Bitmap redMarker = null;
+    private Bitmap whiteMarker = null;
+    private Bitmap userSelection = null;
+    private Bitmap enemyRedMarker = null;
+    private Bitmap enemyWhiteMarker = null;
+    private Bitmap playersGrid = null;
+    private Bitmap missile = null;
 
-    private boolean willDraw;
-
-
-    private Activity activity;
+    private boolean willDraw; //boolean for hether the rocket will be drawn or not
+    private Activity activity; //reference to activity in BattleShipHumanPlayer
     private TextView xCoord;
     private TextView yCoord;
-    private int playerNum;
-    private BattleShipLocalGame game;
-    private BattleShipHumanPlayer reference;
-
+    private int playerNum; //a reference to the player number
+    private Game game; //a reference to the game
+    private BattleShipHumanPlayer reference; //a reference to the human player
+    //boolean for if the ships are rotated
     private boolean rotFiveHp = true;
     private boolean rotFourHp1 = true;
     private boolean rotFourHp2 = true;
     private boolean rotThreeHp1 = true;
     private boolean rotThreeHp2 = true;
     private boolean rotTwoHP = true;
-
-    private float xTouch;
+    private float xTouch; //the x value where the player touched
+    private float yTouch; //the y value where the player touched
+    private int drawRot = 0; //instance variable for created rotated bitmaps once
 
 
     public DrawMidgame(Activity activity, BattleShipHumanPlayer player) {
@@ -101,7 +98,7 @@ public class DrawMidgame implements Animator {
         this.xCoord = this.activity.findViewById(R.id.textView);
         this.yCoord = this.activity.findViewById(R.id.textView2);
         this.playerNum = player.getPlayerNum();
-        this.game = (BattleShipLocalGame) player.getGame();
+        this.game = player.getGame();
         //init bitmaps
         fivehp = BitmapFactory.decodeResource(this.resources, R.drawable.fivehpbs);
         fourhp1 = BitmapFactory.decodeResource(this.resources, R.drawable.fourhpbs);
@@ -116,7 +113,6 @@ public class DrawMidgame implements Animator {
         redMarker = BitmapFactory.decodeResource(this.resources, R.drawable.hitmarker);
         whiteMarker = BitmapFactory.decodeResource(this.resources, R.drawable.missmarker);
         userSelection = BitmapFactory.decodeResource(this.resources, R.drawable.tagetselector);
-
         Matrix matrix = new Matrix();
         matrix.postRotate(270);
         missile = BitmapFactory.decodeResource(this.resources, R.drawable.missile);
@@ -127,7 +123,6 @@ public class DrawMidgame implements Animator {
         //Draws the board for the use will use to select and play their move
         grid =  Bitmap.createScaledBitmap(grid, 1000, 1000, false);
         playersGrid =  Bitmap.createScaledBitmap(grid, 400, 400, false);
-
         remainingShips = Bitmap.createScaledBitmap(remainingShips, 150, 1000, false);
 
         //When user hits a ship a red marker will be placed
@@ -144,8 +139,7 @@ public class DrawMidgame implements Animator {
         //creates bitmap for x on sidebar ships
         xSink = Bitmap.createScaledBitmap(xSink, 100, 100, false);
 
-
-
+        //creates colors
         this.blackPaint.setColor(0xFF00FF00);
         this.blackPaint.setStyle(Paint.Style.FILL);
         this.clear.setColor(0x00000000);
@@ -207,14 +201,16 @@ public class DrawMidgame implements Animator {
      *            the Canvas object on which to draw the animation-frame.
      */
     public void tick(Canvas canvas){
-        background = Bitmap.createScaledBitmap(background, canvas.getWidth(), canvas.getHeight(), false);
+        background = Bitmap.createScaledBitmap(background, canvas.getWidth(),
+                canvas.getHeight(), false);
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
 
         /**
-         * Draws everything to surface view, as of now COOR is just giberish and guess work, will work out
-         *a formula later
+         * Draws everything to surface view, as of now COOR is just
+         * giberish and guess work, will work out a formula later
          */
+        //sets flash
         if(this.flashColor == Color.BLACK) {
             canvas.drawBitmap(background, 0.0f, 0.0f, blackPaint);
         }
@@ -223,6 +219,7 @@ public class DrawMidgame implements Animator {
             tempPaint.setColor(this.flashColor);
             canvas.drawRect(0.0f, 0.0f, canvas.getWidth(), canvas.getHeight(), tempPaint);
         }
+        //draw GUI
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
@@ -230,58 +227,46 @@ public class DrawMidgame implements Animator {
             Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
         }
-        //fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
-        fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
-        if(rotFiveHp) {
-            fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(), fivehp.getHeight(), matrix, true);
-        }
 
-        //fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-        fourhp1 = Bitmap.createScaledBitmap(fourhp1, 123, 28, false);
-        if(rotFourHp1) {
-            fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(), fourhp1.getHeight(), matrix, true);
-        }
-
-        //fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-        fourhp2 = Bitmap.createScaledBitmap(fourhp2, 123, 25, false);
-        if(rotFourHp2) {
-            fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(), fourhp2.getHeight(), matrix, true);
-        }
-
-        //CREATES 3 hp BS #1
-        //threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-        threehp1 = Bitmap.createScaledBitmap(threehp1, 94, 24, false);
-        if(rotThreeHp1) {
-            threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
-        }
-        // threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(), threehp1.getHeight(), matrix, true);
-
-        //CREATES 3 hp BS #2
-        //threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-        threehp2 = Bitmap.createScaledBitmap(threehp2, 94, 24, false);
-        if(rotThreeHp2) {
-            threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
-        }
-        // threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(), threehp2.getHeight(), matrix, true);
-
-        //CREATES 2 hp BS
-        //twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-        twohp = Bitmap.createScaledBitmap(twohp, 61, 24, false);
-        if(rotTwoHP) {
-            twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
-        }
-        // twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(), twohp.getHeight(), matrix, true);
-
-        //CREATES RED HIT MARKER
-        //xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
-
-
+        if(this.drawRot == 0) {
+            fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
+            if (rotFiveHp) {
+                fivehp = Bitmap.createBitmap(fivehp, 0, 0, fivehp.getWidth(),
+                        fivehp.getHeight(), matrix, true);
+            }
+            fourhp1 = Bitmap.createScaledBitmap(fourhp1, 123, 28, false);
+            if (rotFourHp1) {
+                fourhp1 = Bitmap.createBitmap(fourhp1, 0, 0, fourhp1.getWidth(),
+                        fourhp1.getHeight(), matrix, true);
+            }
+            fourhp2 = Bitmap.createScaledBitmap(fourhp2, 123, 25, false);
+            if (rotFourHp2) {
+                fourhp2 = Bitmap.createBitmap(fourhp2, 0, 0, fourhp2.getWidth(),
+                        fourhp2.getHeight(), matrix, true);
+            }
+            threehp1 = Bitmap.createScaledBitmap(threehp1, 94, 24, false);
+            if (rotThreeHp1) {
+                threehp1 = Bitmap.createBitmap(threehp1, 0, 0, threehp1.getWidth(),
+                        threehp1.getHeight(), matrix, true);
+            }
+            threehp2 = Bitmap.createScaledBitmap(threehp2, 94, 24, false);
+            if (rotThreeHp2) {
+                threehp2 = Bitmap.createBitmap(threehp2, 0, 0, threehp2.getWidth(),
+                        threehp2.getHeight(), matrix, true);
+            }
+            twohp = Bitmap.createScaledBitmap(twohp, 61, 24, false);
+            if (rotTwoHP) {
+                twohp = Bitmap.createBitmap(twohp, 0, 0, twohp.getWidth(),
+                        twohp.getHeight(), matrix, true);
+            }
+        }//creates rotated bitmap once
+        this.drawRot++;
 
         if (state == null) {
             Log.i("State is Null", "onDraw: NULL");
             return;
         }
-        int enemyID;
+        int enemyID; //the enemy's player number
 
         if(this.playerID == 0){
             enemyID = 1;
@@ -314,20 +299,17 @@ public class DrawMidgame implements Animator {
             }
         }
 
-
-        if((float)count < yVal && this.willDraw == true) {
-            canvas.drawBitmap(missile, this.xTouch, count, blackPaint);
-            this.count+=15;
+        if((float)count < this.yTouch && this.willDraw == true) {
+            canvas.drawBitmap(missile, this.xTouch - 20.0f, count, blackPaint);
+            this.count+= 40;
         }
-        else if ((float)count > yVal) {
+        else if ((float)count > this.yTouch - 20.0f) {
             this.willDraw = false;
             doQuit();
             this.count = 0;
         }
 
-        /**Draw on your board
-         * Need to change the center methods
-         * */
+        /**Draw on your board*/
         BattleshipObj[][] playerFleet = new BattleshipObj[2][6];
         for (int i = 0;  i < 2; i++) {
             for (int j =0; j < 6; j++){
@@ -337,10 +319,8 @@ public class DrawMidgame implements Animator {
             }
         }
 
-
         //Draws the ships according to that user's board taken from the game state
         Coordinates toPlace = new Coordinates(false,false,0,0);
-
         for (int i = 0; i < playerFleet[playerID].length; i++) {
             if (playerFleet[playerID][i].getSize() == 5) {
                 toPlace = playerFleet[playerID][i].getFirstCoord();
@@ -531,7 +511,9 @@ public class DrawMidgame implements Animator {
         if(xC >= 710 && xC <= 1460) {
             this.setXTouch(xC);
         }
-
+        if (yC >= 180 && yC <= 930) {
+            this.setYTouch(yC);
+        }
 
         // X-Coordinates
         if (xC < 710 || xC > 1460) {
@@ -539,25 +521,25 @@ public class DrawMidgame implements Animator {
             letter = "";
             inBounds = false;
         }
-        if (xC > 710 && xC < 785) {
+        if (xC >= 710 && xC < 785) {
             xC = 1;
-        } else if (xC > 785 && xC < 860) {
+        } else if (xC >= 785 && xC < 860) {
             xC = 2;
-        } else if (xC > 860 && xC < 935) {
+        } else if (xC >= 860 && xC < 935) {
             xC = 3;
-        } else if (xC > 935 && xC < 1010) {
+        } else if (xC >= 935 && xC < 1010) {
             xC = 4;
-        } else if (xC > 1010 && xC < 1085) {
+        } else if (xC >= 1010 && xC < 1085) {
             xC = 5;
-        } else if (xC > 1085 && xC < 1160) {
+        } else if (xC >= 1085 && xC < 1160) {
             xC = 6;
-        } else if (xC > 1160 && xC < 1235) {
+        } else if (xC >= 1160 && xC < 1235) {
             xC = 7;
-        } else if (xC > 1235 && xC < 1310) {
+        } else if (xC >= 1235 && xC < 1310) {
             xC = 8;
-        } else if (xC > 1310 && xC < 1385) {
+        } else if (xC >= 1310 && xC < 1385) {
             xC = 9;
-        } else if (xC > 1385 && xC < 1460) {
+        } else if (xC >= 1385 && xC < 1460) {
             xC = 10;
         }
 
@@ -567,29 +549,30 @@ public class DrawMidgame implements Animator {
             xC = 0;
         }
         if (inBounds == true) {
-            if (yC > 180 && yC < 255) {
+            if (yC >= 180 && yC < 255) {
                 letter = "A";
-            } else if (yC > 255 && yC < 330) {
+            } else if (yC >= 255 && yC < 330) {
                 letter = "B";
-            } else if (yC > 330 && yC < 405) {
+            } else if (yC >= 330 && yC < 405) {
                 letter = "C";
-            } else if (yC > 405 && yC < 480) {
+            } else if (yC >= 405 && yC < 480) {
                 letter = "D";
-            } else if (yC > 480 && yC < 555) {
+            } else if (yC >= 480 && yC < 555) {
                 letter = "E";
-            } else if (yC > 555 && yC < 630) {
+            } else if (yC >= 555 && yC < 630) {
                 letter = "F";
-            } else if (yC > 630 && yC < 705) {
+            } else if (yC >= 630 && yC < 705) {
                 letter = "G";
-            } else if (yC > 705 && yC < 780) {
+            } else if (yC >= 705 && yC < 780) {
                 letter = "H";
-            } else if (yC > 780 && yC < 855) {
+            } else if (yC >= 780 && yC < 855) {
                 letter = "I";
-            } else if (yC > 855 && yC < 930) {
+            } else if (yC >= 855 && yC < 930) {
                 letter = "J";
             }
         }
 
+        //set text views
         if (!(xC == 0)) {
             xCoord.setText("X: " + (int) xC);
         } else {
@@ -597,6 +580,7 @@ public class DrawMidgame implements Animator {
         }
         yCoord.setText("Y: " + letter);
 
+        //sends fire action
         float x = motionEvent.getX();
         float y = motionEvent.getY();
         Log.d("In midGame", "Coords: " + x + ", " + y);
@@ -607,10 +591,7 @@ public class DrawMidgame implements Animator {
                 Log.i("Touch", "onTouch: sending fire ");
                 game.sendAction(new Fire(reference, sendFireto, playerNum));
             }
-            //TODO do we need this? midGameView.invalidate();
         }
-
-
     }
 
 
@@ -620,6 +601,7 @@ public class DrawMidgame implements Animator {
     public void setState(BattleShipGameState state) {
         this.state = new BattleShipGameState(state);
     }
+    //sets rotation of ships
     public void setRotFiveHp(boolean newVal) {rotFiveHp = newVal;}
     public void setRotFourHp1(boolean newVal) {rotFourHp1 = newVal;}
     public void setRotFourHp2(boolean newVal) {rotFourHp2 = newVal;}
@@ -629,5 +611,62 @@ public class DrawMidgame implements Animator {
     public void setFlashColor(int color) {
         this.flashColor = color;
     }
-    public void setXTouch(float x) { this.xTouch = x - 1.5f; }
+
+    /**
+     * setXTouch - Sets the x value where the player touched so the rocket can be
+     * drawn properly.
+     * @param x - the given x value
+     */
+    public void setXTouch(float x) {
+        if (x > 710 && x < 785) {
+            this.xTouch = 747.5f;
+        } else if (x > 785 && x < 860) {
+            this.xTouch = 822.5f;
+        } else if (x > 860 && x < 935) {
+            this.xTouch = 897.5f;
+        } else if (x > 935 && x < 1010) {
+            this.xTouch = 972.5f;
+        } else if (x > 1010 && x < 1085) {
+            this.xTouch = 10475.f;
+        } else if (x > 1085 && x < 1160) {
+            this.xTouch = 1122.5f;
+        } else if (x > 1160 && x < 1235) {
+            this.xTouch = 1197.5f;
+        } else if (x > 1235 && x < 1310) {
+            this.xTouch = 1272.5f;
+        } else if (x > 1310 && x < 1385) {
+            this.xTouch = 1347.5f;
+        } else if (x > 1385 && x < 1460) {
+            this.xTouch = 1422.5f;
+        }
+    }
+
+    /**
+     * setYTouch - Sets the y value where the player touched so the rocket can be
+     * drawn properly.
+     * @param y - the given y value
+     */
+    public void setYTouch(float y) {
+        if (y > 180 && y < 255) {
+            this.yTouch = 217.5f;
+        } else if (y > 255 && y < 330) {
+            this.yTouch = 292.5f;
+        } else if (y > 330 && y < 405) {
+            this.yTouch = 367.5f;
+        } else if (y > 405 && y < 480) {
+            this.yTouch = 442.5f;
+        } else if (y > 480 && y < 555) {
+            this.yTouch = 517.5f;
+        } else if (y > 555 && y < 630) {
+            this.yTouch = 592.5f;
+        } else if (y > 630 && y < 705) {
+            this.yTouch = 667.5f;
+        } else if (y > 705 && y < 780) {
+            this.yTouch = 742.5f;
+        } else if (y > 780 && y < 855) {
+            this.yTouch = 817.5f;
+        } else if (y > 855 && y < 930) {
+            this.yTouch = 892.5f;
+        }
+    }
 }

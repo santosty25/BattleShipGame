@@ -70,6 +70,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 //do nothing
             }
             midGameView.setFlashColor(Color.BLACK);
+            midGame.setFlashColor(Color.BLACK);
             midGameView.invalidate();
         }
     }
@@ -99,6 +100,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         // save the original background color; set the new background
         // color
         midGameView.setFlashColor(color);
+        midGame.setFlashColor(color);
         midGameView.invalidate();
 
         // set up a timer event to set the background color back to
@@ -133,7 +135,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 setupView.checkOverlapping();
             }
             if (midGameView != null) {
-                midGameView.setState(currGS);
+
                 midGameView.invalidate();
             }
             if(midGame != null) {
@@ -155,9 +157,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
         Button nextButton = activity.findViewById(R.id.confirm_button);
         DrawSetup gameView = activity.findViewById(R.id.boardView);
         //setup phase surfaceView object
-
-
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,7 +177,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
                 midGameView = activity.findViewById(R.id.animation_surface);
-                midGameView.setPlayerID(playerNum);
+
                 midGame.setPlayerID(playerNum);
                 game.sendAction(new SwitchPhase(reference, playerNum, true));
                 midGameView.invalidate();
@@ -187,12 +186,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
                 // Finds out which ships should be rotated which way from the setupView object
                 // and sends it to the midGameView Object
-                midGameView.setRotFiveHp(setupView.getRotFiveHp());
-                midGameView.setRotFourHp1(setupView.getRotFourHp1());
-                midGameView.setRotFourHp2(setupView.getRotFourHp2());
-                midGameView.setRotThreeHp1(setupView.getRotThreeHp1());
-                midGameView.setRotThreeHp2(setupView.getRotThreeHp2());
-                midGameView.setRotTwoHP(setupView.getRotTwoHP());
                 midGameView.invalidate();
                 midGame.setRotFiveHp(setupView.getRotFiveHp());
                 midGame.setRotFourHp1(setupView.getRotFourHp1());
@@ -205,9 +198,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
         setupView = activity.findViewById(R.id.boardView);
         setupView.setPlayerID(playerNum);
-
-
-
 
         /** On Touch for setupphase*/
         if (shipIsSelected == false) {

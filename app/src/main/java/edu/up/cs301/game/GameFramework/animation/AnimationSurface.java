@@ -2,8 +2,6 @@ package edu.up.cs301.game.GameFramework.animation;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,8 +12,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import edu.up.cs301.battleship.BattleShipGameState;
-import edu.up.cs301.game.R;
 
 /**
  * A SurfaceView which allows which an animation to be drawn on it by a
@@ -36,37 +32,7 @@ public class AnimationSurface extends SurfaceView implements OnTouchListener {
     private Paint backgroundPaint = new Paint(); // painter for painting background
     private int flashCount; // counts down ticks for background-flash
     private Paint flashPaint; // has color for background flash
-
-    protected BattleShipGameState state;
-    public int playerID;
     protected int flashColor = Color.BLACK;
-
-    Bitmap fivehp = BitmapFactory.decodeResource(getResources(), R.drawable.fivehpbs);
-    private float fivehpLeft = 1814.0f;
-    private float fivehpTop = 108.0f;
-    Bitmap fourhp1 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-    private float fourhp1Left = 1684.0f;
-    private float fourhp1Top = 70.0f;
-    Bitmap fourhp2 = BitmapFactory.decodeResource(getResources(), R.drawable.fourhpbs);
-    private float fourhp2Left = 1677.0f;
-    private float fourhp2Top = 393.0f;
-    Bitmap threehp1 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-    private float threehp1Left = 1828.0f;
-    private float threehp1Top = 500.0f;
-    Bitmap threehp2 = BitmapFactory.decodeResource(getResources(), R.drawable.threehpbs);
-    private float threehp2Left = 1830.0f;
-    private float threehp2Top = 760.0f;
-    Bitmap twohp = BitmapFactory.decodeResource(getResources(), R.drawable.twohpbs);
-    private float twohpLeft = 1680.0f;
-    private float twohpTop = 807.0f;
-    Bitmap xSink = BitmapFactory.decodeResource(getResources(), R.drawable.red_cross);
-
-    private boolean rotFiveHp = true;
-    private boolean rotFourHp1 = true;
-    private boolean rotFourHp2 = true;
-    private boolean rotThreeHp1 = true;
-    private boolean rotThreeHp2 = true;
-    private boolean rotTwoHP = true;
 
     /**
      * Constructor for the AnimationSurface class. In order to be useful, an
@@ -302,59 +268,6 @@ public class AnimationSurface extends SurfaceView implements OnTouchListener {
         }
         return true;
     };// class AnimationThread
-
-    public void setPlayerID(int num) {
-        this.playerID = num;
-    }
-
-    public void setState(BattleShipGameState state) {
-        this.state = new BattleShipGameState(state);
-    }
-
-    //Setters to get positions of battleships from setup phase
-//    public void setFivehpLeft(float newValue) {
-//        fivehpLeft = newValue;
-//    }
-//    public void setFivehpTop(float newValue) {
-//        fivehpTop = newValue;
-//    }
-//    public void setFourhp1Left(float newValue) {
-//        fourhp1Left = newValue;
-//    }
-//    public void setFourhp1Top(float newValue) {
-//        fourhp1Top = newValue;
-//    }
-//    public void setFourhp2Left(float newValue) {
-//        fourhp2Left = newValue;
-//    }
-//    public void setFourhp2Top(float newValue) {
-//        fourhp2Top = newValue;
-//    }
-//    public void setThreehp1Left(float newValue) {
-//        threehp1Left = newValue;
-//    }
-//    public void setThreehp1Top(float newValue) {
-//        threehp1Top = newValue;
-//    }
-//    public void setThreehp2Left(float newValue) {
-//        threehp2Left = newValue;
-//    }
-//    public void setThreehp2Top(float newValue) {
-//        threehp2Top = newValue;
-//    }
-//    public void setTwohpLeft(float newValue) {
-//        twohpLeft = newValue;
-//    }
-//    public void setTwohpTop(float newValue) {
-//        twohpTop = newValue;
-//    }
-
-    public void setRotFiveHp(boolean newVal) {rotFiveHp = newVal;}
-    public void setRotFourHp1(boolean newVal) {rotFourHp1 = newVal;}
-    public void setRotFourHp2(boolean newVal) {rotFourHp2 = newVal;}
-    public void setRotThreeHp1(boolean newVal) {rotThreeHp1 = newVal;}
-    public void setRotThreeHp2(boolean newVal) {rotThreeHp2 = newVal;}
-    public void setRotTwoHP(boolean newVal) {rotTwoHP = newVal;}
 
     public void setFlashColor(int color) {
         this.flashColor = color;
