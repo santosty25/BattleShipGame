@@ -207,17 +207,6 @@ public abstract class GameMainActivity extends Activity implements
         }else {
             Logger.setDebugValue(false);
         }
-
-//        Button howToPlay = findViewById(R.id.howToPlay);
-//
-//        howToPlay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                setContentView(R.layout.how_to_play_screen);
-//            }
-//            });
-
-
     }// onCreate
 
     /**
@@ -519,8 +508,6 @@ public abstract class GameMainActivity extends Activity implements
         v = findViewById(R.id.debugLogging);
         v.setOnClickListener(this);
 
-        v = findViewById(R.id.howToPlay);
-        v.setOnClickListener(this);
 
 
         String ipCode = IPCoder.encodeLocalIP();
@@ -640,16 +627,6 @@ public abstract class GameMainActivity extends Activity implements
                 Logger.setDebugValue(false);
             }
         }
-        else if(button.getId() == R.id.howToPlay) {
-            setContentView(R.layout.how_to_play_screen);
-            View v = findViewById(R.id.back_button);
-            v.setOnClickListener(this);
-        }
-//        else if(button.getId() == R.id.back_button) {
-//            setContentView(R.layout.game_config_main);
-//            justStarted = true;
-//            doingConfiguration = true;
-//        }
 
 
     }// onClick
@@ -874,7 +851,7 @@ public abstract class GameMainActivity extends Activity implements
      * 		the label for the settings tab header
      */
     private String settingsTabString(){
-        return this.getResources().getString(R.string.settings_tab);
+        return "How To Play";
     }
 
 
