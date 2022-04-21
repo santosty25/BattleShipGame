@@ -6,12 +6,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <edu.up.cs301.battleship.DrawMidgame
-        android:id="@+id/boardView"
+    <edu.up.cs301.game.GameFramework.animation.AnimationSurface
+        android:id="@+id/animation_surface"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/textView"

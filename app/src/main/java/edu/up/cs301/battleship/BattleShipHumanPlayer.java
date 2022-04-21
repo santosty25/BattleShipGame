@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
+import edu.up.cs301.game.GameFramework.animation.AnimationSurface;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
-import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;;
+import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;
 import edu.up.cs301.game.R;
 
 /**
@@ -34,9 +36,20 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
     private int lastSelectedShip = 0;
 
+    private DrawMidgame midGame;
+
     //mid game surface view
-    private DrawMidgame midGameView;
+    private AnimationSurface midGameView;
     private DrawSetup setupView;
+
+    public int getPlayerNum() {
+        return this.playerNum;
+    }
+
+    public Game getGame() {
+        return this.game;
+    }
+
     /**
      * helper-class to finish a flash
      */
@@ -123,6 +136,9 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView.setState(currGS);
                 midGameView.invalidate();
             }
+            if(midGame != null) {
+                this.midGame.setState(currGS);
+            }
         }
     }
 
@@ -133,11 +149,13 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
      */
     @Override
     public void setAsGui(GameMainActivity activity) {
+        //TODO set animator
         this.myActivity = activity;
         activity.setContentView(R.layout.setup_phase);
         Button nextButton = activity.findViewById(R.id.confirm_button);
+        DrawSetup gameView = activity.findViewById(R.id.boardView);
         //setup phase surfaceView object
-        SurfaceView gameView = activity.findViewById(R.id.boardView);
+
 
 
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -152,11 +170,16 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         return;
                     }
                 }
+
                 activity.setContentView(R.layout.midgame);
+                AnimationSurface mySurface = (AnimationSurface) activity.findViewById(R.id.animation_surface);
+                midGame = new DrawMidgame(myActivity, reference);
+                mySurface.setAnimator(midGame);
                 //midgame phase surface view
                 SurfaceView gameView = activity.findViewById(R.id.boardView);
-                midGameView = activity.findViewById(R.id.boardView);
+                midGameView = activity.findViewById(R.id.animation_surface);
                 midGameView.setPlayerID(playerNum);
+                midGame.setPlayerID(playerNum);
                 game.sendAction(new SwitchPhase(reference, playerNum, true));
                 midGameView.invalidate();
                 Log.i("Actual Phase:", "The phase is, " + currGS.getPhase());
@@ -171,106 +194,19 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                 midGameView.setRotThreeHp2(setupView.getRotThreeHp2());
                 midGameView.setRotTwoHP(setupView.getRotTwoHP());
                 midGameView.invalidate();
-
-
-                TextView xCoord = activity.findViewById(R.id.textView);
-                TextView yCoord = activity.findViewById(R.id.textView2);
-
-
-                /** touch listener for Midgame*/
-                gameView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        midGameView.invalidate();
-                        BattleShipGameState localGS = getGS();
-                        float xC = motionEvent.getX();
-                        float yC = motionEvent.getY();
-                        String letter = "";
-                        boolean inBounds = true;
-
-                        // X-Coordinates
-                        if (xC < 710 || xC > 1460) {
-                            xC = 0;
-                            letter = "";
-                            inBounds = false;
-                        }
-                        if (xC > 710 && xC < 785) {
-                            xC = 1;
-                        } else if (xC > 785 && xC < 860) {
-                            xC = 2;
-                        } else if (xC > 860 && xC < 935) {
-                            xC = 3;
-                        } else if (xC > 935 && xC < 1010) {
-                            xC = 4;
-                        } else if (xC > 1010 && xC < 1085) {
-                            xC = 5;
-                        } else if (xC > 1085 && xC < 1160) {
-                            xC = 6;
-                        } else if (xC > 1160 && xC < 1235) {
-                            xC = 7;
-                        } else if (xC > 1235 && xC < 1310) {
-                            xC = 8;
-                        } else if (xC > 1310 && xC < 1385) {
-                            xC = 9;
-                        } else if (xC > 1385 && xC < 1460) {
-                            xC = 10;
-                        }
-
-                        // Y-Coordinates
-                        if (yC < 180 || yC > 930) {
-                            letter = "";
-                            xC = 0;
-                        }
-                        if (inBounds == true) {
-                            if (yC > 180 && yC < 255) {
-                                letter = "A";
-                            } else if (yC > 255 && yC < 330) {
-                                letter = "B";
-                            } else if (yC > 330 && yC < 405) {
-                                letter = "C";
-                            } else if (yC > 405 && yC < 480) {
-                                letter = "D";
-                            } else if (yC > 480 && yC < 555) {
-                                letter = "E";
-                            } else if (yC > 555 && yC < 630) {
-                                letter = "F";
-                            } else if (yC > 630 && yC < 705) {
-                                letter = "G";
-                            } else if (yC > 705 && yC < 780) {
-                                letter = "H";
-                            } else if (yC > 780 && yC < 855) {
-                                letter = "I";
-                            } else if (yC > 855 && yC < 930) {
-                                letter = "J";
-                            }
-                        }
-
-                        if (!(xC == 0)) {
-                            xCoord.setText("X: " + (int) xC);
-                        } else {
-                            xCoord.setText("X: ");
-                        }
-                        yCoord.setText("Y: " + letter);
-
-                        float x = motionEvent.getX();
-                        float y = motionEvent.getY();
-                        Log.d("In midGame", "Coords: " + x + ", " + y);
-                        Log.i("Players Turn", "" + currGS.getPlayersTurn());
-                        if (currGS.getPlayersTurn() == playerNum) {
-                            Coordinates sendFireto = currGS.xyToCoordMidGame(x, y);
-                            if (sendFireto != null) {
-                                Log.i("Touch", "onTouch: sending fire ");
-                                game.sendAction(new Fire(reference, sendFireto, playerNum));
-                            }
-                            midGameView.invalidate();
-                        }
-                        return false;
-                    }
-                });
+                midGame.setRotFiveHp(setupView.getRotFiveHp());
+                midGame.setRotFourHp1(setupView.getRotFourHp1());
+                midGame.setRotFourHp2(setupView.getRotFourHp2());
+                midGame.setRotThreeHp1(setupView.getRotThreeHp1());
+                midGame.setRotThreeHp2(setupView.getRotThreeHp2());
+                midGame.setRotTwoHP(setupView.getRotTwoHP());
             }
-        });
+        });//onclick
+
         setupView = activity.findViewById(R.id.boardView);
         setupView.setPlayerID(playerNum);
+
+
 
 
         /** On Touch for setupphase*/
@@ -278,9 +214,12 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             gameView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if(currGS.getPlayersTurn() != playerNum){
+                        return true;
+                    }
 
-                        int shipId = setupView.onTouchEventNew(motionEvent);
-                        //Uses the ship id to determine which ship has been tapped
+                    int shipId = setupView.onTouchEventNew(motionEvent);
+                    //Uses the ship id to determine which ship has been tapped
                     int newSize = 0;
                     boolean isShipRotated = true;
                     switch(shipId) {
@@ -322,10 +261,10 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
                     Log.i("Test Coordinates", "FIND ME HERE" + motionEvent.getX() + ", " + motionEvent.getY());
 
-                        selectedBattleShip.setSize(newSize);
-                        if (newSize < 0 || newSize >= 6) {
-                            return false;
-                        }
+                    selectedBattleShip.setSize(newSize);
+                    if (newSize < 0 || newSize >= 6) {
+                        return false;
+                    }
                     if (motionEvent.getAction() == motionEvent.ACTION_UP) {
                         float xUp = motionEvent.getX();
                         float yUp = motionEvent.getY();
@@ -340,13 +279,18 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
 
                         // Checks to see which orientation the ship is in and creates a coordinate array from the tap origin
                         if (isShipRotated) {
-                           eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
+                            eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
                                     Log.i("Invalid Place", "Ship already placed here");
                                     return false;
                                 }
                                 eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp, yUp);
+                                if(i > 0){
+                                    if(eachShipCoord[i-1].getY() ==  eachShipCoord[i].getY()){
+                                        eachShipCoord[i].setY(eachShipCoord[i-1].getY()+1);
+                                    }
+                                }
                                 Log.i("Coordinates ", "" + eachShipCoord[i].getX() + " " + eachShipCoord[i].getY());
                                 yUp += 74;
                             }
@@ -359,12 +303,16 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                     return false;
                                 }
                                 eachShipCoord[j] = currGS.xyToCoordSetupGame(xUp, yUp);
+                                if(j > 0){
+                                    if(eachShipCoord[j-1].getX() ==  eachShipCoord[j].getX()){
+                                        eachShipCoord[j].setX(eachShipCoord[j-1].getX()+1);
+                                    }
+                                }
                                 Log.i("Coordinates ", "" + eachShipCoord[j].getX() + " " + eachShipCoord[j].getY());
                                 xUp += 74;
                             }
                         }
                         selectedBattleShip.setLocation(eachShipCoord);
-
                         if (selectedBattleShip != null) {//sends a placeship action
                             game.sendAction(new PlaceShip(reference, selectedBattleShip, playerNum));
                         }
@@ -391,6 +339,7 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
             midGameView.invalidate();
         }
     }
+
     public BattleShipGameState getGS(){
         return this.currGS;
     }

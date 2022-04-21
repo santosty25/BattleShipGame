@@ -228,6 +228,7 @@ public class BattleShipLocalGame extends LocalGame {
             BattleshipObj[][] shipsOnBoard = state.getPlayersFleet();
             for (i = 0; i < shipsOnBoard[enemy].length; i++) {
                 for (j = 0; j < shipsOnBoard[enemy][i].getLocation().length; j++) {//Reads locations of opponents board
+                    BattleShipSmartAI.AvoidLoop = 0;
                     if (shipsOnBoard[enemy][i].getLocation()[j].getX() == coord.getX() && shipsOnBoard[enemy][i].getLocation()[j].getY() == coord.getY()) {
                         //Checks if the coordinate sent with the fire action has a ship on it
                         //Draw red marker
