@@ -1,12 +1,7 @@
 package edu.up.cs301.battleship;
 
 import android.util.Log;
-
-import java.nio.file.ClosedFileSystemException;
 import java.util.Random;
-
-import javax.security.auth.login.LoginException;
-
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
 
