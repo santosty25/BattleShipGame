@@ -556,7 +556,7 @@ public class BattleShipGameState extends GameState implements Serializable {
 
         //checks who is checking the remaining ships
         this.remainingShips[0] = player0fleet;
-        this.remainingShips[0] = player1fleet;
+        this.remainingShips[1] = player1fleet;
 
     }
 
