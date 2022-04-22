@@ -213,10 +213,7 @@ public class DrawMidgame implements Animator {
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
 
-        /**
-         * Draws everything to surface view, as of now COOR is just
-         * giberish and guess work, will work out a formula later
-         */
+        /** Draws everything to surface view */
         //sets flash
         if(this.flashColor == Color.BLACK) {
             canvas.drawBitmap(background, 0.0f, 0.0f, blackPaint);
@@ -306,6 +303,7 @@ public class DrawMidgame implements Animator {
             }
         }
 
+        //draw missile from the top of the screen
         if((float)count < this.yTouch && this.willDraw == true) {
             canvas.drawBitmap(missile, this.xTouch - 20.0f, count, blackPaint);
             this.count+= 40;
@@ -530,27 +528,8 @@ public class DrawMidgame implements Animator {
             letter = "";
             inBounds = false;
         }
-        if (xC >= 710 && xC < 785) {
-            xC = 1;
-        } else if (xC >= 785 && xC < 860) {
-            xC = 2;
-        } else if (xC >= 860 && xC < 935) {
-            xC = 3;
-        } else if (xC >= 935 && xC < 1010) {
-            xC = 4;
-        } else if (xC >= 1010 && xC < 1085) {
-            xC = 5;
-        } else if (xC >= 1085 && xC < 1160) {
-            xC = 6;
-        } else if (xC >= 1160 && xC < 1235) {
-            xC = 7;
-        } else if (xC >= 1235 && xC < 1310) {
-            xC = 8;
-        } else if (xC >= 1310 && xC < 1385) {
-            xC = 9;
-        } else if (xC >= 1385 && xC < 1460) {
-            xC = 10;
-        }
+
+       xC = this.setX(xC); //sets the x value for the textview
 
         // Y-Coordinates
         if (yC < 180 || yC > 930) {
@@ -558,27 +537,7 @@ public class DrawMidgame implements Animator {
             xC = 0;
         }
         if (inBounds == true) {
-            if (yC >= 180 && yC < 255) {
-                letter = "A";
-            } else if (yC >= 255 && yC < 330) {
-                letter = "B";
-            } else if (yC >= 330 && yC < 405) {
-                letter = "C";
-            } else if (yC >= 405 && yC < 480) {
-                letter = "D";
-            } else if (yC >= 480 && yC < 555) {
-                letter = "E";
-            } else if (yC >= 555 && yC < 630) {
-                letter = "F";
-            } else if (yC >= 630 && yC < 705) {
-                letter = "G";
-            } else if (yC >= 705 && yC < 780) {
-                letter = "H";
-            } else if (yC >= 780 && yC < 855) {
-                letter = "I";
-            } else if (yC >= 855 && yC < 930) {
-                letter = "J";
-            }
+            letter = this.setLetter(yC);
         }
 
         //set text views
@@ -600,10 +559,7 @@ public class DrawMidgame implements Animator {
                 Log.i("Touch", "onTouch: sending fire ");
                 game.sendAction(new Fire(reference, sendFireto, playerNum));
             }
-            //TODO do we need this? midGameView.invalidate();
         }
-
-
     }
 
 
@@ -681,4 +637,66 @@ public class DrawMidgame implements Animator {
             this.yTouch = 892.5f;
         }
     }
+
+    /**
+     * setLetter - Sets the letter of the y coord for the textview.
+     * @param yC - a given touch value for y
+     * @return a letter for where the player has touched for the y value.
+     */
+    public String setLetter(float yC) {
+        if (yC >= 180 && yC < 255) {
+            return "A";
+        } else if (yC >= 255 && yC < 330) {
+            return "B";
+        } else if (yC >= 330 && yC < 405) {
+            return "C";
+        } else if (yC >= 405 && yC < 480) {
+            return "D";
+        } else if (yC >= 480 && yC < 555) {
+            return "E";
+        } else if (yC >= 555 && yC < 630) {
+            return "F";
+        } else if (yC >= 630 && yC < 705) {
+            return "G";
+        } else if (yC >= 705 && yC < 780) {
+            return "H";
+        } else if (yC >= 780 && yC < 855) {
+            return "I";
+        } else if (yC >= 855 && yC < 930) {
+            return "J";
+        }
+        return "Error";
+    }
+
+    /**
+     * setX - Sets the x value for the textview
+     * @param xC - a given touch falue for x
+     * @return 1-10 depending on where the player touched
+     */
+    public float setX(float xC) {
+        if (xC >= 710 && xC < 785) {
+            return 1;
+        } else if (xC >= 785 && xC < 860) {
+            return 2;
+        } else if (xC >= 860 && xC < 935) {
+            return 3;
+        } else if (xC >= 935 && xC < 1010) {
+            return 4;
+        } else if (xC >= 1010 && xC < 1085) {
+            return 5;
+        } else if (xC >= 1085 && xC < 1160) {
+            return 6;
+        } else if (xC >= 1160 && xC < 1235) {
+            return 7;
+        } else if (xC >= 1235 && xC < 1310) {
+            return 8;
+        } else if (xC >= 1310 && xC < 1385) {
+            return 9;
+        } else if (xC >= 1385 && xC < 1460) {
+            return 10;
+        }
+        return 0;
+    }
 }
+
+

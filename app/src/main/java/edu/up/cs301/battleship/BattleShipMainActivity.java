@@ -35,12 +35,15 @@ import edu.up.cs301.game.R;
  * The game can only be played between a Human Player and an AI Player and a
  * Human Player with another Human Player through network play.
  * The GUI allows the player to drag a ship onto the grid which will snap to place
- * and the player can tap the ship to rotate. If a ship goes out of bounds, it will
- * be returned to the inventory.
+ * and the player can tap the top part of the ship to rotate.
+ * If a ship goes out of bounds, it will be returned to the inventory.
  *
  * Features: When playing through network play each player needs to take
  * turns to place a ship starting with player 0. Don't fire by tapping on the
  * grid unless both players are on the midgame screen.
+ * Sound effects are implemented for when you placed a ship and when you fired at a coordinate.
+ * A how to play is implemented into the top right tab of the start up screen.
+ * Animation implemented to have a missile drawn on the screen.
  *
  * @author Tyler Santos
  * @author Austen Furutani
