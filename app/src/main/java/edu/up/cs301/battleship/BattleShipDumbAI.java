@@ -58,7 +58,7 @@ public class BattleShipDumbAI extends GameComputerPlayer {
             fireAction();
         }
         Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
-        sleep(0.5);
+        sleep(0.1);
     }
 
     /**
