@@ -297,7 +297,7 @@ public class DrawMidgame implements Animator {
         //draw missile from the top of the screen
         if((float)count < this.yTouch && this.willDraw == true) {
             canvas.drawBitmap(missile, this.xTouch - 20.0f, count, blackPaint);
-            this.count+= 40;
+            this.count+= 100;
         }
         else if ((float)count > this.yTouch - 20.0f) {
             this.willDraw = false;
@@ -314,7 +314,6 @@ public class DrawMidgame implements Animator {
                 }
             }
         }
-
 
         //Draws the ships according to that user's board taken from the game state
         Coordinates toPlace = new Coordinates(false,false,0,0);
@@ -451,8 +450,6 @@ public class DrawMidgame implements Animator {
         if(playerID == 0){
             enemy = 1;
         }
-        state.getPlayersFleet()[enemy][5].getSunk();
-
         if (state.getPlayersFleet()[enemy][5].getSunk()) {
             canvas.drawBitmap(xSink, 1825.0f, 880.0f, blackPaint);
         }

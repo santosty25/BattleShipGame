@@ -23,10 +23,10 @@ public class BattleShipGameState extends GameState implements Serializable {
     private int[] playerID; //an array of each player's ID
     private GameBoard[] playersBoard; //the Battleship game board for each player
     private int playersTurn; //determines who's turn it is
-    private int timer; //a set timer for how long each turn should take
+//    private int timer; //a set timer for how long each turn should take
     // 0 = setup | 1 = game phase | 2 = end phase
     private int phase; //determines the phase of the game
-    private int remainingShips[]; //a player's remaining ships
+//    private int remainingShips[]; //a player's remaining ships
     private BattleshipObj[][] playersFleet; //a player's fleet
 
 
@@ -42,14 +42,10 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playersBoard[0] = new GameBoard();
         this.playersBoard[1] = new GameBoard();
 
+        //Log.i("BSG", "Made gameBoard");
         int num = (int) Math.random() * 1;
         this.playersTurn = num;
-        this.timer = 30;
         this.phase = 0;
-        this.remainingShips = new int[2];
-        for (int k = 0; k < remainingShips.length; k++) {
-            this.remainingShips[k] = 6;
-        }
         this.playersFleet = new BattleshipObj[2][6];
 
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
@@ -63,7 +59,6 @@ public class BattleShipGameState extends GameState implements Serializable {
                 playersFleet[i][j] = new BattleshipObj(testShip);
             }
         }
-
     }
 
     /**
@@ -84,9 +79,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                 this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
             }
             this.playersTurn = copy.playersTurn;
-            this.timer = copy.timer;
             this.phase = copy.phase;
-            this.remainingShips = copy.remainingShips;
             this.playersFleet = new BattleshipObj[2][6];
 
             int i, j;
@@ -127,7 +120,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     boolean sunk = this.playersFleet[1][i].checkIfHit();
                     if(sunk == true) {
-                        this.playersFleet[1][i].setSunk(true);
+                        this.setFleetSunk(1, i);
                     }
                     else {
                         continue;
@@ -150,7 +143,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                     boolean sunk = this.playersFleet[0][i].checkIfHit();
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     if(sunk == true) {
-                        this.playersFleet[0][i].setSunk(true);
+                        this.setFleetSunk(0, i);
                     }
                     else {
                         continue;
@@ -170,7 +163,8 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param playerNum
      * @return true or false depnding on whether the player can place a ship on the board
      */
-    public boolean placeShip(BattleshipObj[][] currentFleet, BattleshipObj placedShip, int playerNum) {
+    public boolean placeShip(BattleshipObj[][] currentFleet, BattleshipObj placedShip,
+                             int playerNum) {
         int i, j, k;
         for(j = 0; j < 6; j++){ //Grabs all 6 ships from the current players fleet
             if(currentFleet[playerNum][j] != null) {
@@ -178,9 +172,13 @@ public class BattleShipGameState extends GameState implements Serializable {
                 for (i = 0; i < onBoard.getSize(); i++) { //size of the boats already placed
                     for (k = 0; k < placedShip.getSize(); k++) { //size of boat about to be placed
                         if (placedShip.getLocation()[k].getY() == onBoard.getLocation()[i].getY() &&
-                                placedShip.getLocation()[k].getX() == onBoard.getLocation()[i].getX()) {
-                            if (!(placedShip.getSize() == onBoard.getSize() && placedShip.getTwinShip() == onBoard.getTwinShip())){ //Checks if both ships are the same
-                                return false; //if any of the two ships coordinates are the same returns false
+                                placedShip.getLocation()[k].getX() ==
+                                        onBoard.getLocation()[i].getX()) {
+                            //Checks if both ships are the same
+                            if (!(placedShip.getSize() == onBoard.getSize() &&
+                                    placedShip.getTwinShip() == onBoard.getTwinShip())){
+                                return false;
+                                //if any of the two ships coordinates are the same returns false
                             }
                         }
                     }
@@ -280,7 +278,8 @@ public class BattleShipGameState extends GameState implements Serializable {
 
 
     /**
-     * xyToCoordMidGame - Returns a coordinate object based on where the player taps on the enemies mid game board
+     * xyToCoordMidGame - Returns a coordinate object based on where the player
+     * taps on the enemies mid game board
      * @param touchX - float x coordinate of user tap
      * @param touchY - float y coordinate of user tap
      * @return coordinate object based on board
@@ -303,7 +302,8 @@ public class BattleShipGameState extends GameState implements Serializable {
     }
 
     /**
-     * xyToCoordSetupGame - Returns a coordinate object based on where the player taps on the setup board and creates a coordianate
+     * xyToCoordSetupGame - Returns a coordinate object based on where the player
+     * taps on the setup board and creates a coordianate
      * with a has ship boolean
      * @param touchX - float x coordinate of user tap
      * @param touchY - float y coordinate of user tap
@@ -328,8 +328,9 @@ public class BattleShipGameState extends GameState implements Serializable {
     }
 
     /**
-     * middleXOfCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the grid
-     * these are based on indicies and not actual board coordinates that a player might think
+     * middleXOfCoord - Returns a float value of X corresponding to the middle of a
+     * selected coordinate on the grid these are based on indicies and not actual board
+     * coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
      * @return float value of x that corresponds to the middle of that selected grid
      */
@@ -400,12 +401,9 @@ public class BattleShipGameState extends GameState implements Serializable {
                         + "Is Sunk: " + this.playersFleet[1][j].getSunk() + "\n";
             }
             //prints all variables
-            return "It is Player " + playerID[this.playersTurn] + "'s turn. They have " + remainingShips + " remaining ships.\n" +
+            return "It is Player " + playerID[this.playersTurn] + "'s turn.\n" +
                     "Player ID: " + playerID[0] + " and " + playerID[1] + "\n" +
                     "Phase: " + this.phase + "\n" +
-                    "Timer: " + this.timer + " seconds\n" +
-                    "Player " + this.playerID[0] + " has " + this.remainingShips[0] + " left.\n" +
-                    "Player " + this.playerID[1] + " has " + this.remainingShips[1] + " left.\n" +
                     "GameBoard: " + this.playersBoard + " \n"
                     + player0Fleet + "\n"
                     + player1Fleet;
