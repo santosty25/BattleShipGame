@@ -66,7 +66,7 @@ public class DrawMidgame implements Animator {
     private Bitmap playersGrid = null;
     private Bitmap missile = null;
 
-    private boolean willDraw; //boolean for hether the rocket will be drawn or not
+    private boolean willDraw; //boolean for whether the rocket will be drawn or not
     private Activity activity; //reference to activity in BattleShipHumanPlayer
     private TextView xCoord;
     private TextView yCoord;
@@ -395,7 +395,9 @@ public class DrawMidgame implements Animator {
 
         }
 
-        //draw rotated ships on the bottom left grid
+        // draw rotated ships on the bottom left grid and checks to see if ships are rotated
+        // horizontal ships have a slightly offset top left coordinate so the else checks for that and
+        // adjusts accordingly
         if (rotFiveHp) {
             canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
         }
@@ -647,7 +649,7 @@ public class DrawMidgame implements Animator {
 
     /**
      * setX - Sets the x value for the textview
-     * @param xC - a given touch falue for x
+     * @param xC - a given touch value for x
      * @return 1-10 depending on where the player touched
      */
     public float setX(float xC) {
