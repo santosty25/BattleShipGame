@@ -217,8 +217,6 @@ public class DrawMidgame implements Animator {
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
-
-        // Checks to see if the ship is rotated horizontally or vertically and draws it accordingly
         if(this.drawRot == 0) {
             fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
             if (rotFiveHp) {
@@ -312,8 +310,6 @@ public class DrawMidgame implements Animator {
         //Draws the ships according to that user's board taken from the game state
         Coordinates toPlace = new Coordinates(false,false,0,0);
 
-        // Draws the ships on the enemy board. toPlace.getY() is checked to adjust the ships for the offset position
-        // caused by decimal float values
         for (int i = 0; i < playerFleet[playerID].length; i++) {
             if (playerFleet[playerID][i].getSize() == 5) {
                 toPlace = playerFleet[playerID][i].getFirstCoord();
@@ -399,7 +395,7 @@ public class DrawMidgame implements Animator {
 
         }
 
-        // When rotated, ships coordinates are a little off, so this adjusts for such error
+        //draw rotated ships on the bottom left grid
         if (rotFiveHp) {
             canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
         }
@@ -651,7 +647,7 @@ public class DrawMidgame implements Animator {
 
     /**
      * setX - Sets the x value for the textview
-     * @param xC - a given touch value for x
+     * @param xC - a given touch falue for x
      * @return 1-10 depending on where the player touched
      */
     public float setX(float xC) {
