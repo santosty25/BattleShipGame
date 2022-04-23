@@ -112,10 +112,6 @@ public class BattleShipGameState extends GameState implements Serializable {
             }
         }
     }
-    public void setHasShip(int row, int col, boolean isHit, int playerNum){
-        this.playersBoard[playerNum].getHasShip(row, col);
-    }
-
 
 
     /**
@@ -138,13 +134,11 @@ public class BattleShipGameState extends GameState implements Serializable {
                 for(int j = 0; j < playersFleet[1].length; j++) {
                     this.playersFleet[1][j].checkCoordHit(coord);
                 }
-                //this.printFire(row, col, true);
                 for(int i = 0; i < playersFleet[1].length; i++) {
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     boolean sunk = this.playersFleet[1][i].checkIfHit();
                     if(sunk == true) {
                         this.playersFleet[1][i].setSunk(true);
-                        this.updateNumPlayerFleet();
                     }
                     else {
                         continue;
@@ -163,13 +157,11 @@ public class BattleShipGameState extends GameState implements Serializable {
                 for(int j = 0; j < playersFleet[0].length; j++) {
                     this.playersFleet[0][j].checkCoordHit(coord);
                 }
-                //this.printFire(row, col, true);
                 for(int i = 0; i < playersFleet[0].length; i++) {
                     boolean sunk = this.playersFleet[0][i].checkIfHit();
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     if(sunk == true) {
                         this.playersFleet[0][i].setSunk(true);
-                        this.updateNumPlayerFleet();
                     }
                     else {
                         continue;
@@ -318,7 +310,6 @@ public class BattleShipGameState extends GameState implements Serializable {
             return null;
         }
         char letterRow = boardRows[newY];
-        Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
         return tappedCoordinate;
     }
 
@@ -457,11 +448,6 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public int getPlayerID() { return this.playerID[playersTurn]; }
 
-    /**
-     * getTimer - Gets the timer.
-     * @return - The timer
-     */
-    public int getTimer() { return this.timer; }
 
     /**
      * getPhase - Gets the current phase of the game.
@@ -529,35 +515,6 @@ public class BattleShipGameState extends GameState implements Serializable {
         }
         //game is not over
         return 2;
-    }
-
-    /**
-     * setPlayerFleet - updates the number of ships in a player's fleet
-     */
-    public void updateNumPlayerFleet() {
-        boolean allSunk0 = false;
-        boolean allSunk1 = false;
-        int player0fleet = 0;
-        int player1fleet = 0;
-
-        //check each player's fleet
-        for(int i = 0; i < playersFleet[0].length; i++) {
-            allSunk0 = playersFleet[0][i].getSunk();
-            if(allSunk0 == false) {
-                player0fleet++;
-            }
-        }
-        for(int j = 0; j < playersFleet[1].length; j++) {
-            allSunk1 = playersFleet[1][j].getSunk();
-            if (allSunk1 == false) {
-                player1fleet++;
-            }
-        }
-
-        //checks who is checking the remaining ships
-        this.remainingShips[0] = player0fleet;
-        this.remainingShips[1] = player1fleet;
-
     }
 
     /**

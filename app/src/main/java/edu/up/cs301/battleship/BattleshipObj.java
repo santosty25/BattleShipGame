@@ -61,24 +61,6 @@ public class BattleshipObj implements Serializable {
     }
 
     /**
-     * checkIfSunk - Checks if this battleship has been sunk
-     *
-     * @param ship - a given battleship
-     * @return true or false depending on whether a battleship has been hit
-     */
-    public boolean checkIfSunk(BattleshipObj ship) {
-        int i;
-        for (i = 0; i < location.length; i++) {
-            if (ship.location[i].getHit() == false) {
-                return false;
-            }
-        }
-        //ship sunk
-        setSunk(true);
-        return true;
-    }
-
-    /**
      * getFirstCoord - Gets the first coordinate of a battle ship.
      * @return - the first coordinate
      */
