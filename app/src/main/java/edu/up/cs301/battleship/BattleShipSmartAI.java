@@ -81,9 +81,11 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         if (this.previousHit != null) { //check if a previous hit exits
             if(checkSuccHit(previousHit)) { //Checks if last hit hit a battle ship
                 if(succHits != null) {
-                    if (previousHit.getY() == succHits.getY()) { //if the y values are the same, the dir is left OR right
+                    if (previousHit.getY() == succHits.getY()
+                            && (previousHit.getX() - 1 == succHits.getX() || previousHit.getX() + 1 == succHits.getX() )) { // the dir is left OR right
                         dir = 1;
-                    } else if (previousHit.getX() == succHits.getX()) { //if the x values are the same, the dir is up OR down
+                    } else if (previousHit.getX() == succHits.getX()
+                            && (previousHit.getY() - 1 == succHits.getY() || previousHit.getY() + 1 == succHits.getY() )) { //if the x values are the same, the dir is up OR down
                         dir = 2;
                     }
                 }
@@ -120,7 +122,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             }
         }
         Coordinates fireLoc = new Coordinates(false, false, row, col);
-        if(AvoidLoop >= 50){
+        if(AvoidLoop >= 40){
             return(fireLoc);
         }
         if(dir == 0){ //basecase unknown direction

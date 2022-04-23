@@ -9,9 +9,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.animation.Animator;
 import edu.up.cs301.game.R;
@@ -31,7 +28,6 @@ import edu.up.cs301.game.R;
 public class DrawMidgame implements Animator {
     private Paint blackPaint = new Paint();
     private Paint clear = new Paint();
-    public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
     private int count = 0; //how many pixels the rocket moves
     public int playerID; //reference to playerID
 
@@ -221,10 +217,6 @@ public class DrawMidgame implements Animator {
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
-        for(TapValues tap : tapValues){
-            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
-        }
-
         if(this.drawRot == 0) {
             fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
             if (rotFiveHp) {
