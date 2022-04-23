@@ -351,8 +351,9 @@ public class BattleShipGameState extends GameState implements Serializable {
     }
 
     /**
-     * middleYOfCoord - Returns a float value of Y corresponding to the middle of a selected coordinate on the grid
-     * these are based on indicies and not actual board coordinates that a player might think
+     * middleYOfCoord - Returns a float value of Y corresponding to the middle of a selected
+     * coordinate on the grid these are based on indicies and not actual board
+     * coordinates that a player might think
      * @param selected - coordinates of a selected grid on the board
      * @return float value of y that corresponds to the middle of that selected grid
      */
@@ -365,8 +366,9 @@ public class BattleShipGameState extends GameState implements Serializable {
     }
 
     /**
-     * middleXOfEnemyCoord - Returns a float value of X corresponding to the middle of a selected coordinate on the enemy's grid
-     * these are based on indicies and not actual board coordinates that a player might think/read
+     * middleXOfEnemyCoord - Returns a float value of X corresponding to the middle of a
+     * selected coordinate on the enemy's grid these are based on indicies and not actual board
+     * coordinates that a player might think/read
      * @param selected - coordinates of a selected grid on the board
      * @return float value of x that corresponds to the middle of that selected grid
      */
@@ -511,7 +513,6 @@ public class BattleShipGameState extends GameState implements Serializable {
     public BattleshipObj[][] getPlayersFleet() {
         return playersFleet;
     }
-//push
     public GameBoard[] getPlayersBoard() {
         return playersBoard;
     }
