@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
@@ -261,7 +260,6 @@ public class DrawMidgame implements Animator {
         this.drawRot++;
 
         if (state == null) {
-            Log.i("State is Null", "onDraw: NULL");
             return;
         }
         int enemyID; //the enemy's player number
@@ -279,7 +277,6 @@ public class DrawMidgame implements Animator {
         GameBoard drawBoard = this.state.getBoard(enemyID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                Log.i("NOT NULL", "");
                 if(drawBoard.getCoordHit(row, col)){
                     Coordinates[][] board = drawBoard.getCurrentBoard();
                     float xDrift = 1.5f * (float)row;
@@ -479,7 +476,6 @@ public class DrawMidgame implements Animator {
         GameBoard drawEnemyBoard = this.state.getBoard(playerID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                Log.i("NOT NULL", "");
                 if(drawEnemyBoard.getCoordHit(row, col)){
                     Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
                     float xDrift =  1.8f * (float)row;
@@ -545,12 +541,9 @@ public class DrawMidgame implements Animator {
         //sends fire action
         float x = motionEvent.getX();
         float y = motionEvent.getY();
-        Log.d("In midGame", "Coords: " + x + ", " + y);
-        Log.i("Players Turn", "" + state.getPlayersTurn());
         if (state.getPlayersTurn() == playerNum) {
             Coordinates sendFireto = state.xyToCoordMidGame(x, y);
             if (sendFireto != null) {
-                Log.i("Touch", "onTouch: sending fire ");
                 game.sendAction(new Fire(reference, sendFireto, playerNum));
             }
         }

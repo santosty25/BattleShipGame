@@ -1,7 +1,5 @@
 package edu.up.cs301.battleship;
-
-import android.util.Log;
-import java.io.Serializable;;
+import java.io.Serializable;
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 
@@ -40,18 +38,14 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playerID[0] = 0;
         this.playerID[1] = 1;
 
-        //Log.i("BSG", "Made playerID");
         this.playersBoard = new GameBoard[2];
         this.playersBoard[0] = new GameBoard();
         this.playersBoard[1] = new GameBoard();
 
-        //Log.i("BSG", "Made gameBoard");
         int num = (int) Math.random() * 1;
         this.playersTurn = num;
-        //Log.i("BSG", "Made player turn");
         this.timer = 30;
         this.phase = 0;
-        //Log.i("BSG", "Made timer");
         this.remainingShips = new int[2];
         for (int k = 0; k < remainingShips.length; k++) {
             this.remainingShips[k] = 6;
@@ -69,7 +63,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                 playersFleet[i][j] = new BattleshipObj(testShip);
             }
         }
-        Log.i("BSGS", "Initial setup");
+
     }
 
     /**
@@ -80,7 +74,6 @@ public class BattleShipGameState extends GameState implements Serializable {
     public BattleShipGameState(BattleShipGameState copy) {
         //change so that certain information doesn't get sent to a specific player
         if (copy != null) {
-            Log.i("COPY", "COPY BEING CREATED");
             this.playerID = new int[2];
 
             for (int k = 0; k < 2; k++) {
@@ -456,7 +449,6 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param changePhase - the given phase
      */
     public void setPhase(int changePhase) {
-        Log.i("Phase", "setPhase: " + changePhase);
         this.phase = changePhase;
     }
 

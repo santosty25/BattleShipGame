@@ -1,6 +1,5 @@
 package edu.up.cs301.battleship;
 
-import android.util.Log;
 import java.util.Random;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
@@ -97,10 +96,11 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                 fireLoc = new Coordinates(nextFire());
             }
         }
-        Log.i("COMPUTER FIRING AT ", "fire:" +  fireLoc.getX() + " " + fireLoc.getY());
+
         this.previousHit = new Coordinates(fireLoc);
         game.sendAction(new Fire(this, fireLoc, playerNum));
     }
+
 
 
     /**
@@ -120,8 +120,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             }
         }
         Coordinates fireLoc = new Coordinates(false, false, row, col);
-        if(AvoidLoop >= 100){
-            AvoidLoop = 0;
+        if(AvoidLoop >= 50){
             return(fireLoc);
         }
         if(dir == 0){ //basecase unknown direction

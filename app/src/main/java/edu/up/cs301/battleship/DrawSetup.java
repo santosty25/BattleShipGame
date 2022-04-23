@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -233,7 +232,6 @@ public class DrawSetup extends SurfaceView {
         }
 
         if (state == null) {
-            Log.i("State is Null", "onDraw: NULL");
             return;
         }
         /**Draw on your board
@@ -242,7 +240,6 @@ public class DrawSetup extends SurfaceView {
         GameBoard drawEnemyBoard = this.state.getBoard(0);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                Log.i("NOT NULL", "");
                 if (drawEnemyBoard.getCoordHit(row, col)) {
                     Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
                     if (drawEnemyBoard.getHasShip()) {

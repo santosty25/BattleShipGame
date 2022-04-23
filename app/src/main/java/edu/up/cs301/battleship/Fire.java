@@ -30,7 +30,6 @@ public class Fire extends GameAction implements Serializable {
     public Fire(GamePlayer player, Coordinates coord, int playerNum) {
         super(player);
         this.playerNum = playerNum;
-        Log.i("fire action", "Instance of fire action ");
         this.coord = new Coordinates(coord);
     }
 

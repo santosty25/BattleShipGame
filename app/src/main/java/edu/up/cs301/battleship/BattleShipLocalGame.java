@@ -1,6 +1,6 @@
 package edu.up.cs301.battleship;
 
-import android.util.Log;
+
 
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
@@ -95,7 +95,7 @@ public class BattleShipLocalGame extends LocalGame {
     @Override
     protected boolean makeMove(GameAction action) {
 
-        Log.i("IN ACTION", "makeMove: ");
+
         BattleShipGameState state = (BattleShipGameState) super.state; //the gameState
         int phase = state.getPhase(); //the phase
         int player = state.getPlayerID(); //the playerID
@@ -105,7 +105,6 @@ public class BattleShipLocalGame extends LocalGame {
         if (whoseTurn == 0) {
             enemy = 1;
         }
-        Log.i("Players turn ", "makeMove: " + whoseTurn);
 
         if(action instanceof SwitchPhase) {
             int playerNum = ((SwitchPhase)action).getPlayerNum();
@@ -125,7 +124,6 @@ public class BattleShipLocalGame extends LocalGame {
         }
 
             if (action instanceof Fire) {
-                Log.i("PHASE", "makeMove: " + state.getPhase());
                 fire((Fire) action, state);
                 return true;
             } else if (action instanceof PlaceShip) {
@@ -210,7 +208,6 @@ public class BattleShipLocalGame extends LocalGame {
          * @return
          */
     public boolean fire(Fire fireAction, BattleShipGameState state) {
-        Log.i("Firing", "fire: ");
         Coordinates coord = new Coordinates(fireAction.getCoord());
         int playerNum = fireAction.getPlayerNum();
         int enemy;
@@ -220,6 +217,7 @@ public class BattleShipLocalGame extends LocalGame {
             enemy = 0;
         }
         if(playerNum != state.getPlayersTurn()){
+            sendAllUpdatedState();
             return false;
         }
         if (state.canFire(coord)) { //If the coord has NOT already been hit
@@ -235,7 +233,6 @@ public class BattleShipLocalGame extends LocalGame {
                         //IT SHOULD STILL BE THE PLAYERS TURN
                         state.getBoard(enemy).setHasShip(coord.getX(), coord.getY(), true); //Sets the coord to hit
                         BattleShipMainActivity.explosion.start();
-                        Log.i("FIRE", "fire: HIT");
                         state.setPlayersTurn(playerNum);
                         sendAllUpdatedState();
                         return true;
@@ -243,13 +240,12 @@ public class BattleShipLocalGame extends LocalGame {
                 }
             }
             //DRAW WHITE the player missed
-            Log.i("MISS", "fire: MISS");
             state.setPlayersTurn(enemy);
-            Log.i("Player turn", "fire: " + state.getPlayersTurn());
             BattleShipMainActivity.splash.start();
             sendAllUpdatedState();
             return true;
         }
+        sendAllUpdatedState();
         return false;
     }
 }
