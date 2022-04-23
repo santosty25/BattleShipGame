@@ -49,7 +49,7 @@ import edu.up.cs301.game.R;
  * @author Austen Furutani
  * @author Keoni Han
  * @author Steven Lee
- * @version Spring 2022 - 4/14/22
+ * @version Spring 2022 - 4/22/22
  */
 public class BattleShipMainActivity extends GameMainActivity {
     //Tag for logging
