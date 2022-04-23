@@ -134,7 +134,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     boolean sunk = this.playersFleet[1][i].checkIfHit();
                     if(sunk == true) {
-                        this.setFleetSunk(1, i);
+                        this.playersFleet[1][i].setSunk(true);
                     }
                     else {
                         continue;
@@ -157,7 +157,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                     boolean sunk = this.playersFleet[0][i].checkIfHit();
                     //checks if a player's ship has been sunk and sets it as sunk if true
                     if(sunk == true) {
-                        this.setFleetSunk(1, i);
+                        this.playersFleet[0][i].setSunk(true);
                     }
                     else {
                         continue;
