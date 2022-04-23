@@ -25,7 +25,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
     private int dir;
     private Coordinates previousHit;
     private Coordinates succHits;
-    private Coordinates firstSuccHit; //its the first successful hit is a "combo"
+    private Coordinates firstSuccHit; //its the first successful hit in a "combo"
     private int enemyNum;
 
     public BattleShipSmartAI(String name) {
@@ -367,7 +367,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             overlap = this.checkShip(gs, location);
         }
         this.battleship = new BattleshipObj(size, location);
-        this.battleship.setTwinShip(twin);
+        this.battleship.setTwinShip(twin); //Keeps track of the two twin ships,3 and 4hp
         game.sendAction(new PlaceShip(this, this.battleship, playerNum));
     }
 
@@ -385,7 +385,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
                     continue;
                 } else {
                     for (int l = 0; l < gs.getPlayersFleet()[playerNum][j].getLocation().length; l++)
-                        if (gs.getPlayersFleet()[playerNum][j].getLocation()[l].getX() == coord.getX() &&
+                        if (gs.getPlayersFleet()[playerNum][j].getLocation()[l].getX() == coord.getX() && //checking x and y values
                                 gs.getPlayersFleet()[playerNum][j].getLocation()[l].getY() == coord.getY()) {
                             return true;
                         }
@@ -401,7 +401,6 @@ public class BattleShipSmartAI extends GameComputerPlayer {
      */
 
     public void placeShips() {
-        Coordinates[] loc;
         Coordinates[] temp = new Coordinates[1];
         temp[0] = new Coordinates(false, false, -1, -1);
         BattleshipObj selectedBattleShip = new  BattleshipObj(1, temp);
