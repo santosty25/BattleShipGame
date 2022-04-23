@@ -651,7 +651,7 @@ public class DrawMidgame implements Animator {
 
     /**
      * setX - Sets the x value for the textview
-     * @param xC - a given touch falue for x
+     * @param xC - a given touch value for x
      * @return 1-10 depending on where the player touched
      */
     public float setX(float xC) {
