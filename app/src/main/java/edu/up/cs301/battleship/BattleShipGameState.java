@@ -97,17 +97,13 @@ public class BattleShipGameState extends GameState implements Serializable {
             this.playersFleet = new BattleshipObj[2][6];
 
             int i, j;
-            //Log.i("Test", "before Players fleet for loop");
             for (i = 0; i < 2; i++) {
                 for (j = 0; j < 6; j++) {
                     this.playersFleet[i][j] = new BattleshipObj(copy.playersFleet[i][j]);
-                    //Log.i("SHIP INFO", "Length " + this.playersFleet[i][j].getSize());
                     Coordinates[] arrayTest = this.playersFleet[i][j].getLocation();
                     int k;
                     for (k = 0; k < arrayTest.length; k++) {
-                        // Log.i("coordinates", "" + arrayTest[k].getX() + " " + arrayTest[k].getY());
                     }
-                    //Log.i("====================", " ");
                 }
             }
         }
@@ -469,12 +465,6 @@ public class BattleShipGameState extends GameState implements Serializable {
      */
     public int getPhase() { return this.phase; }
 
-    /**
-     * getRemainingShips - Gets the number of remaining ships for a specific player.
-     * @param playerNum - the player number
-     * @return - The number of remaining ships of a player
-     */
-    public int getRemainingShips(int playerNum) { return this.remainingShips[playerNum];}
 
     /**
      * setPhase - Sets the phase of the game

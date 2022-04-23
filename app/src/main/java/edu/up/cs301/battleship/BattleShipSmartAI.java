@@ -48,7 +48,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
             return;
         }
         this.gameState = new BattleShipGameState((BattleShipGameState) info);
-        if (playerNum == 0) {
+        if (playerNum == 0) {//determines enemy player num
             this.enemyNum = 1;
         } else {
             this.enemyNum = 0;
@@ -65,7 +65,7 @@ public class BattleShipSmartAI extends GameComputerPlayer {
         }
         if (this.gameState .getPhase() == BattleShipGameState.SETUP_PHASE){ //calls place ships if its insetUP
             placeShips();
-        }
+        }//if its their turn and its the battle phase, the ai beings firing
         else if(this.gameState.getPhase() == BattleShipGameState.BATTLE_PHASE && gameState.getPlayersTurn() == playerNum){
             this.fire();
         }

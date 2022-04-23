@@ -231,7 +231,6 @@ public class DrawMidgame implements Animator {
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
         for(TapValues tap : tapValues){
-            Log.i("midgame", "onDraw: " + tap.getX() + " " +  tap.getY()) ;
             canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
         }
 
