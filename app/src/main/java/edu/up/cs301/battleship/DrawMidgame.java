@@ -395,6 +395,7 @@ public class DrawMidgame implements Animator {
 
         }
 
+        //draw rotated ships on the bottom left grid
         if (rotFiveHp) {
             canvas.drawBitmap(fivehp, fivehpLeft, fivehpTop, blackPaint);
         }

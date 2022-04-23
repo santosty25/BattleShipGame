@@ -45,6 +45,11 @@ import edu.up.cs301.game.R;
  * A how to play is implemented into the top right tab of the start up screen.
  * Animation implemented to have a missile drawn on the screen.
  *
+ * Bugs:
+ * There’s a bug in our game in which the smart AI will just randomly pause which stops the
+ * whole game. The bug isn’t caused by an infinite loop error. This could’ve been avoided
+ * if our game wasn't RNG based so that it would be easier to tell what happened.
+ *
  * @author Tyler Santos
  * @author Austen Furutani
  * @author Keoni Han

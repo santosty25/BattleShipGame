@@ -38,6 +38,7 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playerID[0] = 0;
         this.playerID[1] = 1;
 
+        //Log.i("BSG", "Made playerID");
         this.playersBoard = new GameBoard[2];
         this.playersBoard[0] = new GameBoard();
         this.playersBoard[1] = new GameBoard();
@@ -45,7 +46,14 @@ public class BattleShipGameState extends GameState implements Serializable {
         //Log.i("BSG", "Made gameBoard");
         int num = (int) Math.random() * 1;
         this.playersTurn = num;
+        //Log.i("BSG", "Made player turn");
+//        this.timer = 30;
         this.phase = 0;
+        //Log.i("BSG", "Made timer");
+//        this.remainingShips = new int[2];
+//        for (int k = 0; k < remainingShips.length; k++) {
+//            this.remainingShips[k] = 6;
+//        }
         this.playersFleet = new BattleshipObj[2][6];
 
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
