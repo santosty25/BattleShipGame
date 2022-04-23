@@ -1,8 +1,5 @@
 package edu.up.cs301.battleship;
 
-import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
@@ -57,7 +54,6 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         else if (compGS.getPhase() == BattleShipGameState.BATTLE_PHASE){
             fireAction();
         }
-        Log.i("COMPUTER PLAYERS TURN", "COMPUTER PLAYERS TURN");
         sleep(0.1);
     }
 
@@ -66,7 +62,6 @@ public class BattleShipDumbAI extends GameComputerPlayer {
      */
     public void placeShip(){
         int i;
-        Log.i("PLACING SHIP", "ship Num" + shipNum);
         Coordinates[] loc;
         Coordinates[] temp = new Coordinates[1];
         temp[0] = new Coordinates(false, false, -1, -1);
@@ -138,7 +133,6 @@ public class BattleShipDumbAI extends GameComputerPlayer {
         int col;
         row = r.nextInt(10);
         col = r.nextInt(10);
-        Log.i("COMPUTER FIRE;", "Fired at " + row + " " + col + ".");
         Coordinates fire = new Coordinates(false, false, row, col);
         int enemy = 1;
         if(playerNum ==1){

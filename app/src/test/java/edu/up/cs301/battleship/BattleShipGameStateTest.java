@@ -2,7 +2,6 @@ package edu.up.cs301.battleship;
 
 import static org.junit.Assert.*;
 
-import android.util.Log;
 
 import org.junit.Test;
 

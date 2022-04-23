@@ -1,11 +1,9 @@
 package edu.up.cs301.battleship;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -248,8 +246,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                         }
                     }
 
-                    Log.i("Test Coordinates", "FIND ME HERE" + motionEvent.getX() + ", " + motionEvent.getY());
-
                     selectedBattleShip.setSize(newSize);
                     if (newSize < 0 || newSize >= 6) {
                         return false;
@@ -271,7 +267,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int i = 0; i < selectedBattleShip.getSize(); i++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
-                                    Log.i("Invalid Place", "Ship already placed here");
                                     return false;
                                 }
                                 eachShipCoord[i] = currGS.xyToCoordSetupGame(xUp, yUp);
@@ -280,7 +275,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                         eachShipCoord[i].setY(eachShipCoord[i-1].getY()+1);
                                     }
                                 }
-                                Log.i("Coordinates ", "" + eachShipCoord[i].getX() + " " + eachShipCoord[i].getY());
                                 yUp += 74;
                             }
                         }
@@ -288,7 +282,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                             eachShipCoord = new Coordinates[selectedBattleShip.getSize()];
                             for (int j = 0; j < selectedBattleShip.getSize(); j++) {
                                 if (currGS.getBoard(playerNum).getHasShip()) {
-                                    Log.i("Invalid Place", "Ship already placed here");
                                     return false;
                                 }
                                 eachShipCoord[j] = currGS.xyToCoordSetupGame(xUp, yUp);
@@ -297,7 +290,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                                         eachShipCoord[j].setX(eachShipCoord[j-1].getX()+1);
                                     }
                                 }
-                                Log.i("Coordinates ", "" + eachShipCoord[j].getX() + " " + eachShipCoord[j].getY());
                                 xUp += 74;
                             }
                         }
@@ -319,7 +311,6 @@ public class BattleShipHumanPlayer extends GameHumanPlayer {
                     if (motionEvent.getAction() == motionEvent.ACTION_DOWN) {
                         float x = motionEvent.getX();
                         float y = motionEvent.getY();
-                        Log.i("Second touch", "placing ship on " + x + ", " + y);
                     }
                     return true;
                 }

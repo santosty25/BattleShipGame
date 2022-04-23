@@ -7,12 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.animation.Animator;
 import edu.up.cs301.game.R;
@@ -32,7 +28,6 @@ import edu.up.cs301.game.R;
 public class DrawMidgame implements Animator {
     private Paint blackPaint = new Paint();
     private Paint clear = new Paint();
-    public ArrayList<TapValues> tapValues = new ArrayList<TapValues>();
     private int count = 0; //how many pixels the rocket moves
     public int playerID; //reference to playerID
 
@@ -222,10 +217,6 @@ public class DrawMidgame implements Animator {
         canvas.drawBitmap(grid, 550.0f, 25.0f, blackPaint);
         canvas.drawBitmap(playersGrid, 50.0f, 600.0f, blackPaint);
         canvas.drawBitmap(remainingShips, 1800.0f, 25.0f, blackPaint);
-        for(TapValues tap : tapValues){
-            canvas.drawBitmap(whiteMarker, tap.getX(), tap.getY(), blackPaint);
-        }
-
         if(this.drawRot == 0) {
             fivehp = Bitmap.createScaledBitmap(fivehp, 155, 28, false);
             if (rotFiveHp) {
@@ -261,7 +252,6 @@ public class DrawMidgame implements Animator {
         this.drawRot++;
 
         if (state == null) {
-            Log.i("State is Null", "onDraw: NULL");
             return;
         }
         int enemyID; //the enemy's player number
@@ -279,7 +269,6 @@ public class DrawMidgame implements Animator {
         GameBoard drawBoard = this.state.getBoard(enemyID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                Log.i("NOT NULL", "");
                 if(drawBoard.getCoordHit(row, col)){
                     Coordinates[][] board = drawBoard.getCurrentBoard();
                     float xDrift = 1.5f * (float)row;
@@ -477,7 +466,6 @@ public class DrawMidgame implements Animator {
         GameBoard drawEnemyBoard = this.state.getBoard(playerID);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
-                Log.i("NOT NULL", "");
                 if(drawEnemyBoard.getCoordHit(row, col)){
                     Coordinates[][] board = drawEnemyBoard.getCurrentBoard();
                     float xDrift =  1.8f * (float)row;
@@ -543,12 +531,9 @@ public class DrawMidgame implements Animator {
         //sends fire action
         float x = motionEvent.getX();
         float y = motionEvent.getY();
-        Log.d("In midGame", "Coords: " + x + ", " + y);
-        Log.i("Players Turn", "" + state.getPlayersTurn());
         if (state.getPlayersTurn() == playerNum) {
             Coordinates sendFireto = state.xyToCoordMidGame(x, y);
             if (sendFireto != null) {
-                Log.i("Touch", "onTouch: sending fire ");
                 game.sendAction(new Fire(reference, sendFireto, playerNum));
             }
         }
