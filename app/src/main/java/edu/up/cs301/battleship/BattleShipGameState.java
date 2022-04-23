@@ -25,10 +25,8 @@ public class BattleShipGameState extends GameState implements Serializable {
     private int[] playerID; //an array of each player's ID
     private GameBoard[] playersBoard; //the Battleship game board for each player
     private int playersTurn; //determines who's turn it is
-//    private int timer; //a set timer for how long each turn should take
     // 0 = setup | 1 = game phase | 2 = end phase
     private int phase; //determines the phase of the game
-//    private int remainingShips[]; //a player's remaining ships
     private BattleshipObj[][] playersFleet; //a player's fleet
 
 
@@ -39,23 +37,12 @@ public class BattleShipGameState extends GameState implements Serializable {
         this.playerID = new int[2];
         this.playerID[0] = 0;
         this.playerID[1] = 1;
-
-        //Log.i("BSG", "Made playerID");
         this.playersBoard = new GameBoard[2];
         this.playersBoard[0] = new GameBoard();
         this.playersBoard[1] = new GameBoard();
-
-        //Log.i("BSG", "Made gameBoard");
         int num = (int) Math.random() * 1;
         this.playersTurn = num;
-        //Log.i("BSG", "Made player turn");
-//        this.timer = 30;
         this.phase = 0;
-        //Log.i("BSG", "Made timer");
-//        this.remainingShips = new int[2];
-//        for (int k = 0; k < remainingShips.length; k++) {
-//            this.remainingShips[k] = 6;
-//        }
         this.playersFleet = new BattleshipObj[2][6];
 
         /** FOR TESTING HARD CODING SHIPS AND LOCATION TO PREVENT NULL EXCEPTION*/
@@ -91,9 +78,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                 this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
             }
             this.playersTurn = copy.playersTurn;
-//            this.timer = copy.timer;
             this.phase = copy.phase;
-//            this.remainingShips = copy.remainingShips;
             this.playersFleet = new BattleshipObj[2][6];
 
             int i, j;
@@ -518,11 +503,9 @@ public class BattleShipGameState extends GameState implements Serializable {
     public BattleshipObj[][] getPlayersFleet() {
         return playersFleet;
     }
-//push
     public GameBoard[] getPlayersBoard() {
         return playersBoard;
     }
-
     public void setFleetSunk(int playerNum, int shipNum) {
         this.playersFleet[playerNum][shipNum].setSunk(true);
     }
