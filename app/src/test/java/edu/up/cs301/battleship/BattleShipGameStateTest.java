@@ -61,14 +61,16 @@ public class BattleShipGameStateTest {
         Coordinates testCoord = new Coordinates(gameState.xyToCoordMidGame
                 (750.0f, 200.0f));
         Coordinates coord = new Coordinates(false, false, 0, 0 );
-        assertEquals(coord, testCoord);
+        assertEquals(coord.getX(), testCoord.getX());
+        assertEquals(coord.getY(), testCoord.getY());
     }
 
     @Test
     public void xyToCoordSetupGame() throws Exception {
         BattleShipGameState gameState = new BattleShipGameState();
-        gameState.xyToCoordSetupGame(750.0f, 200.0f);
-
+        Coordinates testCoord = new Coordinates(gameState.xyToCoordSetupGame(750.0f, 200.0f));
+        assertEquals(testCoord.getX(), 0);
+        assertEquals(testCoord.getY(), 0);
     }
 
     @Test
@@ -76,6 +78,7 @@ public class BattleShipGameStateTest {
         BattleShipGameState gameState = new BattleShipGameState();
         Coordinates coord = new Coordinates(false, false, 4, 5);
         float x = gameState.middleXOfCoord(coord);
+        assertEquals(1044.1155, x, 0.005);
     }
 
     @Test
@@ -83,6 +86,7 @@ public class BattleShipGameStateTest {
         BattleShipGameState gameState = new BattleShipGameState();
         Coordinates coord = new Coordinates(false, false, 6, 9);
         float y = gameState.middleYOfCoord(coord);
+        assertEquals(888.37309, y, 0.005);
     }
 
     @Test
@@ -90,13 +94,15 @@ public class BattleShipGameStateTest {
         BattleShipGameState gameState = new BattleShipGameState();
         Coordinates coord = new Coordinates(false, false, 7, 8);
         float x = gameState.middleXOfEnemyBoard(coord);
+        assertEquals(353.5, x, 0.005);
     }
 
     @Test
     public void middleYOfEnemyBoard() throws Exception {
         BattleShipGameState gameState = new BattleShipGameState();
         Coordinates coord = new Coordinates(false, false, 9, 1);
-        float y = gameState.middleXOfEnemyBoard(coord);
+        float y = gameState.middleYOfEnemyBoard(coord);
+        assertEquals(712, y, 0.005);
     }
 
     @Test

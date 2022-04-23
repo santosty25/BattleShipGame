@@ -331,7 +331,6 @@ public class BattleShipGameState extends GameState implements Serializable {
             return null;
         }
         char letterRow = boardRows[newY];
-        Log.d("Converted Coords", "New Coords:" + (newX + 1) + ", " + letterRow);
         return tappedCoordinate;
     }
 
