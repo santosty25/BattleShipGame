@@ -66,7 +66,7 @@ public class DrawMidgame implements Animator {
     private Bitmap playersGrid = null;
     private Bitmap missile = null;
 
-    private boolean willDraw; //boolean for hether the rocket will be drawn or not
+    private boolean willDraw; //boolean for whether the rocket will be drawn or not
     private Activity activity; //reference to activity in BattleShipHumanPlayer
     private TextView xCoord;
     private TextView yCoord;
