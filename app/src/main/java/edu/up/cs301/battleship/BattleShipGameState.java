@@ -67,7 +67,6 @@ public class BattleShipGameState extends GameState implements Serializable {
                 playersFleet[i][j] = new BattleshipObj(testShip);
             }
         }
-        Log.i("BSGS", "Initial setup");
     }
 
     /**
@@ -78,7 +77,6 @@ public class BattleShipGameState extends GameState implements Serializable {
     public BattleShipGameState(BattleShipGameState copy) {
         //change so that certain information doesn't get sent to a specific player
         if (copy != null) {
-            Log.i("COPY", "COPY BEING CREATED");
             this.playerID = new int[2];
 
             for (int k = 0; k < 2; k++) {
@@ -89,9 +87,7 @@ public class BattleShipGameState extends GameState implements Serializable {
                 this.playersBoard[l] = new GameBoard(copy.playersBoard[l]);
             }
             this.playersTurn = copy.playersTurn;
-//            this.timer = copy.timer;
             this.phase = copy.phase;
-//            this.remainingShips = copy.remainingShips;
             this.playersFleet = new BattleshipObj[2][6];
 
             int i, j;
@@ -459,7 +455,6 @@ public class BattleShipGameState extends GameState implements Serializable {
      * @param changePhase - the given phase
      */
     public void setPhase(int changePhase) {
-        Log.i("Phase", "setPhase: " + changePhase);
         this.phase = changePhase;
     }
 
