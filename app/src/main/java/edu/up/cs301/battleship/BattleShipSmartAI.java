@@ -15,7 +15,7 @@ import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
  * @author Tyler Santos
  * @author Keoni Han
  * @author Steven Lee
- * @version Spring 2022 - 3/31/22
+ * @version Spring 2022 - 4/22/22
  */
 public class BattleShipSmartAI extends GameComputerPlayer {
     private BattleshipObj battleship;
